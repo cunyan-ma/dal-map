@@ -6,7 +6,7 @@ import Methodology from './pages/Methodology'
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/dal-map/">
       <NavBar />
       <Routes>
         <Route path="/" element={<SupplyChain />} />
