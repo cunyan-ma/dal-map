@@ -1,0 +1,44 @@
+.method-container {
+    box-sizing: border-box;
+    /* match InfoBar width */
+    padding: 24px 32px;
+    max-width: 900px;
+    color: #222233;
+}
+
+.method-container h1 {
+    margin: 0 0 12px 0;
+    text-align: left;
+    font-size: 28px;
+    color: #111122;
+}
+
+.method-container h2 {
+    margin-top: 20px;
+    margin-bottom: 8px;
+        text-align: left;
+
+    font-size: 18px;
+    color: #111122;
+}
+
+.method-container p,
+.method-container ul {
+    line-height: 1.6;
+    color: #33334b;
+        text-align: left;
+
+}
+
+.method-container ul {
+    padding-left: 20px;
+}
+
+/* Responsive: on small screens remove left margin so content fills viewport */
+@media (max-width: 800px) {
+    .about-container {
+        margin-left: 16px;
+        margin-right: 16px;
+        padding: 16px;
+    }
+}
