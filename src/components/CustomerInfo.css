@@ -1,4 +1,4 @@
-.country-info {
+.customer-info {
     position: fixed;
     left: 16px;
     bottom: 269px;
@@ -16,16 +16,7 @@
     overflow-y: auto;
 }
 
-.country-info-description {
-    display: flex;
-    justify-content: space-between;
-    align-items: left;
-    font-weight: 700;
-    color: #cccccc;
-    font-size: 12px;
-}
-
-.country-info-header {
+.customer-info-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -34,7 +25,7 @@
     font-size: 14px;
 }
 
-.country-info-close {
+.customer-info-close {
     background: none;
     border: none;
     font-size: 18px;
@@ -43,26 +34,16 @@
     color: #cccccc;
 }
 
-.country-info-stat {
+.customer-info-description {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    border-radius: 5px;
-}
-
-.country-info-label {
+    align-items: left;
     font-weight: 700;
     color: #cccccc;
-    font-size: 13px;
+    font-size: 12px;
 }
 
-.country-info-value {
-    font-size: 13px;
-    font-weight: 700;
-    color: #e0432a;
-}
-
-.country-info-list {
+.customer-info-list {
     list-style-type: circle;
     margin: 0;
     padding: 0;
@@ -71,7 +52,7 @@
     gap: 6px;
 }
 
-.country-info-list li {
+.customer-info-list li {
     font-size: 11px;
     color: #cccccc;
 }

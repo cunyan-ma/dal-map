@@ -5,6 +5,7 @@ function Methodology() {
     const introduction = "this is a general introduction to the method involved"
     const companies = "I did the following this to locate companies"
     const delivery = "and this is how I was able to locate their delivery centers"
+    const customer = "I used resources from TechEquity's research"
 
     return (
         <div className="method-container">
@@ -16,6 +17,9 @@ function Methodology() {
 
             <h2>How were delivery centers located located</h2>
             <p>{delivery}</p>
+
+            <h2>Locating relatinoships between customers and companies</h2>
+            <p>{customer}</p>
 
         </div>
     )

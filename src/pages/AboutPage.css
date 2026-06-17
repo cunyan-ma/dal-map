@@ -3,14 +3,14 @@
     /* match InfoBar width */
     padding: 24px 32px;
     max-width: 900px;
-    color: #222233;
+    color: #e0e0e0;
 }
 
 .about-container h1 {
     margin: 0 0 12px 0;
     text-align: left;
     font-size: 28px;
-    color: #111122;
+    color: #ffffff;
 }
 
 .about-container h2 {
@@ -19,13 +19,13 @@
         text-align: left;
 
     font-size: 18px;
-    color: #111122;
+    color: #ffffff;
 }
 
 .about-container p,
 .about-container ul {
     line-height: 1.6;
-    color: #33334b;
+    color: #cccccc;
         text-align: left;
 
 }

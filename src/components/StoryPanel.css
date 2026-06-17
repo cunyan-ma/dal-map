@@ -1,0 +1,104 @@
+.story-panel {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    bottom: 20px;
+    width: 380px;
+    height: 100vh;
+    background: rgba(10, 10, 10, 0.92);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1300;
+    display: flex;
+    flex-direction: column;
+    padding: 48px 32px 32px;
+    box-sizing: border-box;
+    backdrop-filter: blur(4px);
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-380px); opacity: 0; }
+    to   { transform: translateX(0);      opacity: 1; }
+}
+
+.story-panel-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px 8px;
+    transition: color 0.15s;
+}
+
+.story-panel-close:hover {
+    color: #fff;
+}
+
+.story-panel-body {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 8px;
+}
+
+.story-panel-text {
+    font-family: Helvetica, 'Times New Roman', serif;
+text-align: left;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #e0e0e0;
+    margin: 0;
+}
+
+.story-panel-citation {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0;
+    font-style: italic;
+}
+
+.story-panel-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 16px;
+}
+
+.story-panel-nav {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #e0e0e0;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    padding: 8px 16px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.story-panel-nav:hover:not(:disabled) {
+    border-color: #fff;
+    color: #fff;
+}
+
+.story-panel-nav:disabled {
+    opacity: 0.2;
+    cursor: default;
+}
+
+.story-panel-progress {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.05em;
+}

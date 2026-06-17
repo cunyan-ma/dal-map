@@ -3,6 +3,7 @@ import NavBar from './components/NavBar'
 import SupplyChain from './pages/SupplyChain'
 import AboutPage from './pages/AboutPage'
 import Methodology from './pages/Methodology'
+import Database from './pages/Database'
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
         <Route path="/" element={<SupplyChain />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/methodology" element={<Methodology />} />
-        {/* add more pages here later */}
+        <Route path="/database" element={<Database />} />
       </Routes>
     </HashRouter>
   )

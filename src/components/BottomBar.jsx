@@ -1,60 +1,67 @@
 import { useState } from 'react'
+import SearchBox from './SearchBox'
+import FilterPanel from './FilterPanel'
+import StoryBox from './StoryBox'
 import './BottomBar.css'
 
 function BottomBar({
     countries = [],
+    customerEdges = [],
     selectedCompany = null,
-    onSelectCompany = () => { },
+    onSelectCompany = () => {},
     selectedCountry = null,
-    onSelectCountry = () => { },
+    onSelectCountry = () => {},
+    selectedCustomer = null,
+    onSelectCustomer = () => {},
+    onEnterStory = () => {},
 }) {
-    const [openFilter, setOpenFilter] = useState(null) // null | 'country' | 'company'
+    const [openFilter, setOpenFilter] = useState(null) // null | 'country' | 'company' | 'customer'
+
+    const countryNames  = [...new Set(countries.map(r => r.country).filter(Boolean))].sort()
+    const companyNames  = [...new Set(countries.map(r => r.company).filter(Boolean))].sort()
+    const customerNames = [...new Set(customerEdges.map(e => e.target).filter(Boolean))].sort()
 
     const toggleFilter = (filter) => {
-        setOpenFilter(prev => (prev === filter ? null : filter))
+        setOpenFilter(prev => {
+            const next = prev === filter ? null : filter
+            onSelectCompany(null)
+            onSelectCountry(null)
+            onSelectCustomer(null)
+            return next
+        })
     }
 
-    const countryNames = [...new Set(countries.map(r => r.country).filter(Boolean))].sort()
-    const companyNames = [...new Set(countries.map(r => r.company).filter(Boolean))].sort()
-    const locationCount = countries.filter(r => r.location_lat && r.location_lat !== 'to be completed').length
+    const getFilterItems = () => {
+        if (openFilter === 'country')  return countryNames
+        if (openFilter === 'company')  return companyNames
+        if (openFilter === 'customer') return customerNames
+        return []
+    }
+
+    const getSelectedItem = () => {
+        if (openFilter === 'country')  return selectedCountry
+        if (openFilter === 'company')  return selectedCompany
+        if (openFilter === 'customer') return selectedCustomer
+        return null
+    }
+
+    const getOnSelect = () => {
+        if (openFilter === 'country')  return onSelectCountry
+        if (openFilter === 'company')  return onSelectCompany
+        if (openFilter === 'customer') return onSelectCustomer
+        return () => {}
+    }
 
     return (
         <div className="bottombar">
             {openFilter && (
-                <div className="filter-panel">
-                    <div className="filter-panel-header">
-                        <span>{openFilter === 'country' ? 'Countries' : 'Companies'}</span>
-                        <button
-                            className="filter-panel-close"
-                            onClick={() => {
-                                setOpenFilter(null)
-                                if (openFilter === 'company') onSelectCompany(null)
-                                if (openFilter === 'country') onSelectCountry(null)
-                            }}
-                        >×</button>
-                    </div>
-                    <ul className="filter-panel-list">
-                        {(openFilter === 'country' ? countryNames : companyNames).map(name => (
-                            <li
-                                key={name}
-                                className={`clickable ${(openFilter === 'company' && name === selectedCompany) ||
-                                        (openFilter === 'country' && name === selectedCountry)
-                                        ? 'selected'
-                                        : ''
-                                    }`}
-                                onClick={() => {
-                                    if (openFilter === 'company') {
-                                        onSelectCompany(name === selectedCompany ? null : name)
-                                    } else if (openFilter === 'country') {
-                                        onSelectCountry(name === selectedCountry ? null : name)
-                                    }
-                                }}
-                            >
-                                {name}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                <FilterPanel
+                    mode={openFilter}
+                    items={getFilterItems()}
+                    selectedItem={getSelectedItem()}
+                    onSelect={getOnSelect()}
+                    onClose={() => toggleFilter(openFilter)}
+                />
             )}
 
             <div className="bottombar-inner">
@@ -64,32 +71,27 @@ function BottomBar({
                     BEHIND AI?
                 </div>
 
-
                 <div className="bottombar-description-box">
                     <div className="bottombar-description">
-                        Behind the AI systems we use is an enormous web of human labor that span across the globe.
-                        Mapped here the are the delivery centers of data annotation companies that are contracted by AI.
-                        Workers are often paid 2 dollars per hour or else. navigate the map to find more.
+                        <p>Behind AI is an enormous web of human labor across the globe.
+                        These data workers are paid under $2/hr to annotate
+                        data and render them legible to machines. Data annotation companies 
+                        deliberately seek out these workers in countries with
+                         worse pay.</p> Mapped here the are the delivery centers of these data annotation companies, representing
+                        the demography that these companies systematically exploit. Navigate the map to
+                        find out more.
                     </div>
                 </div>
 
-                <div className="bottombar-search">
-                    <div className="bottombar-search-title">Search by:</div>
-                    <button
-                        className={`bottombar-search-item ${openFilter === 'company' ? 'active' : ''}`}
-                        onClick={() => toggleFilter('company')}
-                    >
-                        Companies ({companyNames.length})
-                    </button>
-                    <button
-                        className={`bottombar-search-item ${openFilter === 'country' ? 'active' : ''}`}
-                        onClick={() => toggleFilter('country')}
-                    >
-                        Countries ({countryNames.length})
-                    </button>
-                    <div className="bottombar-search-item">
-                        Locations ({locationCount})
-                    </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginLeft: 'auto' }}>
+                    <StoryBox onEnterStory={onEnterStory} />
+                    <SearchBox
+                        openFilter={openFilter}
+                        onToggle={toggleFilter}
+                        companyCount={companyNames.length}
+                        countryCount={countryNames.length}
+                        customerCount={customerNames.length}
+                    />
                 </div>
             </div>
         </div>

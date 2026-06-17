@@ -1,12 +1,12 @@
 .legend {
     position: fixed;
-    top: 120px;
+    top: 110px;
     right: 40px;
     z-index: 1099;
-    background: #ffffff;
+    background: #111111;
     border-radius: 2px;
-    box-shadow: 0 8px 20px rgba(23, 24, 40, 0.06);
-    padding: 8px 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    padding: 8px 12px 14px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -16,8 +16,8 @@
 
 .legend-title {
     font-weight: 700;
-    font-size: 16px;
-    color: #08060d;
+    font-size: 14px;
+    color: #ffffff;
     margin-bottom: 2px;
 }
 
@@ -25,8 +25,9 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 14px;
-    color: #33334b;
+    line-height: 0.8;
+    font-size: 12px;
+    color: #cccccc;
     text-align: left;
 }
 
@@ -36,6 +37,11 @@
     height: 14px;
     border-radius: 50%;
     box-sizing: border-box;
+}
+
+.legend-swatch-customer {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid #ffffff;
 }
 
 .legend-swatch-company {
@@ -48,7 +54,14 @@
     border: 1px solid #c51818;
 }
 
-.legend-swatch-line {
+.legend-swatch-line-customer {
+    width: 14px;
+    height: 2px;
+    border-radius: 0;
+    background: #ffffff;
+}
+
+.legend-swatch-line-worker {
     width: 14px;
     height: 2px;
     border-radius: 0;

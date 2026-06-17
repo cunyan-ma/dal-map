@@ -5,16 +5,24 @@ import BottomBar from '../components/BottomBar'
 import Legend from '../components/Legend'
 import CompanyInfo from '../components/CompanyInfo'
 import CountryInfo from '../components/CountryInfo'
+import CustomerInfo from '../components/CustomerInfo'
+import StoryPanel from '../components/StoryPanel'
+import ViewModePanel from '../components/ViewModePanel'
+import customerCoords from '../data/customerCoords.json'
 
-// Use CSV output so Papa.parse fetches raw CSV, not HTML
 const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTSF7sVqlLv16NeJJJZxSDvxwgUK74I7zm0IDqs8x5Aq1pzSFXlnpIJVXTX4cy0339tXLU7U2GMWFPG/pub?gid=1725569278&single=true&output=csv'
+const RELATIONSHIPS_URL = '/dal-map/relationships.csv'
 
 function SupplyChain() {
     const [countries, setCountries] = useState([])
+    const [customerEdges, setCustomerEdges] = useState([])
     const [selectedCompany, setSelectedCompany] = useState(null)
     const [selectedCountry, setSelectedCountry] = useState(null)
+    const [selectedCustomer, setSelectedCustomer] = useState(null)
+    const [viewMode, setViewMode] = useState(null)
+    const [storyStep, setStoryStep] = useState(null)
 
-    useEffect(() => { //setting up anything after rendering
+    useEffect(() => {
         Papa.parse(SHEET_CSV_URL, {
             download: true,
             header: true,
@@ -22,18 +30,55 @@ function SupplyChain() {
         })
     }, [])
 
+    useEffect(() => {
+        Papa.parse(RELATIONSHIPS_URL, {
+            download: true,
+            header: true,
+            complete: (results) => {
+                const edges = results.data
+                    .filter(row => row.relationship_type === 'Customer' && row.source && row.target)
+                    .map(row => ({ source: row.source.trim(), target: row.target.trim() }))
+                setCustomerEdges(edges)
+            }
+        })
+    }, [])
+
+    const handleEnterStory = () => {
+        setSelectedCompany(null)
+        setSelectedCountry(null)
+        setSelectedCustomer(null)
+        setStoryStep(0)
+    }
+
+    const handleExitStory = () => {
+        setStoryStep(null)
+    }
+
+    const inStory = storyStep !== null
+
     return (
-        <div style={{
-            display: 'flex',
-            height: '100vh',
-        }}>
-            <div style={{ flex: 1, paddingBottom: 220 }}> {/* reserve space for bottom bar */}
-                <MapView countries={countries} selectedCompany={selectedCompany} selectedCountry={selectedCountry} />
+        <div style={{ display: 'flex', height: '100vh' }}>
+            <div style={{ flex: 1, paddingBottom: inStory ? 0 : 150, position: 'relative' }}>
+                <MapView
+                    countries={countries}
+                    selectedCompany={selectedCompany}
+                    selectedCountry={selectedCountry}
+                    customerEdges={customerEdges}
+                    customerCoords={customerCoords}
+                    viewMode={viewMode}
+                    storyStep={storyStep}
+                    onSelectCompany={(c) => { setSelectedCompany(c); setSelectedCountry(null); setSelectedCustomer(null) }}
+                    onSelectCountry={(c) => { setSelectedCountry(c); setSelectedCompany(null); setSelectedCustomer(null) }}
+                    onSelectCustomer={(c) => { setSelectedCustomer(c); setSelectedCompany(null); setSelectedCountry(null) }}
+                />
+                {!inStory && (
+                    <ViewModePanel viewMode={viewMode} onSelect={setViewMode} />
+                )}
             </div>
 
-            <Legend />
+            {!inStory && <Legend />}
 
-            {selectedCompany && (
+            {!inStory && selectedCompany && (
                 <CompanyInfo
                     company={selectedCompany}
                     countries={countries}
@@ -41,7 +86,7 @@ function SupplyChain() {
                 />
             )}
 
-            {selectedCountry && (
+            {!inStory && selectedCountry && (
                 <CountryInfo
                     country={selectedCountry}
                     countries={countries}
@@ -49,13 +94,35 @@ function SupplyChain() {
                 />
             )}
 
-            <BottomBar
-                countries={countries}
-                selectedCompany={selectedCompany}
-                onSelectCompany={setSelectedCompany}
-                selectedCountry={selectedCountry}
-                onSelectCountry={setSelectedCountry}
-            />
+            {!inStory && selectedCustomer && (
+                <CustomerInfo
+                    customer={selectedCustomer}
+                    customerEdges={customerEdges}
+                    onClose={() => setSelectedCustomer(null)}
+                />
+            )}
+
+            {!inStory && (
+                <BottomBar
+                    countries={countries}
+                    customerEdges={customerEdges}
+                    selectedCompany={selectedCompany}
+                    onSelectCompany={setSelectedCompany}
+                    selectedCountry={selectedCountry}
+                    onSelectCountry={setSelectedCountry}
+                    selectedCustomer={selectedCustomer}
+                    onSelectCustomer={setSelectedCustomer}
+                    onEnterStory={handleEnterStory}
+                />
+            )}
+
+            {inStory && (
+                <StoryPanel
+                    step={storyStep}
+                    onStep={setStoryStep}
+                    onClose={handleExitStory}
+                />
+            )}
         </div>
     )
 }

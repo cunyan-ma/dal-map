@@ -1,12 +1,12 @@
 .company-info {
     position: fixed;
     left: 16px;
-    bottom: 250px;
+    bottom: 269px;
     width: 280px;
-    max-height: calc(100vh - 280px);
-    background: #ffffff;
+    max-height: calc(100vh - 269px - 80px);
+    background: #111111;
     border-radius: 8px;
-    box-shadow: 0 8px 20px rgba(23, 24, 40, 0.06);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
     box-sizing: border-box;
     padding: 16px;
     display: flex;
@@ -21,7 +21,7 @@
     justify-content:space-between;
     align-items: left;
     font-weight: 700;
-    color: #33334b;
+    color: #cccccc;
     font-size: 12px;
 }
 
@@ -30,7 +30,7 @@
     justify-content: space-between;
     align-items: center;
     font-weight: 700;
-    color: #33334b;
+    color: #cccccc;
     font-size: 14px;
 }
 
@@ -40,7 +40,7 @@
     font-size: 18px;
     line-height: 1;
     cursor: pointer;
-    color: #33334b;
+    color: #cccccc;
 }
 
 .company-info-stat {
@@ -52,7 +52,7 @@
 
 .company-info-label {
     font-weight: 700;
-    color: #33334b;
+    color: #cccccc;
     font-size: 13px;
 }
 
@@ -73,5 +73,5 @@
 
 .company-info-list li {
     font-size: 11px;
-    color: #33334b;
+    color: #cccccc;
 }
