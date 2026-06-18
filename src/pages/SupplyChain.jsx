@@ -63,6 +63,7 @@ function SupplyChain() {
                     countries={countries}
                     selectedPlatform={selectedPlatform}
                     selectedCountry={selectedCountry}
+                    selectedCustomer={selectedCustomer}
                     customerEdges={customerEdges}
                     customerCoords={customerCoords}
                     viewMode={viewMode}
