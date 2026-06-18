@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import Papa from 'papaparse'
 import MapView from '../components/MapView'
 import BottomBar from '../components/BottomBar'
@@ -43,6 +43,16 @@ function SupplyChain() {
         })
     }, [])
 
+    // Only keep edges whose source platform exists in the countries dataset
+    const knownPlatforms = useMemo(
+        () => new Set(countries.map(r => r.company).filter(Boolean)),
+        [countries]
+    )
+    const filteredCustomerEdges = useMemo(
+        () => customerEdges.filter(e => knownPlatforms.has(e.source)),
+        [customerEdges, knownPlatforms]
+    )
+
     const handleEnterStory = () => {
         setSelectedPlatform(null)
         setSelectedCountry(null)
@@ -64,7 +74,7 @@ function SupplyChain() {
                     selectedPlatform={selectedPlatform}
                     selectedCountry={selectedCountry}
                     selectedCustomer={selectedCustomer}
-                    customerEdges={customerEdges}
+                    customerEdges={filteredCustomerEdges}
                     customerCoords={customerCoords}
                     viewMode={viewMode}
                     storyStep={storyStep}
@@ -98,7 +108,7 @@ function SupplyChain() {
             {!inStory && selectedCustomer && (
                 <CustomerInfo
                     customer={selectedCustomer}
-                    customerEdges={customerEdges}
+                    customerEdges={filteredCustomerEdges}
                     onClose={() => setSelectedCustomer(null)}
                 />
             )}
@@ -106,7 +116,7 @@ function SupplyChain() {
             {!inStory && (
                 <BottomBar
                     countries={countries}
-                    customerEdges={customerEdges}
+                    customerEdges={filteredCustomerEdges}
                     selectedPlatform={selectedPlatform}
                     onSelectPlatform={setSelectedPlatform}
                     selectedCountry={selectedCountry}
