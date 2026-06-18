@@ -32,7 +32,7 @@ function buildPlatformLatLng(countries) {
 
 // Default opacities for each node type
 const DEFAULTS = {
-    red:    { fillOpacity: 0.8,  opacity: 0.7 },
+    red:    { fillOpacity: 0.5,  opacity: 0.7 },
     orange: { fillOpacity: 0.15, opacity: 1   },
     white:  { fillOpacity: 0.3,  opacity: 0.5 },
 }
@@ -299,6 +299,29 @@ function MapView({
         if (!map) return
         storyLayersRef.current.forEach(l => map.removeLayer(l))
         storyLayersRef.current = []
+    }, [storyStep])
+
+    // Hide normal-mode markers/edges when entering story; restore when exiting
+    useEffect(() => {
+        const map = mapRef.current
+        if (!map) return
+        const inStory = storyStep !== null
+
+        redMarkersRef.current.forEach(({ marker }) =>
+            inStory ? map.removeLayer(marker) : marker.addTo(map))
+        orangeMarkersRef.current.forEach(({ marker }) =>
+            inStory ? map.removeLayer(marker) : marker.addTo(map))
+        whiteMarkersRef.current.forEach(({ marker }) =>
+            inStory ? map.removeLayer(marker) : marker.addTo(map))
+        viewModeEdgesRef.current.forEach(l =>
+            inStory ? map.removeLayer(l) : l.addTo(map))
+        selectionEdgesRef.current.forEach(l =>
+            inStory ? map.removeLayer(l) : l.addTo(map))
+
+        if (inStory) {
+            hoverEdgesRef.current.forEach(l => map.removeLayer(l))
+            hoverEdgesRef.current = []
+        }
     }, [storyStep])
 
     // ── Normal mode layer rendering ──────────────────────────────────────
