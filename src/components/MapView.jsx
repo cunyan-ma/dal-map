@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useCallback } from 'react'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import STORY_BEATS from '../data/storyBeats.js'
@@ -51,6 +51,7 @@ function MapView({
     countries,
     selectedPlatform = null,
     selectedCountry = null,
+    selectedCustomer = null,
     customerEdges = [],
     customerCoords = {},
     viewMode = 'platform-worker',
@@ -73,11 +74,120 @@ function MapView({
     // Dynamically added hover edges (cleared on mouseout)
     const hoverEdgesRef = useRef([])
 
+    // Persistent edges drawn for the active selection
+    const selectionEdgesRef = useRef([])
+
     // Permanent edges drawn for the active viewMode
     const viewModeEdgesRef = useRef([])
 
     // Pre-computed relationship maps
     const relRef = useRef(null)
+
+    // Refs that keep prop values current inside stale closures
+    const selectedPlatformRef = useRef(selectedPlatform)
+    const selectedCustomerRef = useRef(selectedCustomer)
+    const customerCoordsRef   = useRef(customerCoords)
+    useEffect(() => { selectedPlatformRef.current = selectedPlatform }, [selectedPlatform])
+    useEffect(() => { selectedCustomerRef.current = selectedCustomer }, [selectedCustomer])
+    useEffect(() => { customerCoordsRef.current   = customerCoords   }, [customerCoords])
+
+    // Ref holding the latest restoreSelectionStyles so clearHover (inside a stale closure) can call it
+    const restoreSelectionStylesRef = useRef(null)
+
+    // Applies highlight/dim marker styles matching the current selection (no edge drawing).
+    // Uses only refs so the identity is stable and stale closures always get the latest version.
+    const restoreSelectionStyles = useCallback(() => {
+        const platform = selectedPlatformRef.current
+        const customer = selectedCustomerRef.current
+        const rel      = relRef.current
+
+        if (!platform && !customer) {
+            redMarkersRef.current.forEach(({ marker }) => marker.setStyle(DEFAULTS.red))
+            orangeMarkersRef.current.forEach(({ marker }) => marker.setStyle(DEFAULTS.orange))
+            whiteMarkersRef.current.forEach(({ marker }) => marker.setStyle(DEFAULTS.white))
+            return
+        }
+
+        if (platform) {
+            const connectedWhites = new Set(rel?.custEdgesBySource[platform] || [])
+            redMarkersRef.current.forEach(({ marker: m, row: r }) =>
+                m.setStyle(r.company === platform ? HIGHLIGHT.red : DIMMED.red))
+            orangeMarkersRef.current.forEach(({ marker: m, platform: p }) =>
+                m.setStyle(p === platform ? HIGHLIGHT.orange : DIMMED.orange))
+            whiteMarkersRef.current.forEach(({ marker: m, name }) =>
+                m.setStyle(connectedWhites.has(name) ? HIGHLIGHT.white : DIMMED.white))
+        }
+
+        if (customer) {
+            const connectedOranges = new Set(rel?.custEdgesByTarget[customer] || [])
+            const connectedRedRows = new Set()
+            connectedOranges.forEach(p => {
+                ;(rel?.redByPlatform[p] || []).forEach(r => connectedRedRows.add(r))
+            })
+            whiteMarkersRef.current.forEach(({ marker: m, name }) =>
+                m.setStyle(name === customer ? HIGHLIGHT.white : DIMMED.white))
+            orangeMarkersRef.current.forEach(({ marker: m, platform: p }) =>
+                m.setStyle(connectedOranges.has(p) ? HIGHLIGHT.orange : DIMMED.orange))
+            redMarkersRef.current.forEach(({ marker: m, row: r }) =>
+                m.setStyle(connectedRedRows.has(r) ? HIGHLIGHT.red : DIMMED.red))
+        }
+    }, [])
+
+    // Keep the ref in sync so clearHover (inside a stale closure) always calls the latest version
+    restoreSelectionStylesRef.current = restoreSelectionStyles
+
+    // ── Selection highlight effect ───────────────────────────────────────
+    // Mirrors the hover visual for the currently selected platform / customer.
+    useEffect(() => {
+        const map = mapRef.current
+
+        // Clear any lingering hover edges and old selection edges
+        hoverEdgesRef.current.forEach(l => map?.removeLayer(l))
+        hoverEdgesRef.current = []
+        selectionEdgesRef.current.forEach(l => map?.removeLayer(l))
+        selectionEdgesRef.current = []
+
+        // Apply marker styles
+        restoreSelectionStyles()
+
+        if (!map) return
+        const rel = relRef.current
+        if (!rel) return
+
+        const addSelectionEdge = (from, to, color) => {
+            const line = L.polyline([from, to], { color, weight: 1.5, opacity: 0.75, smoothFactor: 1 }).addTo(map)
+            selectionEdgesRef.current.push(line)
+        }
+
+        if (selectedPlatform) {
+            const orangeCoords    = rel.orangeByName[selectedPlatform]
+            const connectedWhites = new Set(rel.custEdgesBySource[selectedPlatform] || [])
+            if (orangeCoords) {
+                ;(rel.redByPlatform[selectedPlatform] || []).forEach(r => {
+                    addSelectionEdge([parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords, '#c51818')
+                })
+                connectedWhites.forEach(name => {
+                    const c = customerCoordsRef.current[name]
+                    if (c) addSelectionEdge(orangeCoords, c, '#ffffff')
+                })
+            }
+        }
+
+        if (selectedCustomer) {
+            const connectedOranges = new Set(rel.custEdgesByTarget[selectedCustomer] || [])
+            const custCoords = customerCoordsRef.current[selectedCustomer]
+            if (custCoords) {
+                connectedOranges.forEach(p => {
+                    const orangeCoords = rel.orangeByName[p]
+                    if (!orangeCoords) return
+                    addSelectionEdge(orangeCoords, custCoords, '#ffffff')
+                    ;(rel.redByPlatform[p] || []).forEach(r => {
+                        addSelectionEdge([parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords, '#c51818')
+                    })
+                })
+            }
+        }
+    }, [selectedPlatform, selectedCustomer, restoreSelectionStyles])
 
     useEffect(() => {
         const map = L.map(containerRef.current).setView([20, 0], 2)
@@ -217,9 +327,7 @@ function MapView({
         const clearHover = () => {
             hoverEdgesRef.current.forEach(l => map.removeLayer(l))
             hoverEdgesRef.current = []
-            redMarkersRef.current.forEach(({ marker }) => marker.setStyle(DEFAULTS.red))
-            orangeMarkersRef.current.forEach(({ marker }) => marker.setStyle(DEFAULTS.orange))
-            whiteMarkersRef.current.forEach(({ marker }) => marker.setStyle(DEFAULTS.white))
+            restoreSelectionStylesRef.current()
         }
 
         const addEdge = (from, to, color) => {
