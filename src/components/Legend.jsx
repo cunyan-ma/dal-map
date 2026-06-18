@@ -12,7 +12,7 @@ function Legend() {
                 Customer contract
             </div>
             <div className="legend-item">
-                <span className="legend-swatch legend-swatch-company" />
+                <span className="legend-swatch legend-swatch-platform" />
                 Platform
             </div>
             <div className="legend-item">

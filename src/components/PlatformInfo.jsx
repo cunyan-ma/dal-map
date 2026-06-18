@@ -1,24 +1,24 @@
-import './CompanyInfo.css'
+import './PlatformInfo.css'
 
-function CompanyInfo({ company, countries = [], onClose }) {
-    const rows = countries.filter(r => r.company === company)
+function PlatformInfo({ platform, countries = [], onClose }) {
+    const rows = countries.filter(r => r.company === platform)
     const locations = [...new Set(rows.map(r => r.location).filter(Boolean))]
     const countryNames = [...new Set(rows.map(r => r.country).filter(Boolean))]
 
     return (
-        <div className="company-info">
-            <div className="company-info-header">
-                <span>{company}</span>
-                <button className="company-info-close" onClick={onClose}>×</button>
+        <div className="platform-info">
+            <div className="platform-info-header">
+                <span>{platform}</span>
+                <button className="platform-info-close" onClick={onClose}>×</button>
             </div>
 
-            <div className="company-info-description">
-                <span>{company} has {locations.length} delivery centeres across 
+            <div className="platform-info-description">
+                <span>{platform} has {locations.length} delivery centeres across
                     {countryNames.length} countries. These are:
                 </span>
             </div>
 
-             <ul className="company-info-list">
+             <ul className="platform-info-list">
                 {locations.map(loc => {
                     const row = rows.find(r => r.location === loc)
                     return (
@@ -29,18 +29,18 @@ function CompanyInfo({ company, countries = [], onClose }) {
                 })}
             </ul>
 
-            <div className="company-info-description">
-                <span>I will insert personalized information about the company's 
+            <div className="platform-info-description">
+                <span>I will insert personalized information about the platform's
                     worker practice here, with relevant links. These will be written out later.
                 </span>
             </div>
 
-            {/* <div className="company-info-stat">
-                <span className="company-info-label">Delivery centers</span>
-                <span className="company-info-value">{locations.length}</span>
+            {/* <div className="platform-info-stat">
+                <span className="platform-info-label">Delivery centers</span>
+                <span className="platform-info-value">{locations.length}</span>
             </div>
 
-            <ul className="company-info-list">
+            <ul className="platform-info-list">
                 {locations.map(loc => {
                     const row = rows.find(r => r.location === loc)
                     return (
@@ -52,13 +52,13 @@ function CompanyInfo({ company, countries = [], onClose }) {
             </ul>
 
             {countryNames.length > 0 && (
-                <div className="company-info-stat">
-                    <span className="company-info-label">Countries</span>
-                    <span className="company-info-value">{countryNames.length}</span>
+                <div className="platform-info-stat">
+                    <span className="platform-info-label">Countries</span>
+                    <span className="platform-info-value">{countryNames.length}</span>
                 </div>
             )} */}
         </div>
     )
 }
 
-export default CompanyInfo
+export default PlatformInfo

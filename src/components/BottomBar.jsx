@@ -7,24 +7,24 @@ import './BottomBar.css'
 function BottomBar({
     countries = [],
     customerEdges = [],
-    selectedCompany = null,
-    onSelectCompany = () => {},
+    selectedPlatform = null,
+    onSelectPlatform = () => {},
     selectedCountry = null,
     onSelectCountry = () => {},
     selectedCustomer = null,
     onSelectCustomer = () => {},
     onEnterStory = () => {},
 }) {
-    const [openFilter, setOpenFilter] = useState(null) // null | 'country' | 'company' | 'customer'
+    const [openFilter, setOpenFilter] = useState(null) // null | 'country' | 'platform' | 'customer'
 
     const countryNames  = [...new Set(countries.map(r => r.country).filter(Boolean))].sort()
-    const companyNames  = [...new Set(countries.map(r => r.company).filter(Boolean))].sort()
+    const platformNames = [...new Set(countries.map(r => r.company).filter(Boolean))].sort()
     const customerNames = [...new Set(customerEdges.map(e => e.target).filter(Boolean))].sort()
 
     const toggleFilter = (filter) => {
         setOpenFilter(prev => {
             const next = prev === filter ? null : filter
-            onSelectCompany(null)
+            onSelectPlatform(null)
             onSelectCountry(null)
             onSelectCustomer(null)
             return next
@@ -33,21 +33,21 @@ function BottomBar({
 
     const getFilterItems = () => {
         if (openFilter === 'country')  return countryNames
-        if (openFilter === 'company')  return companyNames
+        if (openFilter === 'platform') return platformNames
         if (openFilter === 'customer') return customerNames
         return []
     }
 
     const getSelectedItem = () => {
         if (openFilter === 'country')  return selectedCountry
-        if (openFilter === 'company')  return selectedCompany
+        if (openFilter === 'platform') return selectedPlatform
         if (openFilter === 'customer') return selectedCustomer
         return null
     }
 
     const getOnSelect = () => {
         if (openFilter === 'country')  return onSelectCountry
-        if (openFilter === 'company')  return onSelectCompany
+        if (openFilter === 'platform') return onSelectPlatform
         if (openFilter === 'customer') return onSelectCustomer
         return () => {}
     }
@@ -88,7 +88,7 @@ function BottomBar({
                     <SearchBox
                         openFilter={openFilter}
                         onToggle={toggleFilter}
-                        companyCount={companyNames.length}
+                        platformCount={platformNames.length}
                         countryCount={countryNames.length}
                         customerCount={customerNames.length}
                     />

@@ -3,7 +3,7 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import STORY_BEATS from '../data/storyBeats.js'
 
-const COMPANY_ALIASES = {
+const PLATFORM_ALIASES = {
     'Samasource Impact Sourcing': 'Sama',
     'Keymakr Data Labeling': 'Keymakr',
     'Innodata': 'Innodata',
@@ -13,7 +13,7 @@ function normalizeName(name) {
     return name.replace(/,?\s+(Inc\.?|LLC\.?|Ltd\.?|Corp\.?|Co\.?)$/i, '').trim()
 }
 
-function buildCompanyLatLng(countries) {
+function buildPlatformLatLng(countries) {
     const result = {}
     countries.forEach(row => {
         if (row.company && row.company_lat && row.company_long) {
@@ -22,8 +22,8 @@ function buildCompanyLatLng(countries) {
             const normalized = normalizeName(name)
             result[name] = coords
             result[normalized] = coords
-            if (COMPANY_ALIASES[normalized]) {
-                result[COMPANY_ALIASES[normalized]] = coords
+            if (PLATFORM_ALIASES[normalized]) {
+                result[PLATFORM_ALIASES[normalized]] = coords
             }
         }
     })
@@ -49,13 +49,13 @@ const DIMMED = {
 
 function MapView({
     countries,
-    selectedCompany = null,
+    selectedPlatform = null,
     selectedCountry = null,
     customerEdges = [],
     customerCoords = {},
     viewMode = 'platform-worker',
     storyStep = null,
-    onSelectCompany = () => {},
+    onSelectPlatform = () => {},
     onSelectCountry = () => {},
     onSelectCustomer = () => {},
 }) {
@@ -67,7 +67,7 @@ function MapView({
 
     // Normal mode marker collections (rebuilt when data changes)
     const redMarkersRef = useRef([])    // [{ marker, row }]
-    const orangeMarkersRef = useRef([]) // [{ marker, company, lat, lng }]
+    const orangeMarkersRef = useRef([]) // [{ marker, platform, lat, lng }]
     const whiteMarkersRef = useRef([])  // [{ marker, name, coords }]
 
     // Dynamically added hover edges (cleared on mouseout)
@@ -97,22 +97,22 @@ function MapView({
     useEffect(() => {
         if (countries.length === 0 || customerEdges.length === 0) return
 
-        const redByCompany = {}   // company → [rows]
-        const orangeByName = {}   // company → [lat, lng]
+        const redByPlatform = {}  // platform → [rows]
+        const orangeByName = {}   // platform → [lat, lng]
 
         countries.forEach(row => {
             if (row.location_lat && row.location_lat !== 'to be completed' &&
                 row.location_long && row.company) {
-                if (!redByCompany[row.company]) redByCompany[row.company] = []
-                redByCompany[row.company].push(row)
+                if (!redByPlatform[row.company]) redByPlatform[row.company] = []
+                redByPlatform[row.company].push(row)
             }
             if (row.company && row.company_lat && row.company_long) {
                 orangeByName[row.company] = [parseFloat(row.company_lat), parseFloat(row.company_long)]
             }
         })
 
-        const custEdgesBySource = {} // orange company → [customer names]
-        const custEdgesByTarget = {} // customer name   → [orange companies]
+        const custEdgesBySource = {} // orange platform → [customer names]
+        const custEdgesByTarget = {} // customer name   → [orange platforms]
         customerEdges.forEach(e => {
             if (!custEdgesBySource[e.source]) custEdgesBySource[e.source] = []
             custEdgesBySource[e.source].push(e.target)
@@ -120,7 +120,7 @@ function MapView({
             custEdgesByTarget[e.target].push(e.source)
         })
 
-        relRef.current = { redByCompany, orangeByName, custEdgesBySource, custEdgesByTarget }
+        relRef.current = { redByPlatform, orangeByName, custEdgesBySource, custEdgesByTarget }
     }, [countries, customerEdges])
 
     // ── Story mode layer rendering ───────────────────────────────────────
@@ -166,8 +166,8 @@ function MapView({
         }
 
         if (nodeFilter === 'white' || nodeFilter === 'all') {
-            const companyLatLng = buildCompanyLatLng(countries)
-            const mapNames = new Set(Object.keys(companyLatLng))
+            const platformLatLng = buildPlatformLatLng(countries)
+            const mapNames = new Set(Object.keys(platformLatLng))
             const validEdges = customerEdges.filter(e => mapNames.has(e.source) && customerCoords[e.target])
             const rendered = new Set()
             validEdges.forEach(edge => {
@@ -239,17 +239,17 @@ function MapView({
             marker.on('mouseover', () => {
                 const rel = relRef.current
                 if (!rel) return
-                const company = row.company
-                const connectedWhites = new Set(rel.custEdgesBySource[company] || [])
+                const platform = row.company
+                const connectedWhites = new Set(rel.custEdgesBySource[platform] || [])
 
                 redMarkersRef.current.forEach(({ marker: m, row: r }) =>
                     m.setStyle(r === row ? HIGHLIGHT.red : DIMMED.red))
-                orangeMarkersRef.current.forEach(({ marker: m, company: c }) =>
-                    m.setStyle(c === company ? HIGHLIGHT.orange : DIMMED.orange))
+                orangeMarkersRef.current.forEach(({ marker: m, platform: p }) =>
+                    m.setStyle(p === platform ? HIGHLIGHT.orange : DIMMED.orange))
                 whiteMarkersRef.current.forEach(({ marker: m, name }) =>
                     m.setStyle(connectedWhites.has(name) ? HIGHLIGHT.white : DIMMED.white))
 
-                const orangeCoords = rel.orangeByName[company]
+                const orangeCoords = rel.orangeByName[platform]
                 if (orangeCoords) {
                     addEdge([lat, lng], orangeCoords, '#c51818')
                     connectedWhites.forEach(name => {
@@ -268,10 +268,10 @@ function MapView({
         })
 
         // --- Orange platform nodes ---
-        const seenCompanies = new Set()
+        const seenPlatforms = new Set()
         workerRows.forEach(row => {
-            if (seenCompanies.has(row.company)) return
-            seenCompanies.add(row.company)
+            if (seenPlatforms.has(row.company)) return
+            seenPlatforms.add(row.company)
 
             const lat = parseFloat(row.company_lat)
             const lng = parseFloat(row.company_long)
@@ -283,18 +283,18 @@ function MapView({
             marker.on('mouseover', () => {
                 const rel = relRef.current
                 if (!rel) return
-                const company = row.company
-                const connectedWhites = new Set(rel.custEdgesBySource[company] || [])
+                const platform = row.company
+                const connectedWhites = new Set(rel.custEdgesBySource[platform] || [])
                 const orangeCoords = [lat, lng]
 
                 redMarkersRef.current.forEach(({ marker: m, row: r }) =>
-                    m.setStyle(r.company === company ? HIGHLIGHT.red : DIMMED.red))
-                orangeMarkersRef.current.forEach(({ marker: m, company: c }) =>
-                    m.setStyle(c === company ? HIGHLIGHT.orange : DIMMED.orange))
+                    m.setStyle(r.company === platform ? HIGHLIGHT.red : DIMMED.red))
+                orangeMarkersRef.current.forEach(({ marker: m, platform: p }) =>
+                    m.setStyle(p === platform ? HIGHLIGHT.orange : DIMMED.orange))
                 whiteMarkersRef.current.forEach(({ marker: m, name }) =>
                     m.setStyle(connectedWhites.has(name) ? HIGHLIGHT.white : DIMMED.white))
 
-                ;(rel.redByCompany[company] || []).forEach(r => {
+                ;(rel.redByPlatform[platform] || []).forEach(r => {
                     addEdge([parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords, '#c51818')
                 })
                 connectedWhites.forEach(name => {
@@ -305,14 +305,14 @@ function MapView({
 
             marker.on('mouseout', clearHover)
             marker.on('click', () => {
-                onSelectCompany(row.company)
+                onSelectPlatform(row.company)
             })
             marker.addTo(map)
-            orangeMarkersRef.current.push({ marker, company: row.company, lat, lng })
+            orangeMarkersRef.current.push({ marker, platform: row.company, lat, lng })
         })
 
         // --- White customer nodes ---
-        const companyLatLng = buildCompanyLatLng(countries)
+        const companyLatLng = buildPlatformLatLng(countries)
         const mapNames = new Set(Object.keys(companyLatLng))
         const validEdges = customerEdges.filter(e => mapNames.has(e.source) && customerCoords[e.target])
         const renderedCustomers = new Set()
@@ -334,22 +334,22 @@ function MapView({
                 const connectedOranges = new Set(rel.custEdgesByTarget[custName] || [])
 
                 const connectedRedRows = new Set()
-                connectedOranges.forEach(company => {
-                    ;(rel.redByCompany[company] || []).forEach(r => connectedRedRows.add(r))
+                connectedOranges.forEach(platform => {
+                    ;(rel.redByPlatform[platform] || []).forEach(r => connectedRedRows.add(r))
                 })
 
                 whiteMarkersRef.current.forEach(({ marker: m, name }) =>
                     m.setStyle(name === custName ? HIGHLIGHT.white : DIMMED.white))
-                orangeMarkersRef.current.forEach(({ marker: m, company }) =>
-                    m.setStyle(connectedOranges.has(company) ? HIGHLIGHT.orange : DIMMED.orange))
+                orangeMarkersRef.current.forEach(({ marker: m, platform }) =>
+                    m.setStyle(connectedOranges.has(platform) ? HIGHLIGHT.orange : DIMMED.orange))
                 redMarkersRef.current.forEach(({ marker: m, row: r }) =>
                     m.setStyle(connectedRedRows.has(r) ? HIGHLIGHT.red : DIMMED.red))
 
-                connectedOranges.forEach(company => {
-                    const orangeCoords = rel.orangeByName[company]
+                connectedOranges.forEach(platform => {
+                    const orangeCoords = rel.orangeByName[platform]
                     if (!orangeCoords) return
                     addEdge(orangeCoords, coords, '#ffffff')
-                    ;(rel.redByCompany[company] || []).forEach(r => {
+                    ;(rel.redByPlatform[platform] || []).forEach(r => {
                         addEdge([parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords, '#c51818')
                     })
                 })
@@ -381,8 +381,8 @@ function MapView({
         const showWhite = viewMode === 'customer-platform'        || viewMode === 'customer-platform-worker'
 
         if (showRed) {
-            Object.entries(rel.orangeByName).forEach(([company, orangeCoords]) => {
-                ;(rel.redByCompany[company] || []).forEach(r => {
+            Object.entries(rel.orangeByName).forEach(([platform, orangeCoords]) => {
+                ;(rel.redByPlatform[platform] || []).forEach(r => {
                     const line = L.polyline(
                         [[parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords],
                         { color: '#c51818', weight: 1, opacity: 0.4, smoothFactor: 1 }

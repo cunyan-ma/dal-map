@@ -1,6 +1,6 @@
 import './SearchBox.css'
 
-function SearchBox({ openFilter, onToggle, companyCount, countryCount, customerCount }) {
+function SearchBox({ openFilter, onToggle, platformCount, countryCount, customerCount }) {
     return (
         <div className="search-box">
             <div className="search-box-title">Search by:</div>
@@ -11,10 +11,10 @@ function SearchBox({ openFilter, onToggle, companyCount, countryCount, customerC
                 Worker Location ({countryCount})
             </button>
             <button
-                className={`search-box-item ${openFilter === 'company' ? 'active' : ''}`}
-                onClick={() => onToggle('company')}
+                className={`search-box-item ${openFilter === 'platform' ? 'active' : ''}`}
+                onClick={() => onToggle('platform')}
             >
-                Platforms ({companyCount})
+                Platforms ({platformCount})
             </button>
             <button
                 className={`search-box-item ${openFilter === 'customer' ? 'active' : ''}`}

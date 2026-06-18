@@ -3,7 +3,7 @@ import Papa from 'papaparse'
 import MapView from '../components/MapView'
 import BottomBar from '../components/BottomBar'
 import Legend from '../components/Legend'
-import CompanyInfo from '../components/CompanyInfo'
+import PlatformInfo from '../components/PlatformInfo'
 import CountryInfo from '../components/CountryInfo'
 import CustomerInfo from '../components/CustomerInfo'
 import StoryPanel from '../components/StoryPanel'
@@ -16,7 +16,7 @@ const RELATIONSHIPS_URL = '/dal-map/relationships.csv'
 function SupplyChain() {
     const [countries, setCountries] = useState([])
     const [customerEdges, setCustomerEdges] = useState([])
-    const [selectedCompany, setSelectedCompany] = useState(null)
+    const [selectedPlatform, setSelectedPlatform] = useState(null)
     const [selectedCountry, setSelectedCountry] = useState(null)
     const [selectedCustomer, setSelectedCustomer] = useState(null)
     const [viewMode, setViewMode] = useState(null)
@@ -44,7 +44,7 @@ function SupplyChain() {
     }, [])
 
     const handleEnterStory = () => {
-        setSelectedCompany(null)
+        setSelectedPlatform(null)
         setSelectedCountry(null)
         setSelectedCustomer(null)
         setStoryStep(0)
@@ -61,15 +61,15 @@ function SupplyChain() {
             <div style={{ flex: 1, paddingBottom: inStory ? 0 : 150, position: 'relative' }}>
                 <MapView
                     countries={countries}
-                    selectedCompany={selectedCompany}
+                    selectedPlatform={selectedPlatform}
                     selectedCountry={selectedCountry}
                     customerEdges={customerEdges}
                     customerCoords={customerCoords}
                     viewMode={viewMode}
                     storyStep={storyStep}
-                    onSelectCompany={(c) => { setSelectedCompany(c); setSelectedCountry(null); setSelectedCustomer(null) }}
-                    onSelectCountry={(c) => { setSelectedCountry(c); setSelectedCompany(null); setSelectedCustomer(null) }}
-                    onSelectCustomer={(c) => { setSelectedCustomer(c); setSelectedCompany(null); setSelectedCountry(null) }}
+                    onSelectPlatform={(c) => { setSelectedPlatform(c); setSelectedCountry(null); setSelectedCustomer(null) }}
+                    onSelectCountry={(c) => { setSelectedCountry(c); setSelectedPlatform(null); setSelectedCustomer(null) }}
+                    onSelectCustomer={(c) => { setSelectedCustomer(c); setSelectedPlatform(null); setSelectedCountry(null) }}
                 />
                 {!inStory && (
                     <ViewModePanel viewMode={viewMode} onSelect={setViewMode} />
@@ -78,11 +78,11 @@ function SupplyChain() {
 
             {!inStory && <Legend />}
 
-            {!inStory && selectedCompany && (
-                <CompanyInfo
-                    company={selectedCompany}
+            {!inStory && selectedPlatform && (
+                <PlatformInfo
+                    platform={selectedPlatform}
                     countries={countries}
-                    onClose={() => setSelectedCompany(null)}
+                    onClose={() => setSelectedPlatform(null)}
                 />
             )}
 
@@ -106,8 +106,8 @@ function SupplyChain() {
                 <BottomBar
                     countries={countries}
                     customerEdges={customerEdges}
-                    selectedCompany={selectedCompany}
-                    onSelectCompany={setSelectedCompany}
+                    selectedPlatform={selectedPlatform}
+                    onSelectPlatform={setSelectedPlatform}
                     selectedCountry={selectedCountry}
                     onSelectCountry={setSelectedCountry}
                     selectedCustomer={selectedCustomer}

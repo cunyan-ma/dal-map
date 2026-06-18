@@ -1,7 +1,7 @@
 import './FilterPanel.css'
 
 function FilterPanel({ mode, items, selectedItem, onSelect, onClose }) {
-    const title = mode === 'country' ? 'Countries' : mode === 'customer' ? 'Customers' : 'Companies'
+    const title = mode === 'country' ? 'Countries' : mode === 'customer' ? 'Customers' : 'Platforms'
 
     return (
         <div className="filter-panel">

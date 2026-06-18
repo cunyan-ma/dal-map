@@ -1,4 +1,4 @@
-.company-info {
+.platform-info {
     position: fixed;
     left: 16px;
     bottom: 269px;
@@ -16,7 +16,7 @@
     overflow-y: auto;
 }
 
-.company-info-description {
+.platform-info-description {
     display: flex;
     justify-content:space-between;
     align-items: left;
@@ -25,7 +25,7 @@
     font-size: 12px;
 }
 
-.company-info-header {
+.platform-info-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -34,7 +34,7 @@
     font-size: 14px;
 }
 
-.company-info-close {
+.platform-info-close {
     background: none;
     border: none;
     font-size: 18px;
@@ -43,26 +43,26 @@
     color: #cccccc;
 }
 
-.company-info-stat {
+.platform-info-stat {
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-radius: 5px;
 }
 
-.company-info-label {
+.platform-info-label {
     font-weight: 700;
     color: #cccccc;
     font-size: 13px;
 }
 
-.company-info-value {
+.platform-info-value {
     font-size: 13px;
     font-weight: 700;
     color: #e0432a;
 }
 
-.company-info-list {
+.platform-info-list {
     list-style-type: circle;
     margin: 0;
     padding: 0;
@@ -71,7 +71,7 @@
     gap: 6px;
 }
 
-.company-info-list li {
+.platform-info-list li {
     font-size: 11px;
     color: #cccccc;
 }
