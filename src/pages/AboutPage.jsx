@@ -11,27 +11,62 @@ function AboutPage() {
         <div className="about-container">
             <h1>About this project (very rough draft)</h1>
             <p>
-                This map tracks the geographic locations of data workers
-                who annotate data to render them legible to machine with little
-                pay or recognition. It provides the first systematic and
-                quantitative documentation of workers' geographic region,
-                visualized via an interactive global map that ties workers
-                around the globe with contracting platforms and custmers
-                concentrated in the Western world.
+                This map visualizes the geographic locations of data workers
+                behind AI. It provides the first systematic and
+                quantitative documentation of workers' distribution around the
+                world by tracking data labeling platforms' global worker
+                delivery centers. This interactive map positions data workers
+                as part of a supply chain in the global AI system, connecting
+                them with data labeling platforms and each platform's known
+                customers that contract for data labeling services.
             </p>
             <br></br>
             <p>
                 This map is part of the data journalism series: where is the
-                material supply chain behind AI? *insert hyperlink here after finished*
+                material supply chain behind AI? *insert hyperlink here after
+                finished* *this should also be the page where I explain what
+                this "power mapping" thing is*
+            </p>
+
+            <p>
+                All methodology, including any LLM use, is documented in the
+                Methodology page.
+            </p>
+
+            <h2>How to use this project</h2>
+            <p>
+                1. Download the database to access platform-specific locations
+                of data workers.
+                2. Browse around the map, explore the linkage between customers,
+                platforms, and workers. Through the visual distribution and the
+                worker country profiles, I want users to seriously ponder:
+                Where is power concentrated behind modern-day AI systems?
             </p>
 
             <h2>Background</h2>
+
+            <p>
+                *unfinished* In order for machines to understand a piece of
+                data, it has to be annotated. These are data workers, who makes
+                up the foundation of the AI industry but receive little pay or
+                recognition.
+            </p>
+            <p>
+                *ufinished* Data work = lot more nuanced industry in the age of
+                LLM. Scaling law = needs lots more data = data workers
+                in higher demand. The work grew more different. On one hand, a
+                demand for domain knowledge. Some data workers are well-educated,
+                Ph.D folks who train AI on thinking critically about science or
+                law. On the other hand, AI alignment like Reinforcement
+                Learning by Human Feedback expanded the type of AI output that
+                humans have to read.
+            </p>
             <p>
                 Thanks to some incredible journalists, the story of data workers
                 have surfaced to us more as AI became a larger part of our
                 lives. We know that some of them locate in Kenya, Venezuela,
                 and other countries with English literacy but poor economic
-                conditions which enable exploitation. We know that they are
+                conditions, enabling exploitation. We know that they are
                 subjected to gruesome work, often made to work with traumatizing
                 material with no redress from their supposed employees--the
                 "data labeling platforms" that pass down contracts from
@@ -67,19 +102,23 @@ function AboutPage() {
                 companies.
             </p>
 
-            <br></br>
-
-            <h2>Methodology</h2>
-
-            <p>
-
-            </p>
-
             <h2>Data source</h2>
             <p>
                 All entries are sourced from public filings, company websites,
                 and academic research. See the full methodology sheet for
                 confidence ratings and source URLs.
+            </p>
+
+            <h2>Cite this work</h2>
+            <p>
+                A CNTR project by Cunyan Ma.
+                (insert cite)
+            </p>
+
+            <h2>Bibliography</h2>
+            <p>
+                *This page should be folded up* *include everything that I
+                think is worth it*
             </p>
         </div>
     )
