@@ -1,7 +1,7 @@
 .about-container {
     box-sizing: border-box;
     /* match InfoBar width */
-    padding: 24px 32px;
+    padding: 150px 70px;
     max-width: 900px;
     color: #e0e0e0;
 }

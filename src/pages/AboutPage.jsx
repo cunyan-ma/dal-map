@@ -10,6 +10,7 @@ function AboutPage() {
     return (
         <div className="about-container">
             <h1>About this project (very rough draft)</h1>
+            <br></br>
             <p>
                 This map visualizes the geographic locations of data workers
                 behind AI. It provides the first systematic and
@@ -24,26 +25,35 @@ function AboutPage() {
             <p>
                 This map is part of the data journalism series: where is the
                 material supply chain behind AI? *insert hyperlink here after
-                finished* *this should also be the page where I explain what
-                this "power mapping" thing is*
+                finished* *I will also explain the "power mapping" framework
+                here*
             </p>
 
             <p>
                 All methodology, including any LLM use, is documented in the
                 Methodology page.
             </p>
+            <br></br>
 
             <h2>How to use this project</h2>
+            <br></br>
             <p>
                 1. Download the database to access platform-specific locations
                 of data workers.
-                2. Browse around the map, explore the linkage between customers,
+            </p>
+            <br></br>
+            <p>2. Browse around the map, explore the linkage between customers,
                 platforms, and workers. Through the visual distribution and the
-                worker country profiles, I want users to seriously ponder:
-                Where is power concentrated behind modern-day AI systems?
+                worker country profiles, I hope users to seriously ponder
+                where power is concentrated behind modern-day AI systems. What
+                does that implicate about this technology we build, and how
+                should we change that?
             </p>
 
+            <br></br>
+
             <h2>Background</h2>
+            <br></br>
 
             <p>
                 *unfinished* In order for machines to understand a piece of
@@ -102,12 +112,7 @@ function AboutPage() {
                 companies.
             </p>
 
-            <h2>Data source</h2>
-            <p>
-                All entries are sourced from public filings, company websites,
-                and academic research. See the full methodology sheet for
-                confidence ratings and source URLs.
-            </p>
+
 
             <h2>Cite this work</h2>
             <p>
@@ -117,8 +122,7 @@ function AboutPage() {
 
             <h2>Bibliography</h2>
             <p>
-                *This page should be folded up* *include everything that I
-                think is worth it*
+                *This page should be folded up* *would be a long long list*
             </p>
         </div>
     )
