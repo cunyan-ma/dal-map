@@ -10,7 +10,7 @@ const SECTIONS = {
     { label: 'Bibliography', id: 'bibliography' },
   ],
   '/methodology': [
-    { label: 'IDAL BPO platforms', id: 'identify-platforms' },
+    { label: 'DAL BPO platforms', id: 'identify-platforms' },
     { label: 'Worker delivery centers', id: 'delivery-centers' },
     { label: 'Customers', id: 'customers' },
     { label: 'Geocoding', id: 'geocoding' },
