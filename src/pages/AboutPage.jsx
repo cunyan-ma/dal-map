@@ -52,28 +52,25 @@ function AboutPage() {
 
             <br></br>
 
-            <h2 id="background">Background (unfinished)</h2>
+            <h2 id="background">Background</h2>
             <br></br>
 
             <p>
-                *unfinished* In order for machines to understand a piece of
-                data, it has to be annotated. These are data workers, who makes
-                up the foundation of the AI industry.
+                In order for machines to understand a piece of data, it has to be annotated. This act of annotation is performed by data workers in the data annotation and labeling (DAL) industry, who make up the foundation of the AI industry.
+
             </p>
+             <br></br>
             <p>
-                *ufinished* Data work is lot more nuanced industry in the age of
-                LLM. 
+                Data work has become a far more nuanced industry in the age of LLMs.
+
                 <ul>
-                    <li>Scaling law = needs lots more generic data = data workers
-                in higher demand. this will grow as AI advances into different fields.
-                recent reporting on Indian workers wearing headset to train AI 
-                on doing housework</li>
-                    <li>Reinforcement Learning through Human Feedback = read 
-                        AIGC. include traumatizing material on sexual abuse, violence, etc
+                    <li>Scaling law: Building LLMs requires a vast amount of generic data, thereby expanding the DAL industry into new magnitudes. As AI advances into new fields, demand for data workers grows with it. Recent reporting out of Tamil Nadu, India shows workers strapping head-mounted cameras to themselves to film everyday chores so that humanoid robots can eventually learn to do the same.
+</li>
+                    <li>Reinforcement Learning through Human Feedback (RLHF): Training AIGC requires human raters to review and label that content, including material depicting sexual abuse, violence, and other traumatizing content.
+
                     </li>
-                    <li>Domain knowledge. shifts the class character of the job. 
-                        folks who are replaced out of job due to AI are now training AI 
-                        to better replace jobs.
+                    <li>Domain knowledge: Workers with specialized expertise are recruited to label data in their own field. The same people being automated out of their professions are, in some cases, the ones training the AI that replaces them.
+
                     </li>
                 </ul>
                 
@@ -84,7 +81,7 @@ function AboutPage() {
                 lives. We know that some of them locate in Kenya, Venezuela,
                 and other countries with English literacy but poor economic
                 conditions, enabling exploitation. We know that they are
-                subjected to gruesome work, often made to work with traumatizing
+                sometimes made to work with traumatizing
                 material with no redress from their supposed employees--the
                 "data labeling platforms" that pass down contracts from
                 mysterious customers.
