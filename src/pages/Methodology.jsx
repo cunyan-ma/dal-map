@@ -12,11 +12,10 @@ function Methodology() {
                 platforms (see About - Background), their worker delivery
                 centers, and their customers into the following supply chain:
             </p>
-            <br></br>
-            <p>
-                customer (white) - platform (orange) - worker (red)
-            </p>
-            <br></br>
+            <blockquote>
+                <strong style={{color:'#ffffff'}}>Customer</strong> - <strong style={{color:'#f2572d'}}>Platform</strong> - <strong style={{color:'#c51818'}}>Worker</strong>
+            </blockquote>
+           
             <p>
                 To construct the full supply chain, we:
                 <ul>
@@ -54,14 +53,14 @@ function Methodology() {
 
             </p>
 
-            <h2>Identify BPO data labeling platforms</h2>
+            <h2 id="identify-platforms">Identify BPO DAL platforms</h2>
             <br>
             </br>
             <p>
                 To identify data labeling platforms, we referenced
-                many existing resources, including TechEquity's
+                many existing resources, including TechEquity's  
                 <a href="https://dataworklandscape.org/database">
-                    Data Work Landscape database</a>, which includes
+                     Data Work Landscape database</a>, which includes
                 a list of data labeling platforms compiled thorugh
                 systematic Google search; and various industry reports, which lists
                 top performing data labeling platforms. These resources are
@@ -89,8 +88,8 @@ function Methodology() {
                 on each company to determine whether it operates as BPO.
                 TechEquity's database already includes some of those information.
                 Only BPO platforms are selected for the scope of this project.
-                This doesn't include companies who use a mix of BPO & marketplace
-                model. The resulting list is bpo-platforms.csv *insert download link*.
+                Companies that use a mix of BPO & marketplace models are also 
+                included. The resulting list is bpo-platforms.csv *insert download link*.
             </p>
 
             <br>
@@ -102,7 +101,7 @@ function Methodology() {
                 next section.
             </p>
 
-            <h2>Identifying platforms' worker delivery centers</h2>
+            <h2 id="delivery-centers">Identifying worker delivery centers</h2>
             <br>
             </br>
             <p>
@@ -164,7 +163,7 @@ function Methodology() {
                 "database."
             </p>
 
-            <h2>Locating platforms' customers</h2>
+            <h2 id="customers">Identifying customers</h2>
             <p>
                 At the early stage of mapping, customer data is sourced
                 primarily from TechEquity's existing research on publicly
@@ -174,19 +173,19 @@ function Methodology() {
                 documented floor, not a complete picture.
             </p>
 
-            <h2>Geocoding</h2>
+            <h2 id="geocoding">Geocoding</h2>
             <p>
                 Platform, delivery center, and customer information are compiled
                 into a SQL database. City-level specificity of these entities'
                 locations is manually guaranteed. A geocoding API converts these
                 to latitude/longitude coordinates, rendered as nodes on the
-                Leaflet map. White marks customers contracting data labeling
-                services, orange marks the DAL platforms providing those
-                services, and red marks worker delivery center locations.
+                Leaflet map. <strong style={{color:'#ffffff'}}>White</strong> marks customers contracting data labeling
+                services, <strong style={{color:'#f2572d'}}>orange</strong> marks the DAL platforms providing those
+                services, and <strong style={{color:'#c51818'}}>red</strong> marks worker delivery center locations.
 
             </p>
 
-            <h2>Contextualizing worker countries</h2>
+            <h2 id="worker-countries">Contextualizing worker countries</h2>
             <p>
                 *unfinished* all manually compiled, by doing deep research into
                 each company's history in DAL industry, their English literacy

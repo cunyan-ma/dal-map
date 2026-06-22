@@ -16,10 +16,10 @@
 .about-container h2 {
     margin-top: 20px;
     margin-bottom: 8px;
-        text-align: left;
-
+    text-align: left;
     font-size: 18px;
     color: #ffffff;
+    scroll-margin-top: 80px;
 }
 
 .about-container p,
@@ -32,6 +32,15 @@
 
 .about-container ul {
     padding-left: 20px;
+}
+
+.about-container a {
+    color: #f2572d;
+    text-decoration: underline;
+}
+
+.about-container a:hover {
+    color: #ff7a55;
 }
 
 /* Responsive: on small screens remove left margin so content fills viewport */

@@ -35,7 +35,7 @@ function AboutPage() {
             </p>
             <br></br>
 
-            <h2>How to use this project</h2>
+            <h2 id="how-to-use">How to use this project</h2>
             <br></br>
             <p>
                 1. Download the original database to access platform-specific locations
@@ -44,7 +44,7 @@ function AboutPage() {
             <br></br>
             <p>2. Browse around the map, explore the linkage between customers,
                 platforms, and workers. Through the visual distribution and the
-                worker country profiles, I hope users to seriously ponder
+                worker country profiles, we hope that users can seriously ponder
                 where power is concentrated behind modern-day AI systems. What
                 does that implicate about this technology we build, and how
                 should we change that?
@@ -52,24 +52,31 @@ function AboutPage() {
 
             <br></br>
 
-            <h2>Background (unfinished)</h2>
+            <h2 id="background">Background (unfinished)</h2>
             <br></br>
 
             <p>
                 *unfinished* In order for machines to understand a piece of
                 data, it has to be annotated. These are data workers, who makes
-                up the foundation of the AI industry but receive little pay or
-                recognition.
+                up the foundation of the AI industry.
             </p>
             <p>
-                *ufinished* Data work = lot more nuanced industry in the age of
-                LLM. Scaling law = needs lots more data = data workers
-                in higher demand. The work grew more different. On one hand, a
-                demand for domain knowledge. Some data workers are well-educated,
-                Ph.D folks who train AI on thinking critically about science or
-                law. On the other hand, AI alignment like Reinforcement
-                Learning by Human Feedback expanded the type of AI output that
-                humans have to read.
+                *ufinished* Data work is lot more nuanced industry in the age of
+                LLM. 
+                <ul>
+                    <li>Scaling law = needs lots more generic data = data workers
+                in higher demand. this will grow as AI advances into different fields.
+                recent reporting on Indian workers wearing headset to train AI 
+                on doing housework</li>
+                    <li>Reinforcement Learning through Human Feedback = read 
+                        AIGC. include traumatizing material on sexual abuse, violence, etc
+                    </li>
+                    <li>Domain knowledge. shifts the class character of the job. 
+                        folks who are replaced out of job due to AI are now training AI 
+                        to better replace jobs.
+                    </li>
+                </ul>
+                
             </p>
             <p>
                 Thanks to some incredible journalists, the story of data workers
@@ -114,13 +121,13 @@ function AboutPage() {
 
 
 
-            <h2>Cite this work</h2>
+            <h2 id="cite">Cite this work</h2>
             <p>
                 A CNTR project by Cunyan Ma.
                 (insert cite)
             </p>
 
-            <h2>Bibliography</h2>
+            <h2 id="bibliography">Bibliography</h2>
             <p>
                 *This page should be folded up* *would be a long long list*
             </p>
