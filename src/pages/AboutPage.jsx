@@ -9,13 +9,13 @@ function AboutPage() {
 
     return (
         <div className="about-container">
-            <h1>About this project (very rough draft)</h1>
+            <h1>About this project</h1>
             <br></br>
             <p>
                 This map visualizes the geographic locations of data workers
                 behind AI. It provides the first systematic and
                 quantitative documentation of workers' distribution around the
-                world by tracking data labeling platforms' global worker
+                world by tracking data labeling platforms' worker
                 delivery centers. This interactive map positions data workers
                 as part of a supply chain in the global AI system, connecting
                 them with data labeling platforms and each platform's known
@@ -38,7 +38,7 @@ function AboutPage() {
             <h2>How to use this project</h2>
             <br></br>
             <p>
-                1. Download the database to access platform-specific locations
+                1. Download the original database to access platform-specific locations
                 of data workers.
             </p>
             <br></br>
@@ -52,7 +52,7 @@ function AboutPage() {
 
             <br></br>
 
-            <h2>Background</h2>
+            <h2>Background (unfinished)</h2>
             <br></br>
 
             <p>

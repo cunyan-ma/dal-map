@@ -6,111 +6,184 @@ function Methodology() {
         <div className="method-container">
             <h1>Methodology</h1>
             <p>
-                The data behind the map is collected via the following steps:
-                locate data labeling platforms, locate their worker delivery
-                centers, locate their custoemrs, then visualizing them via a
-                React app on leaflet library.
+                This map documents the labor geography of the AI data labeling
+                and annotation (DAL) industry. Specifically, it visualizes
+                prominent business-process-outsourcing (BPO) data labeling
+                platforms (see About - Background), their worker delivery
+                centers, and their customers into the following supply chain:
+            </p>
+            <br></br>
+            <p>
+                customer (white) - platform (orange) - worker (red)
+            </p>
+            <br></br>
+            <p>
+                To construct the full supply chain, we:
+                <ul>
+                    <li>Identified data labeling platforms with a BPO
+                    business model</li>
+                    <li>Identify platforms' worker delivery centers</li>
+                    <li>Identify platforms' customers</li>
+                    <li>Geocode these locations into map coordinates for
+                        visualization.</li>
+                </ul>
             </p>
 
             <br></br>
 
             <p>
                 It's important to highlight that this map is not a comprehensive
-                database of ALL BPO data labeling companies and ALL of their
-                delivery centers. The magnitude of search is incredible,
-                therefore this is a live project that will need continual
-                updating. The author is less concerned with capturing the
-                entirety of the data labeling companies, but more to display a
-                consistent pattern across the industry--where are the workers
-                located across the world, and what type of customers do they
-                serve?
+                database of all BPO data labeling companies and all of their
+                delivery centers. The goal is not to build an exhaustive
+                inventory, but rather to display a consistent pattern across
+                the industry: What is the structural relationship between AI
+                company customers, the data labeling platforms that intermediate
+                labor, and the workers who receive little recognition or pay?
+
+            </p>
+            <p>
+                <br></br>
+
+                Despite narrowing scope to BPO platforms only, the industry
+                remains deliberately opaque. Due to the lack of publicly
+                available information, almost all search is done manually,
+                building on top of resources created by previous researchers.
+                The project is updated on an ongoing basis as new sources are
+                identified, and a company's absence from the map should be read
+                as "not yet verifiable," not "does not exist."
+
             </p>
 
-            <h2>Locating data labeling platforms</h2>
+            <h2>Identify BPO data labeling platforms</h2>
+            <br>
+            </br>
             <p>
-                Lots of existing research done on this. TechEquity's Data Work
-                Landscape is a good starting point. Lots of industry reports.
-                All of these resources are combined together to get the most
-                comprehensive list of data labeling companies that exist in the
-                English media world. These resources are searched manually. 
-                LLM is used to assist with cross-referncing between existing 
-                resources.
+                To identify data labeling platforms, we referenced
+                many existing resources, including TechEquity's
+                <a href="https://dataworklandscape.org/database">
+                    Data Work Landscape database</a>, which includes
+                a list of data labeling platforms compiled thorugh
+                systematic Google search; and various industry reports, which lists
+                top performing data labeling platforms. These resources are
+                searched manually.
+
             </p>
 
             <br>
             </br>
 
             <p>
-                After a list of companies is collected, we do desk research on
-                each company to determine their business model. TechEquity's
-                database already includes some of those information. The BPO
-                ones are preserved for the scope of this project. Their HQ info
-                is pulled from web as publicly avaialble info.
+                All data labeling companies mentioned in these resources are
+                compiled into all-platforms.csv *need to insert download link*
+                for a comprehensive list of data labeling companies that exist in the
+                English media world. *explain why scope is English world*
+                LLM is used to assist with cross-referencing between
+                existing resources to avoid duplicates between lists.
             </p>
 
             <br>
             </br>
 
             <p>
-                Not all BPO companies are immediately included on the map. Its
+                Using all-platforms.csv as reference, we then do desk search
+                on each company to determine whether it operates as BPO.
+                TechEquity's database already includes some of those information.
+                Only BPO platforms are selected for the scope of this project.
+                This doesn't include companies who use a mix of BPO & marketplace
+                model. The resulting list is bpo-platforms.csv *insert download link*.
+            </p>
+
+            <br>
+            </br>
+
+            <p>
+                Not all BPO companies are included on the map. Its
                 delivery centers have to be discoverable. More on that in the
                 next section.
             </p>
 
-            <h2>Locating platforms' worker delivery centers</h2>
+            <h2>Identifying platforms' worker delivery centers</h2>
+            <br>
+            </br>
             <p>
-                In most cases, a platform's delivery center = their regional
-                offices.
-
+                For most BPO platforms, worker delivery centers refer to the
+                assemblage of annotation teams across its regonal offices.
+                Therefore, we used "regional office" as the first anchor to identify delivery
+                center. Some companies disclose the specific functions of
+                its regional offices. In these cases, we manually judge if
+                the regional office can be listed as a delivery center or not.
             </p>
 
             <br>
             </br>
 
             <p>
-                For publicly traded companies--which makes up an incredibly
+                For publicly traded companies--an incredibly
                 small fraction of the ecosystem--this information is available
-                via their SEC 10-K Exhibit 21, subsidiary information. For
-                private companies, this can be searched either from their
-                LinkedIn or website. Not all private companies release this
-                information. Specificity of address is not guaranteed,
-                entirely based on how much info the company can provide.
+                via their SEC 10-K Exhibit 21 subsidiary list. For
+                private companies, it is searched from their
+                LinkedIn or website. Not all private companies disclose this information,
+                and disclosure varies in specificity: most release a city-level address
+                for their regional offices, some only a country, and others none at all. All of these search is done manually.
             </p>
 
             <br>
             </br>
 
             <p>
-                For this step, the author used LLM to filter out companies with
-                little disclosed information by asking it to try locate their
-                regional offices. The author will not yet spend time to look
-                into companies that even LLM cannot find information for. For
-                any company that LLM tags with available informatino, the author
-                will conduct desk search until locating an exact source.
-                Otherwise the company is not included in the map.
-                All comapny + deliver center + source can be found via "database".
+                LLMs are used as an information-landscape filter to prioritize search
+                order across the ~100 data labeling platforms in scope. Some platforms
+                have substantially more public information available than others.
+                Because an LLM draws on a broad cross-section of the web rather than the
+                SEO- and ad-influenced results a typical Google search surfaces, it
+                offers a faster first pass at gauging which companies have discoverable
+                information before committing to manual research.
+            </p>
+
+            <p>
+                For each company, the LLM is given the following prompt:
+            </p>
+
+            <blockquote>
+                "Find the in-house annotation team delivery center for these data
+                labeling companies. Cite any sources used. Clearly state 'nothing
+                found' if no information can be located. Rank certainty as
+                high, middle, or low."
+            </blockquote>
+
+
+            <p>
+                Companies the LLM identifies with high certainty are searched manually
+                first, followed by those with uncertain (middle or low) results. As of
+                this writing, manual search has not yet extended to companies for which
+                the LLM found no information at all.
+            </p>
+
+            <p>
+                The resulting worker delivery center list can be accessed via the
+                "database."
             </p>
 
             <h2>Locating platforms' customers</h2>
             <p>
-                At the early stage of mapping, the author uses the
-                database from TechEquity, which contains some publicly available
-                information regarding data labeling platforms and AI companies
-                who seek such services. We recognize that this database is not
-                complete, and as TechEquity themselves poignantly pointed out,
-                many data labeling platforms deliberately keep their customer
-                information discrete.
+                At the early stage of mapping, customer data is sourced
+                primarily from TechEquity's existing research on publicly
+                disclosed client relationships. This dataset is incomplete, as
+                platforms frequently withhold client information,
+                sometimes at the client's request. Customer data here is a 
+                documented floor, not a complete picture.
             </p>
 
             <h2>Geocoding</h2>
             <p>
-                Information regarding platforms, their delivery centers, and
-                their respective customers are munually compiled into a SQL
-                database. During the manual process, the author guarantees
-                city-level specificity of these entities' locations. Then, an
-                API query to a lat/lng coordinate company is called upon each
-                location. These lat/lng are read into the leaflet map and
-                eventually visualized as white/orange/red nodes on the map.
+                Platform, delivery center, and customer information are compiled
+                into a SQL database. City-level specificity of these entities'
+                locations is manually guaranteed. A geocoding API converts these
+                to latitude/longitude coordinates, rendered as nodes on the
+                Leaflet map. White marks customers contracting data labeling
+                services, orange marks the DAL platforms providing those
+                services, and red marks worker delivery center locations.
+
             </p>
 
             <h2>Contextualizing worker countries</h2>
