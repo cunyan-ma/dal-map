@@ -33,12 +33,12 @@ function buildPlatformLatLng(countries) {
 // Default opacities for each node type
 const DEFAULTS = {
     red:    { fillOpacity: 0.5,  opacity: 0.7 },
-    orange: { fillOpacity: 0.15, opacity: 1   },
-    white:  { fillOpacity: 0.3,  opacity: 0.5 },
+    orange: { fillOpacity: 0.5, opacity: 1   },
+    white:  { fillOpacity: 0.5,  opacity: 0.5 },
 }
 const HIGHLIGHT = {
     red:    { fillOpacity: 0.95, opacity: 1   },
-    orange: { fillOpacity: 0.85, opacity: 1   },
+    orange: { fillOpacity: 0.95, opacity: 1   },
     white:  { fillOpacity: 0.9,  opacity: 1   },
 }
 const DIMMED = {
@@ -268,7 +268,7 @@ function MapView({
                 seen.add(row.company)
                 const marker = L.circleMarker(
                     [parseFloat(row.company_lat), parseFloat(row.company_long)],
-                    { radius: 10, fillColor: '#f2572d', color: '#f2572d', weight: 1,
+                    { radius: 10, fillColor: '#FF9500', color: '#FF9500', weight: 1,
                       fillOpacity: 0.2, opacity: 1 }
                 ).addTo(map)
                 storyLayersRef.current.push(marker)
@@ -284,7 +284,7 @@ function MapView({
                 if (rendered.has(edge.target)) return
                 rendered.add(edge.target)
                 const marker = L.circleMarker(customerCoords[edge.target], {
-                    radius: 8, fillColor: '#ffffff', color: '#ffffff', weight: 1,
+                    radius: 10, fillColor: '#ffffff', color: '#ffffff', weight: 1,
                     fillOpacity: 0.35, opacity: 0.6
                 }).addTo(map)
                 storyLayersRef.current.push(marker)
@@ -407,7 +407,7 @@ function MapView({
             const lat = parseFloat(row.company_lat)
             const lng = parseFloat(row.company_long)
             const marker = L.circleMarker([lat, lng], {
-                radius: 10, fillColor: '#f2572d', color: '#f2572d', weight: 1,
+                radius: 10, fillColor: '#FF9500', color: '#FF9500', weight: 1,
                 ...DEFAULTS.orange
             })
 
@@ -455,7 +455,7 @@ function MapView({
             const coords = customerCoords[edge.target]
             const custName = edge.target
             const marker = L.circleMarker(coords, {
-                radius: 8, fillColor: '#ffffff', color: '#ffffff', weight: 1,
+                radius: 10, fillColor: '#ffffff', color: '#ffffff', weight: 1,
                 ...DEFAULTS.white
             })
 

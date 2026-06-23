@@ -36,17 +36,30 @@ function AboutPage() {
             <br></br>
 
             <h2 id="how-to-use">How to use this project</h2>
-            <br></br>
+            <ul>
+                <li>
+                    Download the original database to access platform-specific locations
+                    of data workers.
+                </li>
+                <li>
+                    Click "Explore the data worker story" to learn about data workers
+                    throughout the world with the interactive map.
+                </li>
+                <li>
+                    Learn about each platform, customer, and worker location, 
+                    as well as the relationships among them. One can do so by
+                    clicking into each node for entity information; hover on 
+                    a node to explore its linkage with other entities; 
+                    use the search box for any specific entity; or use "show 
+                    relationships" to map out the edges between entities.
+                </li>
+            </ul>
             <p>
-                1. Download the original database to access platform-specific locations
-                of data workers.
-            </p>
-            <br></br>
-            <p>2. Browse around the map, explore the linkage between customers,
-                platforms, and workers. Through the visual distribution and the
+                Through the visual distribution and the
                 worker country profiles, we hope that users can seriously ponder
                 where power is concentrated behind modern-day AI systems. What
-                does that implicate about this technology we build, and how
+                does that implicate about this technology we build, what systems 
+                of power is it inheriting and perpetrating, and how
                 should we change that?
             </p>
 
@@ -56,24 +69,41 @@ function AboutPage() {
             <br></br>
 
             <p>
-                In order for machines to understand a piece of data, it has to be annotated. This act of annotation is performed by data workers in the data annotation and labeling (DAL) industry, who make up the foundation of the AI industry.
+                In order for machines to understand a piece of data, it has to 
+                be annotated. This act of annotation is performed by data 
+                workers in the data annotation and labeling (DAL) industry, 
+                who make up the foundation of the AI industry.
 
             </p>
-             <br></br>
+            <br></br>
             <p>
                 Data work has become a far more nuanced industry in the age of LLMs.
 
                 <ul>
-                    <li>Scaling law: Building LLMs requires a vast amount of generic data, thereby expanding the DAL industry into new magnitudes. As AI advances into new fields, demand for data workers grows with it. Recent reporting out of Tamil Nadu, India shows workers strapping head-mounted cameras to themselves to film everyday chores so that humanoid robots can eventually learn to do the same.
-</li>
-                    <li>Reinforcement Learning through Human Feedback (RLHF): Training AIGC requires human raters to review and label that content, including material depicting sexual abuse, violence, and other traumatizing content.
+                    <li>Scaling law: Building LLMs requires a vast amount of 
+                        generic data, thereby expanding the DAL industry into 
+                        new magnitudes. As AI advances into new fields, demand 
+                        for data workers grows with it. Recent reporting out of 
+                        Tamil Nadu, India shows workers strapping head-mounted 
+                        cameras to themselves to film everyday chores so that 
+                        humanoid robots can eventually learn to do the same.
+                    </li>
+                    <li>Reinforcement Learning through Human Feedback (RLHF): 
+                        Training AI generated content requires human raters 
+                        to review and label 
+                        that content, including material depicting sexual 
+                        abuse, violence, and other traumatizing content.
 
                     </li>
-                    <li>Domain knowledge: Workers with specialized expertise are recruited to label data in their own field. The same people being automated out of their professions are, in some cases, the ones training the AI that replaces them.
+                    <li>Domain knowledge: Workers with specialized expertise 
+                        are recruited to label data in their own field. The 
+                        same people being automated out of their professions 
+                        are, in some cases, the ones training the AI that 
+                        replaces them.
 
                     </li>
                 </ul>
-                
+
             </p>
             <p>
                 Thanks to some incredible journalists, the story of data workers
@@ -89,11 +119,10 @@ function AboutPage() {
             </p>
             <br></br>
             <p>
-                More than anything, we know that the Data Annotation and
-                Labeling (DAL) industry is an incredibly opaque industry by
+                More than anything, we know that the DAL industry is an incredibly opaque industry by
                 design. Half of the industry operates as gig platforms, which
                 treats workers as "contractors" rather than "workers", obscuring
-                away any detail on worker number, location, wage, etc to the
+                away any detail on worker number, location, wage, and more, to the
                 public.
             </p>
 

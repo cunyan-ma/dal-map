@@ -73,13 +73,23 @@ function BottomBar({
 
                 <div className="bottombar-description-box">
                     <div className="bottombar-description">
-                        <p>Behind AI is an enormous web of human labor across the globe.
-                        These data workers are paid under $2/hr to annotate
-                        data and render them legible to machines. Data annotation companies 
-                        deliberately seek out these workers in countries with
-                         worse pay.</p> Mapped here the are the delivery centers of these data annotation companies, representing
-                        the demography that these companies systematically exploit. Navigate the map to
-                        find out more.
+                        <p>
+                            Behind AI is an enormous, deliberately hidden web 
+                            of human labor. Data workers are paid as little as 
+                            $2 an hour to render data legible to machines--recruited, 
+                            often, from places where the poor economic 
+                            conditions made such wage appealing.
+
+                        </p>
+                        <p>
+                           
+                            Mapped here are the delivery centers where this 
+                            labor happens, the platforms that employ it, and 
+                            the customers it serves. Trace the lines between 
+                            them to explore the concentration of power behind 
+                            AI. Navigate the map for more.
+                        </p>
+                        
                     </div>
                 </div>
 
