@@ -8,14 +8,10 @@ import CountryInfo from '../components/CountryInfo'
 import CustomerInfo from '../components/CustomerInfo'
 import StoryPanel from '../components/StoryPanel'
 import ViewModePanel from '../components/ViewModePanel'
-import customerCoords from '../data/customerCoords.json'
 
-// Two normalized source sheets (served from public/, also offered as downloads
-// on the Methodology page). Swap these for two published Google Sheet CSV URLs
-// if you want the map's red/orange data to live-update without a redeploy.
-const PLATFORMS_URL = '/dal-map/dal-platforms.csv'   // orange nodes: platform HQs
-const WORKERS_URL = '/dal-map/worker-location.csv'   // red nodes: worker delivery centers
-const RELATIONSHIPS_URL = '/dal-map/relationships.csv'
+const PLATFORMS_URL = '/dal-map/dal-platforms.csv'         // orange nodes: platform HQs
+const WORKERS_URL = '/dal-map/worker-location.csv'         // red nodes: worker delivery centers
+const PLATFORM_CUSTOMER_URL = '/dal-map/platform-customer.csv' // white nodes + white edges
 
 // Promise wrapper around Papa.parse so the two source sheets can be joined once both load.
 function parseCsv(url) {
@@ -58,6 +54,7 @@ function SupplyChain() {
     const [countries, setCountries] = useState([])
     const [platforms, setPlatforms] = useState([])
     const [customerEdges, setCustomerEdges] = useState([])
+    const [customerCoords, setCustomerCoords] = useState({})
     const [selectedPlatform, setSelectedPlatform] = useState(null)
     const [selectedCountry, setSelectedCountry] = useState(null)
     const [selectedCustomer, setSelectedCustomer] = useState(null)
@@ -75,15 +72,22 @@ function SupplyChain() {
     }, [])
 
     useEffect(() => {
-        Papa.parse(RELATIONSHIPS_URL, {
-            download: true,
-            header: true,
-            complete: (results) => {
-                const edges = results.data
-                    .filter(row => row.relationship_type === 'Customer' && row.source && row.target)
-                    .map(row => ({ source: row.source.trim(), target: row.target.trim() }))
-                setCustomerEdges(edges)
-            }
+        parseCsv(PLATFORM_CUSTOMER_URL).then(rows => {
+            const edges = rows
+                .filter(r => r.platform?.trim() && r.customer?.trim())
+                .map(r => ({ source: r.platform.trim(), target: r.customer.trim() }))
+            setCustomerEdges(edges)
+
+            const coords = {}
+            rows.forEach(r => {
+                const name = r.customer?.trim()
+                const lat = parseFloat(r.lat)
+                const lng = parseFloat(r.lng)
+                if (name && !coords[name] && Number.isFinite(lat) && Number.isFinite(lng)) {
+                    coords[name] = [lat, lng]
+                }
+            })
+            setCustomerCoords(coords)
         })
     }, [])
 

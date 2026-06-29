@@ -103,14 +103,30 @@ const BASE = import.meta.env.BASE_URL
 function Database() {
   const workerLocation = useCSV(`${BASE}worker-location.csv`)
   const dalPlatforms = useCSV(`${BASE}dal-platforms.csv`)
+  const platCustomer = useCSV(`${BASE}platform-customer.csv`)
 
   return (
     <div className="database-page">
       <div className="database-header">
         <h1>Database</h1>
         <p className="database-subtitle">
-          this map is supported by three database: worker-location.csv,
-          dal-platforms.csv, and platform-customers.csv.
+          This map is supported by three database:
+          <ul>
+            <li>
+              worker-location.csv: an original database constructed by the 
+              project. It tracks worker location by country, city, and the 
+              platform that employes them.
+            </li>
+            <li>
+              dal-platforms.csv: Lists the DAL BPO platforms that are included 
+              in this map due to their public available information on delivery 
+              centers
+            </li>
+            <li>
+              platform-customer.csv: sourced from TechEquity, cleaned to match
+               the data structure required by this map
+            </li>
+            </ul> 
         </p>
       </div>
 
@@ -118,20 +134,20 @@ function Database() {
         <DatabaseColumn
           title="worker-location.csv"
           href={`${BASE}worker-location.csv`}
-          description="The original database behind the map. Tabs worker location by country and the platform they serve"
+          //description="The original database behind the map. Tabs worker location by country and the platform they serve"
           data={workerLocation}
         />
         <DatabaseColumn
           title="dal-platform.csv"
           href={`${BASE}dal-platforms.csv`}
-          description="Filtered list of DAL platforms that operate as BPO with traceable worker location"
+          //description="Filtered list of DAL platforms that operate as BPO with traceable worker location"
           data={dalPlatforms}
         />
         <DatabaseColumn
-          title="platform-customers.csv"
-          href="#"
-          description="Sourced from TechEquity, cleaned to match the data structure required by this map."
-          placeholder
+          title="platform-customer.csv"
+          href={`${BASE}platform-customer.csv`}
+          //description="Sourced from TechEquity, cleaned to match the data structure required by this map."
+          data={platCustomer}
         />
       </div>
     </div>
