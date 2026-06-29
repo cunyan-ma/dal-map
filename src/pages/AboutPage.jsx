@@ -14,12 +14,14 @@ function AboutPage() {
             <p>
                 This map visualizes the geographic locations of data workers
                 behind AI. It provides the first systematic and
-                quantitative documentation of workers' distribution around the
-                world by tracking data labeling platforms' worker
+                quantitative documentation of data workers' distribution around the
+                world by tracking data annotation and labeling (DAL) platforms' worker
                 delivery centers. This interactive map positions data workers
-                as part of a supply chain in the global AI system, connecting
-                them with data labeling platforms and each platform's known
-                customers that contract for data labeling services.
+                as part of a supply chain in the global AI DALindustry. 
+                It display a consistent pattern across
+                the industry: What is the structural relationship between AI
+                company customers, the data labeling platforms that intermediate
+                labor, and the workers who receive little recognition or pay?
             </p>
             <br></br>
             <p>
@@ -30,7 +32,7 @@ function AboutPage() {
             </p>
 
             <p>
-                All methodology, including any LLM use, is documented in the
+                All methodology and limitations, including any LLM use, is documented in the
                 Methodology page.
             </p>
             <br></br>
@@ -47,7 +49,7 @@ function AboutPage() {
                 </li>
                 <li>
                     Learn about each platform, customer, and worker location, 
-                    as well as the relationships among them. One can do so by
+                    as well as the relationships among them. Do so by
                     clicking into each node for entity information; hover on 
                     a node to explore its linkage with other entities; 
                     use the search box for any specific entity; or use "show 
@@ -56,8 +58,8 @@ function AboutPage() {
             </ul>
             <p>
                 Through the visual distribution and the
-                worker country profiles, we hope that users can seriously ponder
-                where power is concentrated behind modern-day AI systems. What
+                worker country profiles, we hope that users can interrogate 
+                the concentration of power behind modern-day AI systems. What
                 does that implicate about this technology we build, what systems 
                 of power is it inheriting and perpetrating, and how
                 should we change that?
@@ -82,16 +84,11 @@ function AboutPage() {
                 <ul>
                     <li>Scaling law: Building LLMs requires a vast amount of 
                         generic data, thereby expanding the DAL industry into 
-                        new magnitudes. As AI advances into new fields, demand 
-                        for data workers grows with it. Recent reporting out of 
-                        Tamil Nadu, India shows workers strapping head-mounted 
-                        cameras to themselves to film everyday chores so that 
-                        humanoid robots can eventually learn to do the same.
+                        new magnitudes. 
                     </li>
                     <li>Reinforcement Learning through Human Feedback (RLHF): 
                         Training AI generated content requires human raters 
-                        to review and label 
-                        that content, including material depicting sexual 
+                        to review and label that content, including material depicting sexual 
                         abuse, violence, and other traumatizing content.
 
                     </li>

@@ -27,58 +27,77 @@ function Methodology() {
                         visualization.</li>
                 </ul>
             </p>
+            <br />
+            <p>All database used in this project is open-sourced in the "Database" 
+                page.</p>
 
-            <br></br>
+            <h2>Key Limitations</h2>
+            <br />
+
+            <p><b>A pattern, rather than an exhaustive landscape</b></p>
+
 
             <p>
-                It's important to highlight that this map is not a comprehensive
-                database of all BPO data labeling companies and all of their
-                delivery centers. The goal is not to build an exhaustive
-                inventory, but rather to display a consistent pattern across
-                the industry: What is the structural relationship between AI
-                company customers, the data labeling platforms that intermediate
-                labor, and the workers who receive little recognition or pay?
-
-            </p>
-            <p>
-                <br></br>
-
-                Despite narrowing scope to BPO platforms only, the industry
-                remains deliberately opaque. Due to the lack of publicly
-                available information, almost all search is done manually,
+                This map is not a comprehensive
+                database of all BPO data labeling platforms and all of their
+                delivery centers. Despite narrowing scope to BPO platforms only, the industry
+                remains deliberately opaque, as the companies are under no legal
+                requirements to disclose information regarding their delivery
+                centers and customers. Almost all search is done manually,
                 building on top of resources created by previous researchers.
-                The project is updated on an ongoing basis as new sources are
+                Therfore, only publicly available information is documented on the
+                map. The project is updated on an ongoing basis as new sources are
                 identified, and a company's absence from the map should be read
                 as "not yet verifiable," not "does not exist."
-
             </p>
 
-            <p>
-                Also important to note is that currently the project is scoped
-                within the English media world.
-                While the English media world is an
-                incomplete scope--ie, it likely misses out the AI data labeling
-                supply chain in China, it nevertheless captures enough
-                information since the AI startup ecosystem happens most actively
-                in the Silicon Valley.
+            <br />
+
+            <p><b>An imperfect capture of "power" within DAL industry</b></p>
+
+            <p>The map acknowledges that the distribution of delivery centers
+                across the world is an imperfect capture of the "power" that the
+                DAL industry exerts upon labor worldwide. DAL platforms disclose 
+                their delivery center at varying scopes, some at the country 
+                level, some to city, and some to specific offices--each would 
+                indicate an uneven concentration of worker location across 
+                the map. The presence of a
+                delivery center cannot indicate workforce size or industry
+                reliance, and absence only suggests an absence in the given pool
+                of documented DAL platforms. Given the small sample size,
+                a few platforms that are highly-saturated in certain regions can
+                also heavily skew the distribution--eg, DesiCrew and NextWealth
+                in India. Nevertheless, this map serves as a
+                useful anchor in understanding existing patterns of worker
+                distribution. More research is needed to uncover the full picture.
+            </p>
+            <br />
+
+            <p><b>Scoped within the English media world</b></p>
+
+
+            <p> *unfinished* Currently, this map only contains information available in the
+                English media world. The map acknowlwedges that this overlooks
+                a large ecosystem of Chinese DAL industry. This is partially by
+                design, however, as the map is interested in understanding a
+                global DAL industry pattern that is championed by western
+                interests and capital, wheras the Chinese ecosystem is far more
+                self-reliant.
             </p>
 
-            <p>plenty of limitation in presenting the most accurate description 
-                of "power". delivery center is found to be the closest estimate, 
-                but does not capture the size of each delivery center, comapny 
-                reliance, etc. two highly saturated companies can heavily skew 
-                the weight of a location on the map--eg, india in this case. 
-                one would also expect a lot more in south america and africa.
-            </p>
+            <br />
 
             <h2 id="identify-platforms">Identify BPO DAL platforms</h2>
-            <p>Download BPO DAL platforms featured on the map</p>
             <br>
             </br>
-            <p>need to first explain how DAL platforms are defined. most 
-                DAL platforms work on more than DAL. therefore, any operation 
-                that includes DAL would be listed??
+            <p>Many DAL platforms also provide broader IT services, and many 
+                operate using a hybrid of the BPO and marketplace business 
+                models. For the purposes of this project, any platform that 
+                offers DAL services and incorporates a BPO component is 
+                included, even if it also engages in other operations or 
+                business models.
             </p>
+            <br />
             <p>
                 To identify data labeling platforms, we referenced
                 many existing resources, including TechEquity's
@@ -108,36 +127,27 @@ function Methodology() {
                 After gathering a comprehensive list, we then do desk search
                 to determine whether each company operates as BPO.
                 TechEquity's database already includes some of those information.
-                Only BPO platforms are selected for the scope of this project.
-                Companies that use a mix of BPO & marketplace models are also
-                included.
-            </p>
-
-            <br>
-            </br>
-
-            <p>
                 Not all BPO companies are included on the map. Its
                 delivery centers have to be discoverable. More on that in the
                 next section.
             </p>
+            <br />
 
             <h2 id="delivery-centers">Identifying worker delivery centers</h2>
-            <p>Download worker locations featured on this map</p>
             <br>
             </br>
             <p>
                 For most BPO platforms, worker delivery centers refer to the
                 assemblage of annotation teams across its regonal offices.
                 Therefore, we used "regional office" as the first anchor to identify delivery
-                center. For companies that do not disclose the specific 
-                functions of its regional office, we see if the platform provide 
-                services other than data labeling. If yes, than the 
-                regional offices is not a reasonable approimate, therefore the 
-                platform is excluded from the list. Some companies disclose the specific functions of
-                its regional offices. In these cases, we manually judge if
-                the regional office can be listed as a delivery center or not. 
-                
+                center. Some platforms disclose the specific functions of its 
+                regional offices and would clearly lable "delivery center" among 
+                these. Otherwise, "regional office" cannot safely translate to 
+                "delivery center" in most cases. For instance, some regional offics are operation centers. 
+                Some delivery centers are shared with other IT services that the 
+                same platform offers. These are judged manually on a case-by-case 
+                basis.
+
             </p>
 
             <br>
