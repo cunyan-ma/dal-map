@@ -10,11 +10,53 @@ import StoryPanel from '../components/StoryPanel'
 import ViewModePanel from '../components/ViewModePanel'
 import customerCoords from '../data/customerCoords.json'
 
-const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTSF7sVqlLv16NeJJJZxSDvxwgUK74I7zm0IDqs8x5Aq1pzSFXlnpIJVXTX4cy0339tXLU7U2GMWFPG/pub?gid=1725569278&single=true&output=csv'
+// Two normalized source sheets (served from public/, also offered as downloads
+// on the Methodology page). Swap these for two published Google Sheet CSV URLs
+// if you want the map's red/orange data to live-update without a redeploy.
+const PLATFORMS_URL = '/dal-map/dal-platforms.csv'   // orange nodes: platform HQs
+const WORKERS_URL = '/dal-map/worker-location.csv'   // red nodes: worker delivery centers
 const RELATIONSHIPS_URL = '/dal-map/relationships.csv'
+
+// Promise wrapper around Papa.parse so the two source sheets can be joined once both load.
+function parseCsv(url) {
+    return new Promise((resolve, reject) => {
+        Papa.parse(url, {
+            download: true,
+            header: true,
+            complete: (results) => resolve(results.data),
+            error: reject,
+        })
+    })
+}
+
+// Join worker delivery centers (red) to their platform HQ (orange) and emit the
+// denormalized row shape the map + info panels consume:
+//   country, location, location_lat, location_long, company, company_lat, company_long
+function buildCountryRows(platforms, workers) {
+    const platformByName = {}
+    platforms.forEach(p => {
+        if (p.name) platformByName[p.name.trim()] = p
+    })
+
+    return workers
+        .filter(w => w.platform && w.lat && w.lng)
+        .map(w => {
+            const platform = platformByName[w.platform.trim()] || {}
+            return {
+                country:       w.country,
+                location:      w.city,
+                location_lat:  w.lat,
+                location_long: w.lng,
+                company:       w.platform.trim(),
+                company_lat:   platform.lat || '',
+                company_long:  platform.lng || '',
+            }
+        })
+}
 
 function SupplyChain() {
     const [countries, setCountries] = useState([])
+    const [platforms, setPlatforms] = useState([])
     const [customerEdges, setCustomerEdges] = useState([])
     const [selectedPlatform, setSelectedPlatform] = useState(null)
     const [selectedCountry, setSelectedCountry] = useState(null)
@@ -23,11 +65,13 @@ function SupplyChain() {
     const [storyStep, setStoryStep] = useState(null)
 
     useEffect(() => {
-        Papa.parse(SHEET_CSV_URL, {
-            download: true,
-            header: true,
-            complete: (results) => setCountries(results.data)
-        })
+        Promise.all([parseCsv(PLATFORMS_URL), parseCsv(WORKERS_URL)])
+            .then(([platformRows, workers]) => {
+                // Keep only platforms with a name and valid coordinates (drops the trailing empty row)
+                const cleanPlatforms = platformRows.filter(p => p.name?.trim() && p.lat && p.lng)
+                setPlatforms(cleanPlatforms)
+                setCountries(buildCountryRows(cleanPlatforms, workers))
+            })
     }, [])
 
     useEffect(() => {
@@ -43,14 +87,14 @@ function SupplyChain() {
         })
     }, [])
 
-    // Only keep edges whose source platform exists in the countries dataset
-    const knownPlatforms = useMemo(
-        () => new Set(countries.map(r => r.company).filter(Boolean)),
-        [countries]
+    // Only keep edges whose source platform is listed in dal-platforms.csv
+    const platformNames = useMemo(
+        () => new Set(platforms.map(p => p.name.trim())),
+        [platforms]
     )
     const filteredCustomerEdges = useMemo(
-        () => customerEdges.filter(e => knownPlatforms.has(e.source)),
-        [customerEdges, knownPlatforms]
+        () => customerEdges.filter(e => platformNames.has(e.source)),
+        [customerEdges, platformNames]
     )
 
     const handleEnterStory = () => {
@@ -71,6 +115,7 @@ function SupplyChain() {
             <div style={{ flex: 1, paddingBottom: inStory ? 0 : 150, position: 'relative' }}>
                 <MapView
                     countries={countries}
+                    platforms={platforms}
                     selectedPlatform={selectedPlatform}
                     selectedCountry={selectedCountry}
                     selectedCustomer={selectedCustomer}

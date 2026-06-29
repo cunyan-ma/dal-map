@@ -3,28 +3,14 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import STORY_BEATS from '../data/storyBeats.js'
 
-const PLATFORM_ALIASES = {
-    'Samasource Impact Sourcing': 'Sama',
-    'Keymakr Data Labeling': 'Keymakr',
-    'Innodata': 'Innodata',
-}
-
-function normalizeName(name) {
-    return name.replace(/,?\s+(Inc\.?|LLC\.?|Ltd\.?|Corp\.?|Co\.?)$/i, '').trim()
-}
-
-function buildPlatformLatLng(countries) {
+// Orange node coordinates, sourced directly from dal-platforms.csv (name → [lat, lng]).
+function buildPlatformByName(platforms) {
     const result = {}
-    countries.forEach(row => {
-        if (row.company && row.company_lat && row.company_long) {
-            const coords = [parseFloat(row.company_lat), parseFloat(row.company_long)]
-            const name = row.company.trim()
-            const normalized = normalizeName(name)
-            result[name] = coords
-            result[normalized] = coords
-            if (PLATFORM_ALIASES[normalized]) {
-                result[PLATFORM_ALIASES[normalized]] = coords
-            }
+    platforms.forEach(p => {
+        const lat = parseFloat(p.lat)
+        const lng = parseFloat(p.lng)
+        if (p.name && Number.isFinite(lat) && Number.isFinite(lng)) {
+            result[p.name.trim()] = [lat, lng]
         }
     })
     return result
@@ -49,6 +35,7 @@ const DIMMED = {
 
 function MapView({
     countries,
+    platforms = [],
     selectedPlatform = null,
     selectedCountry = null,
     selectedCustomer = null,
@@ -208,7 +195,6 @@ function MapView({
         if (countries.length === 0 || customerEdges.length === 0) return
 
         const redByPlatform = {}  // platform → [rows]
-        const orangeByName = {}   // platform → [lat, lng]
 
         countries.forEach(row => {
             if (row.location_lat && row.location_lat !== 'to be completed' &&
@@ -216,10 +202,10 @@ function MapView({
                 if (!redByPlatform[row.company]) redByPlatform[row.company] = []
                 redByPlatform[row.company].push(row)
             }
-            if (row.company && row.company_lat && row.company_long) {
-                orangeByName[row.company] = [parseFloat(row.company_lat), parseFloat(row.company_long)]
-            }
         })
+
+        // Orange coordinates come straight from dal-platforms.csv, independent of worker rows
+        const orangeByName = buildPlatformByName(platforms)   // platform → [lat, lng]
 
         const custEdgesBySource = {} // orange platform → [customer names]
         const custEdgesByTarget = {} // customer name   → [orange platforms]
@@ -231,7 +217,7 @@ function MapView({
         })
 
         relRef.current = { redByPlatform, orangeByName, custEdgesBySource, custEdgesByTarget }
-    }, [countries, customerEdges])
+    }, [countries, platforms, customerEdges])
 
     // ── Story mode layer rendering ───────────────────────────────────────
     useEffect(() => {
@@ -261,22 +247,19 @@ function MapView({
             })
         }
 
+        const platformLatLng = buildPlatformByName(platforms)
+
         if (nodeFilter === 'all') {
-            const seen = new Set()
-            workerRows.forEach(row => {
-                if (seen.has(row.company)) return
-                seen.add(row.company)
-                const marker = L.circleMarker(
-                    [parseFloat(row.company_lat), parseFloat(row.company_long)],
-                    { radius: 10, fillColor: '#FF9500', color: '#FF9500', weight: 1,
-                      fillOpacity: 0.2, opacity: 1 }
-                ).addTo(map)
+            Object.values(platformLatLng).forEach(coords => {
+                const marker = L.circleMarker(coords, {
+                    radius: 10, fillColor: '#FF9500', color: '#FF9500', weight: 1,
+                    fillOpacity: 0.2, opacity: 1
+                }).addTo(map)
                 storyLayersRef.current.push(marker)
             })
         }
 
         if (nodeFilter === 'white' || nodeFilter === 'all') {
-            const platformLatLng = buildPlatformLatLng(countries)
             const mapNames = new Set(Object.keys(platformLatLng))
             const validEdges = customerEdges.filter(e => mapNames.has(e.source) && customerCoords[e.target])
             const rendered = new Set()
@@ -290,7 +273,7 @@ function MapView({
                 storyLayersRef.current.push(marker)
             })
         }
-    }, [storyStep, countries, customerEdges, customerCoords])
+    }, [storyStep, countries, platforms, customerEdges, customerCoords])
 
     // Clean up story layers when exiting story mode
     useEffect(() => {
@@ -398,14 +381,9 @@ function MapView({
             redMarkersRef.current.push({ marker, row })
         })
 
-        // --- Orange platform nodes ---
-        const seenPlatforms = new Set()
-        workerRows.forEach(row => {
-            if (seenPlatforms.has(row.company)) return
-            seenPlatforms.add(row.company)
-
-            const lat = parseFloat(row.company_lat)
-            const lng = parseFloat(row.company_long)
+        // --- Orange platform nodes (sourced directly from dal-platforms.csv) ---
+        const companyLatLng = buildPlatformByName(platforms)
+        Object.entries(companyLatLng).forEach(([platform, [lat, lng]]) => {
             const marker = L.circleMarker([lat, lng], {
                 radius: 10, fillColor: '#FF9500', color: '#FF9500', weight: 1,
                 ...DEFAULTS.orange
@@ -414,7 +392,6 @@ function MapView({
             marker.on('mouseover', () => {
                 const rel = relRef.current
                 if (!rel) return
-                const platform = row.company
                 const connectedWhites = new Set(rel.custEdgesBySource[platform] || [])
                 const orangeCoords = [lat, lng]
 
@@ -436,14 +413,13 @@ function MapView({
 
             marker.on('mouseout', clearHover)
             marker.on('click', () => {
-                onSelectPlatform(row.company)
+                onSelectPlatform(platform)
             })
             marker.addTo(map)
-            orangeMarkersRef.current.push({ marker, platform: row.company, lat, lng })
+            orangeMarkersRef.current.push({ marker, platform, lat, lng })
         })
 
         // --- White customer nodes ---
-        const companyLatLng = buildPlatformLatLng(countries)
         const mapNames = new Set(Object.keys(companyLatLng))
         const validEdges = customerEdges.filter(e => mapNames.has(e.source) && customerCoords[e.target])
         const renderedCustomers = new Set()
@@ -493,7 +469,7 @@ function MapView({
             marker.addTo(map)
             whiteMarkersRef.current.push({ marker, name: custName, coords })
         })
-    }, [countries, customerEdges, customerCoords])
+    }, [countries, platforms, customerEdges, customerCoords])
 
     // ── ViewMode permanent edges ─────────────────────────────────────────
     useEffect(() => {
@@ -541,10 +517,12 @@ function MapView({
     useEffect(() => {
         const map = mapRef.current
         if (!map) return
-        setTimeout(() => {
+        const timer = setTimeout(() => {
             map.invalidateSize()
+            if (map.getSize().x === 0) return
             map.flyTo([20, 0], 2, { duration: 1 })
         }, 50)
+        return () => clearTimeout(timer)
     }, [storyStep])
 
     // Beat auto-fly (beat 5 zooms into Silicon Valley)
@@ -563,6 +541,9 @@ function MapView({
     useEffect(() => {
         const map = mapRef.current
         if (!map || storyStep !== null) return
+        // Guard against flying before the container has a measured size (StrictMode
+        // remount race), which makes Leaflet project to (NaN, NaN) and throw.
+        if (map.getSize().x === 0) return
         if (!selectedCountry) {
             map.flyTo([20, 0], 2, { duration: 1 })
             return

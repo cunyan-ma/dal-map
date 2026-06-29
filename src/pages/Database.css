@@ -3,35 +3,71 @@
   min-height: 100vh;
   background: #0a0a0a;
   font-family: inherit;
+  text-align: left;
 }
 
 .database-header {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 24px;
+  margin-bottom: 40px;
 }
 
 .database-header h1 {
   font-size: 1.8rem;
   font-weight: 700;
   color: #ffffff;
+  margin: 0 0 12px;
+}
+
+.database-subtitle {
+  font-size: 1.1rem;
+  color: #ffffff;
   margin: 0;
 }
 
-.download-btn {
-  padding: 8px 16px;
-  background: #e0432a;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 14px;
-  border-radius: 4px;
-  transition: opacity 0.15s;
+.db-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  align-items: start;
 }
 
-.download-btn:hover {
+.db-column {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.db-column-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #e0432a;
+  text-decoration: underline;
+  margin-bottom: 12px;
+}
+
+.db-column-title:hover {
   opacity: 0.8;
+}
+
+.db-column-desc {
+  font-size: 0.95rem;
+  color: #ffffff;
+  margin: 0 0 20px;
+  line-height: 1.4;
+}
+
+.db-preview-placeholder {
+  background: #3a3a3a;
+  border-radius: 4px;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .db-columns {
+    grid-template-columns: 1fr;
+  }
 }
 
 .db-status {
@@ -44,9 +80,10 @@
 }
 
 .table-wrapper {
-  overflow-x: auto;
+  overflow: auto;
   border: 1px solid #333;
   border-radius: 6px;
+  max-height: 500px;
 }
 
 table {
