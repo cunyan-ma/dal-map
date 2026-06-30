@@ -59,9 +59,30 @@
 
 @media (max-width: 900px) {
     .customer-info {
-        left: 12px;
-        bottom: 12px;
-        width: min(240px, 60vw);
-        max-height: calc(100vh - 140px);
+        left: 8px;
+        top: 86px;
+        bottom: 114px;
+        width: 150px;
+        max-height: none;
+        padding: 8px;
+        gap: 6px;
+        border-radius: 4px;
+    }
+
+    .customer-info-header,
+    .customer-info-description {
+        font-size: 10px;
+    }
+
+    .customer-info-close {
+        font-size: 13px;
+    }
+
+    .customer-info-list {
+        gap: 4px;
+    }
+
+    .customer-info-list li {
+        font-size: 8px;
     }
 }

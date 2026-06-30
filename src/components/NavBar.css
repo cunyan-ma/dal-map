@@ -69,3 +69,26 @@
 .navbar-subitem:hover {
   color: #cccccc;
 }
+
+@media (max-width: 900px) {
+  .navbar {
+    top: 6px;
+    right: 8px;
+  }
+
+  .navbar-links {
+    gap: 2px;
+  }
+
+  .navbar-links a {
+    font-size: 11px;
+  }
+
+  .navbar-subitems {
+    margin-top: 2px;
+  }
+
+  .navbar-subitem {
+    font-size: 9px;
+  }
+}

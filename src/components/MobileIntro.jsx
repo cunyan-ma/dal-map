@@ -50,6 +50,11 @@ function MobileIntro() {
                     </p>
                 </div>
 
+                <p className="mobile-intro-disclaimer">
+                    Some features are limited on mobile. For the full experience,
+                    please view this site on a laptop or larger screen.
+                </p>
+
                 {isPortrait ? (
                     <div className="mobile-intro-rotate">
                         <svg className="mobile-intro-phone" viewBox="0 0 120 120" aria-hidden="true">

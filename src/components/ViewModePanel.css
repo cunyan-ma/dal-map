@@ -57,3 +57,29 @@
     background: #ffffff;
     border-color: #ffffff;
 }
+
+@media (max-width: 900px) {
+    .view-mode-panel {
+        top: 6px;
+        left: 6px;
+        padding: 5px 8px 8px;
+        gap: 5px;
+        min-width: 0;
+        border-radius: 2px;
+    }
+
+    .view-mode-title {
+        font-size: 10px;
+        margin-bottom: 0;
+    }
+
+    .view-mode-option {
+        font-size: 9px;
+        gap: 6px;
+    }
+
+    .view-mode-dot {
+        width: 6px;
+        height: 6px;
+    }
+}

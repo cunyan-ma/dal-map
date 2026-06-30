@@ -50,6 +50,14 @@
     margin: 0;
 }
 
+.mobile-intro-disclaimer {
+    margin: 0;
+    color: #888888;
+    font-size: 12px;
+    font-style: italic;
+    line-height: 145%;
+}
+
 /* Portrait: rotate prompt */
 .mobile-intro-rotate {
     display: flex;

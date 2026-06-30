@@ -67,3 +67,31 @@
     border-radius: 0;
     background: #c51818;
 }
+
+@media (max-width: 900px) {
+    .legend {
+        top: 56px;
+        right: 8px;
+        padding: 5px 8px 8px;
+        gap: 4px;
+        min-width: 0;
+        border-radius: 2px;
+    }
+
+    .legend-item {
+        gap: 5px;
+        font-size: 9px;
+        line-height: 1;
+    }
+
+    .legend-swatch {
+        width: 9px;
+        height: 9px;
+    }
+
+    .legend-swatch-line-customer,
+    .legend-swatch-line-worker {
+        width: 9px;
+        height: 1.5px;
+    }
+}

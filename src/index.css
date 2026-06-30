@@ -55,6 +55,14 @@ body {
   font-family: Helvetica, Arial, sans-serif;
 }
 
+/* Match the page background so any letterboxed space outside the
+   (noWrap) world tiles blends in instead of showing Leaflet's default grey.
+   Leaflet's own stylesheet is imported after this file, so !important is
+   needed to win the cascade. */
+.leaflet-container {
+  background: #0a0a0a !important;
+}
+
 #root {
   width: 100%;
   max-width: 100%;

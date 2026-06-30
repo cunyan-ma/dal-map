@@ -33,6 +33,27 @@ const DIMMED = {
     white:  { fillOpacity: 0.04, opacity: 0.04 },
 }
 
+// On mobile the screen is short, so a fixed zoom-2 world view gets cropped
+// top/bottom. Fit the whole world into whatever space is available instead.
+const WORLD_BOUNDS = L.latLngBounds([-58, -170], [78, 170])
+function isMobileViewport() {
+    return window.matchMedia('(max-width: 900px)').matches
+}
+function setWorldView(map) {
+    if (isMobileViewport()) {
+        map.fitBounds(WORLD_BOUNDS)
+    } else {
+        map.setView([20, 0], 2)
+    }
+}
+function flyToWorldView(map, duration = 1) {
+    if (isMobileViewport()) {
+        map.flyToBounds(WORLD_BOUNDS, { duration })
+    } else {
+        map.flyTo([20, 0], 2, { duration })
+    }
+}
+
 function MapView({
     countries,
     platforms = [],
@@ -74,9 +95,13 @@ function MapView({
     const selectedPlatformRef = useRef(selectedPlatform)
     const selectedCustomerRef = useRef(selectedCustomer)
     const customerCoordsRef   = useRef(customerCoords)
+    const selectedCountryRef  = useRef(selectedCountry)
+    const storyStepRef        = useRef(storyStep)
     useEffect(() => { selectedPlatformRef.current = selectedPlatform }, [selectedPlatform])
     useEffect(() => { selectedCustomerRef.current = selectedCustomer }, [selectedCustomer])
     useEffect(() => { customerCoordsRef.current   = customerCoords   }, [customerCoords])
+    useEffect(() => { selectedCountryRef.current  = selectedCountry  }, [selectedCountry])
+    useEffect(() => { storyStepRef.current        = storyStep        }, [storyStep])
 
     // Ref holding the latest restoreSelectionStyles so clearHover (inside a stale closure) can call it
     const restoreSelectionStylesRef = useRef(null)
@@ -177,17 +202,36 @@ function MapView({
     }, [selectedPlatform, selectedCustomer, restoreSelectionStyles])
 
     useEffect(() => {
-        const map = L.map(containerRef.current).setView([20, 0], 2)
+        const map = L.map(containerRef.current)
         mapRef.current = map
+        setWorldView(map)
 
         L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_dark/{z}/{x}/{y}{r}.{ext}', {
             minZoom: 0,
             maxZoom: 20,
+            noWrap: true,
             attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             ext: 'png'
         }).addTo(map)
 
-        return () => { map.remove() }
+        // Re-fit the world view on rotation (e.g. the map mounts in portrait,
+        // behind the MobileIntro gate, then the user rotates to landscape).
+        // Skip while a story/selection is active so it doesn't yank the user
+        // away from what they're looking at.
+        const handleResize = () => {
+            map.invalidateSize()
+            if (storyStepRef.current !== null) return
+            if (selectedCountryRef.current || selectedPlatformRef.current || selectedCustomerRef.current) return
+            setWorldView(map)
+        }
+        window.addEventListener('resize', handleResize)
+        window.addEventListener('orientationchange', handleResize)
+
+        return () => {
+            window.removeEventListener('resize', handleResize)
+            window.removeEventListener('orientationchange', handleResize)
+            map.remove()
+        }
     }, [])
 
     // Build relationship maps whenever data changes
@@ -520,7 +564,7 @@ function MapView({
         const timer = setTimeout(() => {
             map.invalidateSize()
             if (map.getSize().x === 0) return
-            map.flyTo([20, 0], 2, { duration: 1 })
+            flyToWorldView(map, 1)
         }, 50)
         return () => clearTimeout(timer)
     }, [storyStep])
@@ -545,7 +589,7 @@ function MapView({
         // remount race), which makes Leaflet project to (NaN, NaN) and throw.
         if (map.getSize().x === 0) return
         if (!selectedCountry) {
-            map.flyTo([20, 0], 2, { duration: 1 })
+            flyToWorldView(map, 1)
             return
         }
         const rows = countries.filter(row =>

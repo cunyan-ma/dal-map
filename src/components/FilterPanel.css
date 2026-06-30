@@ -65,9 +65,30 @@
 
 @media (max-width: 900px) {
     .filter-panel {
-        right: 12px;
-        bottom: 200px;
-        width: 200px;
-        max-height: calc(100vh - 220px);
+        top: 56px;
+        right: 8px;
+        bottom: 8px;
+        left: auto;
+        width: 130px;
+        max-height: none;
+        padding: 8px;
+        gap: 6px;
+        border-radius: 3px;
+    }
+
+    .filter-panel-header {
+        font-size: 10px;
+    }
+
+    .filter-panel-close {
+        font-size: 13px;
+    }
+
+    .filter-panel-list {
+        gap: 4px;
+    }
+
+    .filter-panel-list li {
+        font-size: 9px;
     }
 }
