@@ -4,7 +4,9 @@
     z-index: 3000;
     background: #0a0a0a;
     display: flex;
-    align-items: center;
+    /* Top-align so the content sits below the nav bar instead of centering
+       up underneath it. */
+    align-items: flex-start;
     justify-content: center;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -14,7 +16,8 @@
     box-sizing: border-box;
     width: 100%;
     max-width: 560px;
-    padding: 28px 24px;
+    /* Extra top padding clears the nav bar and pushes the title downward. */
+    padding: 88px 24px 32px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -43,7 +46,7 @@
     gap: 12px;
     color: #e0e0e0;
     font-size: 14px;
-    line-height: 150%;
+    line-height: 138%;
 }
 
 .mobile-intro-blurb p {
@@ -132,7 +135,7 @@
 /* In landscape on a short phone, keep everything compact and scrollable */
 @media (orientation: landscape) and (max-height: 500px) {
     .mobile-intro-content {
-        padding: 18px 24px;
+        padding: 52px 24px 18px;
         gap: 14px;
         max-width: 720px;
     }
@@ -143,6 +146,6 @@
 
     .mobile-intro-blurb {
         font-size: 13px;
-        line-height: 140%;
+        line-height: 132%;
     }
 }

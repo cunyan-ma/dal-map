@@ -1,5 +1,4 @@
 import { Link, useLocation } from 'react-router-dom'
-import { useState, useEffect } from 'react'
 import './NavBar.css'
 
 const SECTIONS = {
@@ -25,23 +24,14 @@ function scrollToId(id) {
 
 function NavBar() {
   const location = useLocation()
-  const [expanded, setExpanded] = useState(null)
+  const path = location.pathname
 
-  useEffect(() => {
-    const path = location.pathname
-    if (path === '/about' || path === '/methodology') {
-      setExpanded(path)
-    } else {
-      setExpanded(null)
-    }
-  }, [location.pathname])
-
-  function handleExpandableClick(path, e) {
-    if (location.pathname === path) {
+  // Clicking the link for the page you're already on shouldn't reload the
+  // route (which would briefly tear down the section list); just scroll to top.
+  function handleActiveClick(targetPath, e) {
+    if (path === targetPath) {
       e.preventDefault()
-      setExpanded(prev => (prev === path ? null : path))
-    } else {
-      setExpanded(path)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
 
@@ -51,8 +41,8 @@ function NavBar() {
         <Link to="/">Map</Link>
 
         <div className="navbar-item">
-          <Link to="/about" onClick={(e) => handleExpandableClick('/about', e)}>About</Link>
-          {expanded === '/about' && (
+          <Link to="/about" onClick={(e) => handleActiveClick('/about', e)}>About</Link>
+          {path === '/about' && (
             <div className="navbar-subitems">
               {SECTIONS['/about'].map(s => (
                 <button key={s.id} className="navbar-subitem" onClick={() => scrollToId(s.id)}>
@@ -64,8 +54,8 @@ function NavBar() {
         </div>
 
         <div className="navbar-item">
-          <Link to="/methodology" onClick={(e) => handleExpandableClick('/methodology', e)}>Methodology</Link>
-          {expanded === '/methodology' && (
+          <Link to="/methodology" onClick={(e) => handleActiveClick('/methodology', e)}>Methodology</Link>
+          {path === '/methodology' && (
             <div className="navbar-subitems">
               {SECTIONS['/methodology'].map(s => (
                 <button key={s.id} className="navbar-subitem" onClick={() => scrollToId(s.id)}>

@@ -1,7 +1,7 @@
 .about-container {
     box-sizing: border-box;
-    /* match InfoBar width */
-    padding: 150px 70px;
+    /* Standard page padding, matches the Database page */
+    padding: 80px 40px 40px;
     max-width: 900px;
     color: #e0e0e0;
 }
@@ -9,7 +9,8 @@
 .about-container h1 {
     margin: 0 0 12px 0;
     text-align: left;
-    font-size: 28px;
+    font-size: 1.8rem;
+    font-weight: 700;
     color: #ffffff;
 }
 
@@ -41,13 +42,4 @@
 
 .about-container a:hover {
     color: #ff7a55;
-}
-
-/* Responsive: on small screens remove left margin so content fills viewport */
-@media (max-width: 800px) {
-    .about-container {
-        margin-left: 16px;
-        margin-right: 16px;
-        padding: 16px;
-    }
 }

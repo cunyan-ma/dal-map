@@ -2,7 +2,9 @@
   position: fixed;
   top: 16px;
   right: 40px;
-  z-index: 1100;
+  /* Above the mobile intro overlay (z-index 3000) so the nav shows on the
+     intro page in the same spot it occupies on every other page. */
+  z-index: 3100;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
