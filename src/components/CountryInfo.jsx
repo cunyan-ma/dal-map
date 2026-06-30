@@ -30,9 +30,7 @@ function CountryInfo({ country, countries = [], onClose }) {
             </ul>
 
             <div className="country-info-description">
-                <span>In the future I will write country-specific descriptions
-                    here that describe the socioeconomic conditions that shaped the labor condition
-                </span>
+                <span>More country-specific socioeconomic contextualization to come.</span>
             </div>
         </div>
     )

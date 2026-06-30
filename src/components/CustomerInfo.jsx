@@ -25,7 +25,7 @@ function CustomerInfo({ customer, customerEdges = [], onClose }) {
             </ul>
 
             <div className="customer-info-description">
-                <span>More information about this customer's data annotation practices will be added here.</span>
+                <span>More company-specific DAL demands to come.</span>
             </div>
         </div>
     )

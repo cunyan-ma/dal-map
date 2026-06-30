@@ -30,9 +30,7 @@ function PlatformInfo({ platform, countries = [], onClose }) {
             </ul>
 
             <div className="platform-info-description">
-                <span>I will insert personalized information about the platform's
-                    worker practice here, with relevant links. These will be written out later.
-                </span>
+                <span>More platform-specific labor condition to come.</span>
             </div>
 
             {/* <div className="platform-info-stat">
