@@ -1,0 +1,140 @@
+.mobile-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: #0a0a0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mobile-intro-content {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 560px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    text-align: left;
+}
+
+.mobile-intro-title {
+    margin: 0;
+    font-family: Impact, Helvetica, sans-serif;
+    font-weight: 900;
+    line-height: 1.05;
+    text-transform: uppercase;
+    color: #ffffff;
+    font-size: clamp(40px, 13vw, 64px);
+    letter-spacing: 0;
+}
+
+.mobile-intro-highlight {
+    color: #e0432a;
+}
+
+.mobile-intro-blurb {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    color: #e0e0e0;
+    font-size: 14px;
+    line-height: 150%;
+}
+
+.mobile-intro-blurb p {
+    margin: 0;
+}
+
+/* Portrait: rotate prompt */
+.mobile-intro-rotate {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 4px;
+    color: #e0432a;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+}
+
+.mobile-intro-phone {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    transform-origin: 60px 60px;
+    animation: mobile-intro-rotate 2.4s ease-in-out infinite;
+}
+
+.mobile-intro-phone-body {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 3;
+}
+
+.mobile-intro-phone-speaker {
+    stroke: #ffffff;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+}
+
+.mobile-intro-phone-home {
+    fill: #ffffff;
+}
+
+.mobile-intro-arrow,
+.mobile-intro-arrow-head {
+    stroke: #e0432a;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+@keyframes mobile-intro-rotate {
+    0%, 18%   { transform: rotate(0deg); }
+    50%, 68%  { transform: rotate(-90deg); }
+    100%      { transform: rotate(0deg); }
+}
+
+/* Landscape: enter button */
+.mobile-intro-enter {
+    margin-top: 4px;
+    background: #e0432a;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 14px 28px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.mobile-intro-enter:hover,
+.mobile-intro-enter:active {
+    background: #c5371f;
+}
+
+/* In landscape on a short phone, keep everything compact and scrollable */
+@media (orientation: landscape) and (max-height: 500px) {
+    .mobile-intro-content {
+        padding: 18px 24px;
+        gap: 14px;
+        max-width: 720px;
+    }
+
+    .mobile-intro-title {
+        font-size: clamp(30px, 8vh, 46px);
+    }
+
+    .mobile-intro-blurb {
+        font-size: 13px;
+        line-height: 140%;
+    }
+}

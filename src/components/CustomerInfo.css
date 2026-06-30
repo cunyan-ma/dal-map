@@ -56,3 +56,12 @@
     font-size: 11px;
     color: #cccccc;
 }
+
+@media (max-width: 900px) {
+    .customer-info {
+        left: 12px;
+        bottom: 12px;
+        width: min(240px, 60vw);
+        max-height: calc(100vh - 140px);
+    }
+}

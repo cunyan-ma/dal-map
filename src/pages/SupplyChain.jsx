@@ -8,6 +8,8 @@ import CountryInfo from '../components/CountryInfo'
 import CustomerInfo from '../components/CustomerInfo'
 import StoryPanel from '../components/StoryPanel'
 import ViewModePanel from '../components/ViewModePanel'
+import MobileIntro from '../components/MobileIntro'
+import './SupplyChain.css'
 
 const PLATFORMS_URL = '/dal-map/dal-platforms.csv'         // orange nodes: platform HQs
 const WORKERS_URL = '/dal-map/worker-location.csv'         // red nodes: worker delivery centers
@@ -115,8 +117,8 @@ function SupplyChain() {
     const inStory = storyStep !== null
 
     return (
-        <div style={{ display: 'flex', height: '100vh' }}>
-            <div style={{ flex: 1, paddingBottom: inStory ? 0 : 150, position: 'relative' }}>
+        <div className="supplychain">
+            <div className={`map-wrap ${inStory ? 'in-story' : ''}`}>
                 <MapView
                     countries={countries}
                     platforms={platforms}
@@ -183,6 +185,8 @@ function SupplyChain() {
                     onClose={handleExitStory}
                 />
             )}
+
+            <MobileIntro />
         </div>
     )
 }

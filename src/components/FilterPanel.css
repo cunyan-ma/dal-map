@@ -62,3 +62,12 @@
 .filter-panel-list li.selected {
     color: #e0432a;
 }
+
+@media (max-width: 900px) {
+    .filter-panel {
+        right: 12px;
+        bottom: 200px;
+        width: 200px;
+        max-height: calc(100vh - 220px);
+    }
+}
