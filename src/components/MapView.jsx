@@ -33,6 +33,42 @@ const DIMMED = {
     white:  { fillOpacity: 0.04, opacity: 0.04 },
 }
 
+// Shape-code the node types so they stay distinguishable for color-blind viewers:
+// red workers = circle (L.circleMarker), orange platforms = square, white
+// customers = triangle. Leaflet's circleMarker only draws circles, so the squares
+// and triangles are rendered as SVG divIcon markers instead.
+function shapeSvg(shape, color, { fillOpacity, opacity }) {
+    const inner = shape === 'square'
+        ? `<rect class="node-shape" x="2" y="2" width="16" height="16" fill="${color}" stroke="${color}" stroke-width="1" fill-opacity="${fillOpacity}" stroke-opacity="${opacity}"/>`
+        : `<polygon class="node-shape" points="10,2.5 18.5,18 1.5,18" fill="${color}" stroke="${color}" stroke-width="1" stroke-linejoin="round" fill-opacity="${fillOpacity}" stroke-opacity="${opacity}"/>`
+    return `<svg width="20" height="20" viewBox="0 0 20 20" style="display:block;overflow:visible;cursor:pointer">${inner}</svg>`
+}
+
+function makeShapeIcon(shape, color, style) {
+    return L.divIcon({
+        className: 'node-marker',     // custom class → drops the default leaflet-div-icon box
+        html: shapeSvg(shape, color, style),
+        iconSize: [20, 20],
+        iconAnchor: [10, 10],         // center the shape on its coordinate, like a circleMarker
+    })
+}
+
+// Apply a { fillOpacity, opacity } state to any node regardless of shape.
+// circleMarkers use setStyle; shaped divIcon markers get their SVG element's
+// fill/stroke opacity updated in place (no icon rebuild, so events survive).
+function applyStyle(marker, style) {
+    if (marker instanceof L.CircleMarker) {
+        marker.setStyle(style)
+        return
+    }
+    const el = marker.getElement()
+    const shape = el && el.querySelector('.node-shape')
+    if (shape) {
+        shape.setAttribute('fill-opacity', style.fillOpacity)
+        shape.setAttribute('stroke-opacity', style.opacity)
+    }
+}
+
 // On mobile the screen is short, so a fixed zoom-2 world view gets cropped
 // top/bottom. Fit the whole world into whatever space is available instead.
 const WORLD_BOUNDS = L.latLngBounds([-58, -170], [78, 170])
@@ -46,8 +82,15 @@ function setWorldView(map) {
         map.setView([20, 0], 2)
     }
 }
+// Respect users who've asked the OS to minimize motion: skip the animated pans
+// (which can trigger vestibular discomfort) and jump straight to the destination.
+function prefersReducedMotion() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
 function flyToWorldView(map, duration = 1) {
-    if (isMobileViewport()) {
+    if (prefersReducedMotion()) {
+        setWorldView(map)
+    } else if (isMobileViewport()) {
         map.flyToBounds(WORLD_BOUNDS, { duration })
     } else {
         map.flyTo([20, 0], 2, { duration })
@@ -114,20 +157,20 @@ function MapView({
         const rel      = relRef.current
 
         if (!platform && !customer) {
-            redMarkersRef.current.forEach(({ marker }) => marker.setStyle(DEFAULTS.red))
-            orangeMarkersRef.current.forEach(({ marker }) => marker.setStyle(DEFAULTS.orange))
-            whiteMarkersRef.current.forEach(({ marker }) => marker.setStyle(DEFAULTS.white))
+            redMarkersRef.current.forEach(({ marker }) => applyStyle(marker, DEFAULTS.red))
+            orangeMarkersRef.current.forEach(({ marker }) => applyStyle(marker, DEFAULTS.orange))
+            whiteMarkersRef.current.forEach(({ marker }) => applyStyle(marker, DEFAULTS.white))
             return
         }
 
         if (platform) {
             const connectedWhites = new Set(rel?.custEdgesBySource[platform] || [])
             redMarkersRef.current.forEach(({ marker: m, row: r }) =>
-                m.setStyle(r.company === platform ? HIGHLIGHT.red : DIMMED.red))
+                applyStyle(m,r.company === platform ? HIGHLIGHT.red : DIMMED.red))
             orangeMarkersRef.current.forEach(({ marker: m, platform: p }) =>
-                m.setStyle(p === platform ? HIGHLIGHT.orange : DIMMED.orange))
+                applyStyle(m,p === platform ? HIGHLIGHT.orange : DIMMED.orange))
             whiteMarkersRef.current.forEach(({ marker: m, name }) =>
-                m.setStyle(connectedWhites.has(name) ? HIGHLIGHT.white : DIMMED.white))
+                applyStyle(m,connectedWhites.has(name) ? HIGHLIGHT.white : DIMMED.white))
         }
 
         if (customer) {
@@ -137,11 +180,11 @@ function MapView({
                 ;(rel?.redByPlatform[p] || []).forEach(r => connectedRedRows.add(r))
             })
             whiteMarkersRef.current.forEach(({ marker: m, name }) =>
-                m.setStyle(name === customer ? HIGHLIGHT.white : DIMMED.white))
+                applyStyle(m,name === customer ? HIGHLIGHT.white : DIMMED.white))
             orangeMarkersRef.current.forEach(({ marker: m, platform: p }) =>
-                m.setStyle(connectedOranges.has(p) ? HIGHLIGHT.orange : DIMMED.orange))
+                applyStyle(m,connectedOranges.has(p) ? HIGHLIGHT.orange : DIMMED.orange))
             redMarkersRef.current.forEach(({ marker: m, row: r }) =>
-                m.setStyle(connectedRedRows.has(r) ? HIGHLIGHT.red : DIMMED.red))
+                applyStyle(m,connectedRedRows.has(r) ? HIGHLIGHT.red : DIMMED.red))
         }
     }, [])
 
@@ -167,7 +210,9 @@ function MapView({
         if (!rel) return
 
         const addSelectionEdge = (from, to, color) => {
-            const line = L.polyline([from, to], { color, weight: 1.5, opacity: 0.75, smoothFactor: 1 }).addTo(map)
+            // White customer-contract lines are dotted; red affiliation lines solid.
+            const dashArray = color === '#ffffff' ? '2 5' : null
+            const line = L.polyline([from, to], { color, weight: 1.5, opacity: 0.75, smoothFactor: 1, dashArray }).addTo(map)
             selectionEdgesRef.current.push(line)
         }
 
@@ -176,7 +221,7 @@ function MapView({
             const connectedWhites = new Set(rel.custEdgesBySource[selectedPlatform] || [])
             if (orangeCoords) {
                 ;(rel.redByPlatform[selectedPlatform] || []).forEach(r => {
-                    addSelectionEdge([parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords, '#c51818')
+                    addSelectionEdge([parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords, '#e5312e')
                 })
                 connectedWhites.forEach(name => {
                     const c = customerCoordsRef.current[name]
@@ -194,7 +239,7 @@ function MapView({
                     if (!orangeCoords) return
                     addSelectionEdge(orangeCoords, custCoords, '#ffffff')
                     ;(rel.redByPlatform[p] || []).forEach(r => {
-                        addSelectionEdge([parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords, '#c51818')
+                        addSelectionEdge([parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords, '#e5312e')
                     })
                 })
             }
@@ -283,7 +328,7 @@ function MapView({
                 const highlighted = !highlightCountries || highlightCountries.includes(row.country)
                 const marker = L.circleMarker(
                     [parseFloat(row.location_lat), parseFloat(row.location_long)],
-                    { radius: 10, fillColor: '#c51818', color: '#c51818', weight: 1,
+                    { radius: 10, fillColor: '#e5312e', color: '#e5312e', weight: 1,
                       fillOpacity: highlighted ? 0.85 : 0.05, opacity: highlighted ? 0.9 : 0.05 }
                 ).addTo(map)
                 storyLayersRef.current.push(marker)
@@ -294,9 +339,8 @@ function MapView({
 
         if (nodeFilter === 'all') {
             Object.values(platformLatLng).forEach(coords => {
-                const marker = L.circleMarker(coords, {
-                    radius: 10, fillColor: '#FF9500', color: '#FF9500', weight: 1,
-                    fillOpacity: 0.2, opacity: 1
+                const marker = L.marker(coords, {
+                    icon: makeShapeIcon('square', '#FF9500', { fillOpacity: 0.2, opacity: 1 })
                 }).addTo(map)
                 storyLayersRef.current.push(marker)
             })
@@ -309,9 +353,8 @@ function MapView({
             validEdges.forEach(edge => {
                 if (rendered.has(edge.target)) return
                 rendered.add(edge.target)
-                const marker = L.circleMarker(customerCoords[edge.target], {
-                    radius: 10, fillColor: '#ffffff', color: '#ffffff', weight: 1,
-                    fillOpacity: 0.35, opacity: 0.6
+                const marker = L.marker(customerCoords[edge.target], {
+                    icon: makeShapeIcon('triangle', '#ffffff', { fillOpacity: 0.35, opacity: 0.6 })
                 }).addTo(map)
                 storyLayersRef.current.push(marker)
             })
@@ -380,7 +423,9 @@ function MapView({
         }
 
         const addEdge = (from, to, color) => {
-            const line = L.polyline([from, to], { color, weight: 1.5, opacity: 0.75, smoothFactor: 1 }).addTo(map)
+            // White customer-contract lines are dotted; red affiliation lines solid.
+            const dashArray = color === '#ffffff' ? '2 5' : null
+            const line = L.polyline([from, to], { color, weight: 1.5, opacity: 0.75, smoothFactor: 1, dashArray }).addTo(map)
             hoverEdgesRef.current.push(line)
         }
 
@@ -389,7 +434,7 @@ function MapView({
             const lat = parseFloat(row.location_lat)
             const lng = parseFloat(row.location_long)
             const marker = L.circleMarker([lat, lng], {
-                radius: 10, fillColor: '#c51818', color: '#c51818', weight: 1,
+                radius: 10, fillColor: '#e5312e', color: '#e5312e', weight: 1,
                 ...DEFAULTS.red
             })
 
@@ -400,15 +445,15 @@ function MapView({
                 const connectedWhites = new Set(rel.custEdgesBySource[platform] || [])
 
                 redMarkersRef.current.forEach(({ marker: m, row: r }) =>
-                    m.setStyle(r === row ? HIGHLIGHT.red : DIMMED.red))
+                    applyStyle(m,r === row ? HIGHLIGHT.red : DIMMED.red))
                 orangeMarkersRef.current.forEach(({ marker: m, platform: p }) =>
-                    m.setStyle(p === platform ? HIGHLIGHT.orange : DIMMED.orange))
+                    applyStyle(m,p === platform ? HIGHLIGHT.orange : DIMMED.orange))
                 whiteMarkersRef.current.forEach(({ marker: m, name }) =>
-                    m.setStyle(connectedWhites.has(name) ? HIGHLIGHT.white : DIMMED.white))
+                    applyStyle(m,connectedWhites.has(name) ? HIGHLIGHT.white : DIMMED.white))
 
                 const orangeCoords = rel.orangeByName[platform]
                 if (orangeCoords) {
-                    addEdge([lat, lng], orangeCoords, '#c51818')
+                    addEdge([lat, lng], orangeCoords, '#e5312e')
                     connectedWhites.forEach(name => {
                         const c = customerCoords[name]
                         if (c) addEdge(orangeCoords, c, '#ffffff')
@@ -427,9 +472,8 @@ function MapView({
         // --- Orange platform nodes (sourced directly from dal-platforms.csv) ---
         const companyLatLng = buildPlatformByName(platforms)
         Object.entries(companyLatLng).forEach(([platform, [lat, lng]]) => {
-            const marker = L.circleMarker([lat, lng], {
-                radius: 10, fillColor: '#FF9500', color: '#FF9500', weight: 1,
-                ...DEFAULTS.orange
+            const marker = L.marker([lat, lng], {
+                icon: makeShapeIcon('square', '#FF9500', DEFAULTS.orange)
             })
 
             marker.on('mouseover', () => {
@@ -439,14 +483,14 @@ function MapView({
                 const orangeCoords = [lat, lng]
 
                 redMarkersRef.current.forEach(({ marker: m, row: r }) =>
-                    m.setStyle(r.company === platform ? HIGHLIGHT.red : DIMMED.red))
+                    applyStyle(m,r.company === platform ? HIGHLIGHT.red : DIMMED.red))
                 orangeMarkersRef.current.forEach(({ marker: m, platform: p }) =>
-                    m.setStyle(p === platform ? HIGHLIGHT.orange : DIMMED.orange))
+                    applyStyle(m,p === platform ? HIGHLIGHT.orange : DIMMED.orange))
                 whiteMarkersRef.current.forEach(({ marker: m, name }) =>
-                    m.setStyle(connectedWhites.has(name) ? HIGHLIGHT.white : DIMMED.white))
+                    applyStyle(m,connectedWhites.has(name) ? HIGHLIGHT.white : DIMMED.white))
 
                 ;(rel.redByPlatform[platform] || []).forEach(r => {
-                    addEdge([parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords, '#c51818')
+                    addEdge([parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords, '#e5312e')
                 })
                 connectedWhites.forEach(name => {
                     const c = customerCoords[name]
@@ -473,9 +517,8 @@ function MapView({
 
             const coords = customerCoords[edge.target]
             const custName = edge.target
-            const marker = L.circleMarker(coords, {
-                radius: 10, fillColor: '#ffffff', color: '#ffffff', weight: 1,
-                ...DEFAULTS.white
+            const marker = L.marker(coords, {
+                icon: makeShapeIcon('triangle', '#ffffff', DEFAULTS.white)
             })
 
             marker.on('mouseover', () => {
@@ -489,18 +532,18 @@ function MapView({
                 })
 
                 whiteMarkersRef.current.forEach(({ marker: m, name }) =>
-                    m.setStyle(name === custName ? HIGHLIGHT.white : DIMMED.white))
+                    applyStyle(m,name === custName ? HIGHLIGHT.white : DIMMED.white))
                 orangeMarkersRef.current.forEach(({ marker: m, platform }) =>
-                    m.setStyle(connectedOranges.has(platform) ? HIGHLIGHT.orange : DIMMED.orange))
+                    applyStyle(m,connectedOranges.has(platform) ? HIGHLIGHT.orange : DIMMED.orange))
                 redMarkersRef.current.forEach(({ marker: m, row: r }) =>
-                    m.setStyle(connectedRedRows.has(r) ? HIGHLIGHT.red : DIMMED.red))
+                    applyStyle(m,connectedRedRows.has(r) ? HIGHLIGHT.red : DIMMED.red))
 
                 connectedOranges.forEach(platform => {
                     const orangeCoords = rel.orangeByName[platform]
                     if (!orangeCoords) return
                     addEdge(orangeCoords, coords, '#ffffff')
                     ;(rel.redByPlatform[platform] || []).forEach(r => {
-                        addEdge([parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords, '#c51818')
+                        addEdge([parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords, '#e5312e')
                     })
                 })
             })
@@ -535,7 +578,7 @@ function MapView({
                 ;(rel.redByPlatform[platform] || []).forEach(r => {
                     const line = L.polyline(
                         [[parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords],
-                        { color: '#c51818', weight: 1, opacity: 0.4, smoothFactor: 1 }
+                        { color: '#e5312e', weight: 1, opacity: 0.4, smoothFactor: 1 }
                     ).addTo(map)
                     viewModeEdgesRef.current.push(line)
                 })
@@ -549,7 +592,7 @@ function MapView({
                 if (!orangeCoords || !whiteCoords) return
                 const line = L.polyline(
                     [orangeCoords, whiteCoords],
-                    { color: '#ffffff', weight: 1, opacity: 0.25, smoothFactor: 1 }
+                    { color: '#ffffff', weight: 1, opacity: 0.25, smoothFactor: 1, dashArray: '2 5' }
                 ).addTo(map)
                 viewModeEdgesRef.current.push(line)
             })
@@ -575,7 +618,11 @@ function MapView({
         const beat = STORY_BEATS[storyStep]
         if (!beat.autoFly) return
         const timer = setTimeout(() => {
-            map.flyTo(beat.autoFly.center, beat.autoFly.zoom, { duration: 2 })
+            if (prefersReducedMotion()) {
+                map.setView(beat.autoFly.center, beat.autoFly.zoom, { animate: false })
+            } else {
+                map.flyTo(beat.autoFly.center, beat.autoFly.zoom, { duration: 2 })
+            }
         }, beat.autoFly.delayMs)
         return () => clearTimeout(timer)
     }, [storyStep])
@@ -598,7 +645,11 @@ function MapView({
         )
         if (rows.length === 0) return
         const bounds = L.latLngBounds(rows.map(row => [parseFloat(row.location_lat), parseFloat(row.location_long)]))
-        map.flyToBounds(bounds, { padding: [60, 60], duration: 1, maxZoom: 10 })
+        if (prefersReducedMotion()) {
+            map.fitBounds(bounds, { padding: [60, 60], maxZoom: 10, animate: false })
+        } else {
+            map.flyToBounds(bounds, { padding: [60, 60], duration: 1, maxZoom: 10 })
+        }
     }, [selectedCountry, countries])
 
     return (

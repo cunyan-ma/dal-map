@@ -13,7 +13,7 @@ function Methodology() {
                 centers, and their customers into the following supply chain:
             </p>
             <blockquote>
-                <strong style={{ color: '#ffffff' }}>Customer</strong> - <strong style={{ color: '#f2572d' }}>Platform</strong> - <strong style={{ color: '#c51818' }}>Worker</strong>
+                <strong style={{ color: '#ffffff' }}>Customer</strong> - <strong style={{ color: '#f2572d' }}>Platform</strong> - <strong style={{ color: '#e5312e' }}>Worker</strong>
             </blockquote>
 
             <p>
@@ -90,9 +90,11 @@ function Methodology() {
             <h2 id="identify-platforms">Identify BPO DAL platforms</h2>
             <br>
             </br>
-            <p>Many DAL platforms also provide broader IT services, and many 
-                operate using a hybrid of the BPO and marketplace business 
-                models. For the purposes of this project, any platform that 
+            <p>Many DAL platforms also provide broader outsourcing services, 
+                such as call centers and IT support. Given the availability of 
+                gig platforms nowadays, many also operate with a hybrid of the BPO and marketplace business 
+                models. Because clean overlap between DAL + BPO is rare and to 
+                preserve a meaningful scope for the project, any platform that 
                 offers DAL services and incorporates a BPO component is 
                 included, even if it also engages in other operations or 
                 business models.
@@ -177,7 +179,7 @@ function Methodology() {
             </p>
 
             <p>
-                For each company, the LLM is given the following prompt:
+                LLM is given the following prompt for all the BPO companies:
             </p>
 
             <blockquote>
@@ -208,12 +210,12 @@ function Methodology() {
             <h2 id="geocoding">Geocoding</h2>
             <p>
                 Platform, delivery center, and customer information are compiled
-                into a SQL database. City-level specificity of these entities'
+                into separate SQL database. City-level specificity of these entities'
                 locations is manually guaranteed. A geocoding API converts these
                 to latitude/longitude coordinates, rendered as nodes on the
                 Leaflet map. <strong style={{ color: '#ffffff' }}>White</strong> marks customers contracting data labeling
                 services, <strong style={{ color: '#f2572d' }}>orange</strong> marks the DAL platforms providing those
-                services, and <strong style={{ color: '#c51818' }}>red</strong> marks worker delivery center locations.
+                services, and <strong style={{ color: '#e5312e' }}>red</strong> marks worker delivery center locations.
 
             </p>
 

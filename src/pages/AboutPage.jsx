@@ -16,8 +16,9 @@ function AboutPage() {
                 behind AI. It provides the first systematic and
                 quantitative documentation of data workers' distribution around the
                 world by tracking data annotation and labeling (DAL) platforms' worker
-                delivery centers. This interactive map positions data workers
-                as part of a supply chain in the global AI DALindustry. 
+                delivery centers, a first step towards making this opaque 
+                industry more transparent. This interactive map positions data workers
+                as part of a supply chain in the global AI DAL industry. 
                 It display a consistent pattern across
                 the industry: What is the structural relationship between AI
                 company customers, the data labeling platforms that intermediate
@@ -75,11 +76,51 @@ function AboutPage() {
                 be annotated. This act of annotation is performed by data 
                 workers in the data annotation and labeling (DAL) industry, 
                 who make up the foundation of the AI industry.
-
+            </p>
+            <br />
+            <p>
+                This is an incredibly opaque industry byy
+                design. Half of the industry operates as gig platforms, which
+                treats workers as "contractors" rather than "workers", obscuring
+                away any detail on worker number, location, wage, and more, to the
+                public. 
             </p>
             <br></br>
             <p>
-                Data work has become a far more nuanced industry in the age of LLMs.
+                Thanks to some incredible journalists, the story of data workers
+                have surfaced to us more as AI became a larger part of our
+                lives. We know that some of them locate in Kenya, Venezuela,
+                and other countries with English literacy but poor economic
+                conditions, enabling exploitation. We know that they are
+                sometimes made to work with traumatizing
+                material with no redress from their supposed employees--the
+                "data labeling platforms" that pass down contracts from
+                mysterious customers.
+            </p>
+            <br />
+            <p>
+                However, there is yet to be any systematic documentation of 
+                where these data workers are located. Reliance on journalist 
+                reporting is unable to provide a hollistic overview on the pattern 
+                between worker exploitation and the companies that seek profit 
+                from them. 
+            </p>
+            <br />
+            <p>
+                This project attempts to construct a database that documents 
+                worker location quantitatively and systematically. It does so 
+                by tracking down the DAL platforms that operate on a "Business 
+                Process Outsourcing" (BPO) Business Model. These companies receive
+                data labeling contracts outsourced from AI companies, then pass
+                them along to their in-house annotation teams assembled across
+                "delivery centers" across the world. The locations of these
+                delivery centers are chosen deliberately. Not only do the
+                companies need to guarantee company network, these locations
+                also often have abundant of workers who look for lower pay due
+                to their countries' historic, social, or economic conditions.
+            </p>
+            {/* <p>
+                Data work has become more nuanced in the age of LLMs.
 
                 <ul>
                     <li>Scaling law: Building LLMs requires a vast amount of 
@@ -101,45 +142,19 @@ function AboutPage() {
                     </li>
                 </ul>
 
-            </p>
-            <p>
-                Thanks to some incredible journalists, the story of data workers
-                have surfaced to us more as AI became a larger part of our
-                lives. We know that some of them locate in Kenya, Venezuela,
-                and other countries with English literacy but poor economic
-                conditions, enabling exploitation. We know that they are
-                sometimes made to work with traumatizing
-                material with no redress from their supposed employees--the
-                "data labeling platforms" that pass down contracts from
-                mysterious customers.
-
-            </p>
+            </p> */}
+            
             <br></br>
             <p>
-                More than anything, we know that the DAL industry is an incredibly opaque industry by
-                design. Half of the industry operates as gig platforms, which
-                treats workers as "contractors" rather than "workers", obscuring
-                away any detail on worker number, location, wage, and more, to the
-                public.
+                This documentation is nevertheless imperfect. Information 
+                remains opaque in these BPO platforms, although it's much more 
+                available compared to gig platforms. The overlap between 
+                DAL services and the platforms that provide these services is 
+                imperfect, making scoping a difficult tradeoff.
             </p>
-
-            <br></br>
+            <br />
             <p>
-                The other half of the industry, however, operates as "Business
-                Process Outsourcing" (BPO) companies. These companies receive
-                data labeling contracts outsourced from AI companies, then pass
-                them along to their in-house annotation teams assembled across
-                "delivery centers" across the world. The locations of these
-                delivery centers are chosen deliberately. Not only do the
-                companies need to guarantee company network, these locations
-                also often have abundant of workers who look for lower pay due
-                to their countries' historic, social, or economic conditions.
-            </p>
-
-            <br></br>
-            <p>
-                This map tracks the worker location for the second type of
-                companies.
+                For more notes on methodology and limitation, see Methodology page.
             </p>
 
 

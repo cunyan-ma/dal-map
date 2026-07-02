@@ -8,7 +8,7 @@
     border-radius: 8px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.5);
     box-sizing: border-box;
-    padding: 16px;
+    padding: 0 16px 16px;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -34,6 +34,12 @@
     font-weight: 700;
     color: #cccccc;
     font-size: 14px;
+    /* Keep the × pinned at the top while the panel body scrolls under it */
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #111111;
+    padding: 16px 0 8px;
 }
 
 .country-info-close {
@@ -85,9 +91,13 @@
         bottom: 114px;
         width: 150px;
         max-height: none;
-        padding: 8px;
+        padding: 0 8px 8px;
         gap: 6px;
         border-radius: 4px;
+    }
+
+    .country-info-header {
+        padding: 8px 0 6px;
     }
 
     .country-info-header,

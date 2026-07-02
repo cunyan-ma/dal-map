@@ -121,7 +121,7 @@ function BottomBar({
                         <div className="bottombar-description">
                             {blurbLevel >= 2 && (
                                 <p>
-                                    Behind AI is an enormous, deliberately hidden web
+                                    Behind AI is an enormous, deliberately opaque web
                                     of human labor. Data workers are paid as little as
                                     $2 an hour to render data legible to machines--recruited,
                                     often, from places where the poor economic

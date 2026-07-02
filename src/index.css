@@ -55,6 +55,17 @@ body {
   font-family: Helvetica, Arial, sans-serif;
 }
 
+/* Visible focus ring for keyboard navigation. :focus-visible fires only for
+   keyboard focus (not mouse clicks), so mouse users never see the outline. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #f2572d;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 /* Match the page background so any letterboxed space outside the
    (noWrap) world tiles blends in instead of showing Leaflet's default grey.
    Leaflet's own stylesheet is imported after this file, so !important is

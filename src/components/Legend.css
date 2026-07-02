@@ -39,33 +39,33 @@
     box-sizing: border-box;
 }
 
-.legend-swatch-customer {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid #ffffff;
-}
-
-.legend-swatch-platform {
-    background: rgba(242, 87, 45, 0.1);
-    border: 1px solid #f2572d;
+/* Shaped (square / triangle) swatches drawn as inline SVG: cancel the circle
+   clip so their corners aren't cropped. */
+.legend-swatch-shape {
+    border-radius: 0;
+    overflow: visible;
+    background: none;
+    border: none;
 }
 
 .legend-swatch-location {
-    background: #c51818;
-    border: 1px solid #c51818;
+    background: #e5312e;
+    border: 1px solid #e5312e;
 }
 
 .legend-swatch-line-customer {
     width: 14px;
     height: 2px;
     border-radius: 0;
-    background: #ffffff;
+    /* Dotted to match the dotted customer-contract lines on the map */
+    background: repeating-linear-gradient(to right, #ffffff 0 2px, transparent 2px 5px);
 }
 
 .legend-swatch-line-worker {
     width: 14px;
     height: 2px;
     border-radius: 0;
-    background: #c51818;
+    background: #e5312e;
 }
 
 @media (max-width: 900px) {
