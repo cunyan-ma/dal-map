@@ -80,7 +80,7 @@ text-align: left;
     font-family: Helvetica, Arial, sans-serif;
     font-size: 13px;
     padding: 4px 8px;
-    border-radius: 3px;
+    border-radius: 2px;
     cursor: pointer;
     transition: border-color 0.15s, color 0.15s;
 }

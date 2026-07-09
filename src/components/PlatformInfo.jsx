@@ -1,12 +1,12 @@
 import './PlatformInfo.css'
 
-function PlatformInfo({ platform, countries = [], onClose }) {
+function PlatformInfo({ platform, countries = [], onClose, lowered = false }) {
     const rows = countries.filter(r => r.company === platform)
     const locations = [...new Set(rows.map(r => r.location).filter(Boolean))]
     const countryNames = [...new Set(rows.map(r => r.country).filter(Boolean))]
 
     return (
-        <div className="platform-info">
+        <div className={`platform-info ${lowered ? 'lowered' : ''}`}>
             <div className="platform-info-header">
                 <span>{platform}</span>
                 <button className="platform-info-close" onClick={onClose}>×</button>

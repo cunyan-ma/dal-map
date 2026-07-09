@@ -2,12 +2,13 @@ import { useEffect, useState, useMemo } from 'react'
 import Papa from 'papaparse'
 import MapView from '../components/MapView'
 import BottomBar from '../components/BottomBar'
+import CornerControls from '../components/CornerControls'
 import Legend from '../components/Legend'
 import PlatformInfo from '../components/PlatformInfo'
 import CountryInfo from '../components/CountryInfo'
 import CustomerInfo from '../components/CustomerInfo'
 import StoryPanel from '../components/StoryPanel'
-import ViewModePanel from '../components/ViewModePanel'
+import StoryBox from '../components/StoryBox'
 import MobileIntro from '../components/MobileIntro'
 import './SupplyChain.css'
 
@@ -60,8 +61,11 @@ function SupplyChain() {
     const [selectedPlatform, setSelectedPlatform] = useState(null)
     const [selectedCountry, setSelectedCountry] = useState(null)
     const [selectedCustomer, setSelectedCustomer] = useState(null)
-    const [viewMode, setViewMode] = useState(null)
+    // Permanent edge layers, toggled from the legend's line rows
+    const [showRedEdges, setShowRedEdges] = useState(false)
+    const [showWhiteEdges, setShowWhiteEdges] = useState(false)
     const [storyStep, setStoryStep] = useState(null)
+    const [barFolded, setBarFolded] = useState(false)
 
     useEffect(() => {
         Promise.all([parseCsv(PLATFORMS_URL), parseCsv(WORKERS_URL)])
@@ -118,7 +122,7 @@ function SupplyChain() {
 
     return (
         <div className="supplychain">
-            <div className={`map-wrap ${inStory ? 'in-story' : ''}`}>
+            <div className={`map-wrap ${inStory ? 'in-story' : ''} ${barFolded ? 'bar-folded' : ''}`}>
                 <MapView
                     countries={countries}
                     platforms={platforms}
@@ -127,24 +131,33 @@ function SupplyChain() {
                     selectedCustomer={selectedCustomer}
                     customerEdges={filteredCustomerEdges}
                     customerCoords={customerCoords}
-                    viewMode={viewMode}
+                    showRedEdges={showRedEdges}
+                    showWhiteEdges={showWhiteEdges}
                     storyStep={storyStep}
+                    barFolded={barFolded}
                     onSelectPlatform={(c) => { setSelectedPlatform(c); setSelectedCountry(null); setSelectedCustomer(null) }}
                     onSelectCountry={(c) => { setSelectedCountry(c); setSelectedPlatform(null); setSelectedCustomer(null) }}
                     onSelectCustomer={(c) => { setSelectedCustomer(c); setSelectedPlatform(null); setSelectedCountry(null) }}
                 />
                 {!inStory && (
-                    <ViewModePanel viewMode={viewMode} onSelect={setViewMode} />
+                    <div className="map-controls">
+                        <Legend
+                            showRedEdges={showRedEdges}
+                            showWhiteEdges={showWhiteEdges}
+                            onToggleRed={() => setShowRedEdges(v => !v)}
+                            onToggleWhite={() => setShowWhiteEdges(v => !v)}
+                        />
+                        <StoryBox onEnterStory={handleEnterStory} />
+                    </div>
                 )}
             </div>
-
-            {!inStory && <Legend />}
 
             {!inStory && selectedPlatform && (
                 <PlatformInfo
                     platform={selectedPlatform}
                     countries={countries}
                     onClose={() => setSelectedPlatform(null)}
+                    lowered={barFolded}
                 />
             )}
 
@@ -153,6 +166,7 @@ function SupplyChain() {
                     country={selectedCountry}
                     countries={countries}
                     onClose={() => setSelectedCountry(null)}
+                    lowered={barFolded}
                 />
             )}
 
@@ -161,11 +175,19 @@ function SupplyChain() {
                     customer={selectedCustomer}
                     customerEdges={filteredCustomerEdges}
                     onClose={() => setSelectedCustomer(null)}
+                    lowered={barFolded}
                 />
             )}
 
             {!inStory && (
                 <BottomBar
+                    folded={barFolded}
+                    onToggleFold={() => setBarFolded(f => !f)}
+                />
+            )}
+
+            {!inStory && (
+                <CornerControls
                     countries={countries}
                     customerEdges={filteredCustomerEdges}
                     selectedPlatform={selectedPlatform}
@@ -174,7 +196,7 @@ function SupplyChain() {
                     onSelectCountry={setSelectedCountry}
                     selectedCustomer={selectedCustomer}
                     onSelectCustomer={setSelectedCustomer}
-                    onEnterStory={handleEnterStory}
+                    lowered={barFolded}
                 />
             )}
 

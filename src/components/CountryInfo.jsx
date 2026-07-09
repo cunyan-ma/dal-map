@@ -1,12 +1,12 @@
 import './CountryInfo.css'
 
-function CountryInfo({ country, countries = [], onClose }) {
+function CountryInfo({ country, countries = [], onClose, lowered = false }) {
     const rows = countries.filter(r => r.country === country)
     const locations = [...new Set(rows.map(r => r.location).filter(Boolean))]
     const companyNames = [...new Set(rows.map(r => r.company).filter(Boolean))]
 
     return (
-        <div className="country-info">
+        <div className={`country-info ${lowered ? 'lowered' : ''}`}>
             <div className="country-info-header">
                 <span>{country}</span>
                 <button className="country-info-close" onClick={onClose}>×</button>

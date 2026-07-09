@@ -1,12 +1,12 @@
+/* Rendered as the top item inside .corner-controls, so it stacks above the
+   story/search boxes and moves with them when the bottom bar folds. */
 .filter-panel {
-    position: fixed;
-    right: 40px;
-    bottom: 269px;
     width: 228px;
-    max-height: calc(100vh - 269px - 80px);
+    max-height: min(45vh, calc(100vh - 430px));
     background: #111111;
-    border-radius: 8px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    border: 1px solid #2a2a2a;
+    border-radius: 2px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
     box-sizing: border-box;
     padding: 0 16px 16px;
     display: flex;
@@ -15,6 +15,12 @@
     pointer-events: auto;
     z-index: 1200;
     overflow-y: auto;
+}
+
+/* With the bar folded the stack sits at the bottom edge, so the list can use
+   most of the viewport height. */
+.corner-controls-lowered .filter-panel {
+    max-height: calc(100vh - 200px);
 }
 
 .filter-panel-header {
@@ -60,7 +66,7 @@
     font-size: 13px;
     color: #cccccc;
     padding: 1px 4px;
-    border-radius: 3px;
+    border-radius: 2px;
 }
 
 .filter-panel-list li.clickable {
@@ -76,7 +82,10 @@
 }
 
 @media (max-width: 900px) {
+    /* On mobile the panel breaks out of the corner stack into a fixed
+       full-height list on the right (as before). */
     .filter-panel {
+        position: fixed;
         top: 56px;
         right: 8px;
         bottom: 8px;
@@ -85,7 +94,7 @@
         max-height: none;
         padding: 0 8px 8px;
         gap: 6px;
-        border-radius: 3px;
+        border-radius: 2px;
     }
 
     .filter-panel-header {

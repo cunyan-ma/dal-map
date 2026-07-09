@@ -1,6 +1,6 @@
 import './CustomerInfo.css'
 
-function CustomerInfo({ customer, customerEdges = [], onClose }) {
+function CustomerInfo({ customer, customerEdges = [], onClose, lowered = false }) {
     const connectedPlatforms = [...new Set(
         customerEdges
             .filter(e => e.target === customer)
@@ -8,7 +8,7 @@ function CustomerInfo({ customer, customerEdges = [], onClose }) {
     )].sort()
 
     return (
-        <div className="customer-info">
+        <div className={`customer-info ${lowered ? 'lowered' : ''}`}>
             <div className="customer-info-header">
                 <span>{customer}</span>
                 <button className="customer-info-close" onClick={onClose}>×</button>

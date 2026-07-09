@@ -8,6 +8,48 @@
     justify-content: center;
     z-index: 1200;
     pointer-events: none;
+    /* Fold/unfold slide */
+    transition: transform 0.35s ease;
+}
+
+/* Folded: slide the whole bar below the viewport. The tab sits 16px above the
+   bar's top edge, so it stays peeking at the bottom of the screen. */
+.bottombar-folded {
+    transform: translateY(230px);
+}
+
+.bottombar-tab {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 48px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: #111111;
+    border: 1px solid #2a2a2a;
+    border-bottom: none;
+    border-radius: 2px 2px 0 0;
+    color: #cccccc;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.bottombar-tab:hover {
+    color: #ffffff;
+    background: #1a1a1a;
+}
+
+.bottombar-tab svg {
+    transition: transform 0.35s ease;
+}
+
+/* Chevron points up when folded (click = bring the bar back) */
+.bottombar-folded .bottombar-tab svg {
+    transform: rotate(180deg);
 }
 
 .bottombar-inner {
@@ -56,54 +98,11 @@
     color: #e0e0e0;
 }
 
-/* On mobile the title + blurb live on the rotate/intro screen, so the bottom
-   bar collapses to just the "Explore the story" + "Search by" controls, pinned
-   to the bottom-right corner over the map. */
+/* On mobile the title + blurb live on the rotate/intro screen and the
+   story/search controls float in CornerControls, so the bar (and its fold
+   tab) disappears entirely. */
 @media (max-width: 900px) {
     .bottombar {
-        justify-content: flex-start;
-    }
-
-    .bottombar-inner {
-        width: auto;
-        background: transparent;
-        padding: 0 0 8px 8px;
-        gap: 6px;
-        align-items: flex-start;
-        /* The fixed desktop height does not apply on mobile, where the bar is
-           just the small story/search controls pinned bottom-left. */
-        height: auto;
-        overflow: visible;
-    }
-
-    .bottombar-title,
-    .bottombar-description-box {
         display: none;
-    }
-
-    .bottombar-inner > div:last-child {
-        margin-left: 0 !important;
-    }
-
-    .search-box {
-        min-width: 0;
-        padding: 6px 10px;
-        gap: 2px;
-        border-radius: 3px;
-    }
-
-    .search-box-title {
-        font-size: 10px;
-        margin-bottom: 1px;
-    }
-
-    .search-box-item {
-        font-size: 10px;
-    }
-
-    .story-box {
-        padding: 5px 10px;
-        font-size: 9px;
-        border-radius: 3px;
     }
 }

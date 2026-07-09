@@ -1,12 +1,14 @@
 .customer-info {
     position: fixed;
     left: 16px;
-    bottom: 269px;
+    bottom: 242px;
     width: 280px;
-    max-height: calc(100vh - 269px - 80px);
+    max-height: calc(100vh - 242px - 80px);
     background: #111111;
-    border-radius: 8px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    border: 1px solid #2a2a2a;
+    border-radius: 2px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+    transition: bottom 0.35s ease;
     box-sizing: border-box;
     padding: 0 16px 16px;
     display: flex;
@@ -16,6 +18,12 @@
     overflow-y: auto;
     text-align: left;
     line-height: 1;
+}
+
+/* Ride the bottom-bar fold down to the bottom edge */
+.customer-info.lowered {
+    bottom: 16px;
+    max-height: calc(100vh - 120px);
 }
 
 .customer-info-header {
@@ -74,7 +82,13 @@
         max-height: none;
         padding: 0 8px 8px;
         gap: 6px;
-        border-radius: 4px;
+        border-radius: 2px;
+    }
+
+    /* The bar (and its fold) don't exist on mobile */
+    .customer-info.lowered {
+        bottom: 114px;
+        max-height: none;
     }
 
     .customer-info-header {

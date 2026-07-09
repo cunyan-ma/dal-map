@@ -9,8 +9,11 @@ const STORY_BEATS = [
     nodeFilter: 'red',
     highlightCountries: ['Kenya'],
     autoFly: null,
-    text: `Xxx is a data worker in Kenya. With the pay of xxx, she is tasked to separate images from violent, to extremely violent, xxxx. (cite Karen Hao, yield person description)`,
-    citation: null,
+    text: `Alex is a data worker in Nairobi, Kenya. Paid at a rate of $1.5 to $3.75 an hour, Alex, along with other folks on the team–Mofat, Bill, and more–review paragraphs of children having intercourse with their father, animals, and even rape, and label them into severities of violence.
+They did not know who this work was done for, or where these paragraphs came from. All they know is they work to label data at a company called Sama.
+`,
+    citation: `https://www.wsj.com/podcasts/the-journal/the-hidden-workforce-that-helped-filter-violence-and-abuse-out-of-chatgpt/ffc2427f-bdd8-47b7-9a4b-27e7267cf413
+`,
   },
   {
     id: 'colombia-venezuela',

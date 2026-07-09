@@ -105,8 +105,10 @@ function MapView({
     selectedCustomer = null,
     customerEdges = [],
     customerCoords = {},
-    viewMode = 'platform-worker',
+    showRedEdges = false,
+    showWhiteEdges = false,
     storyStep = null,
+    barFolded = false,
     onSelectPlatform = () => {},
     onSelectCountry = () => {},
     onSelectCustomer = () => {},
@@ -247,9 +249,17 @@ function MapView({
     }, [selectedPlatform, selectedCustomer, restoreSelectionStyles])
 
     useEffect(() => {
-        const map = L.map(containerRef.current)
+        // Zoom control moves to the bottom-left corner, out of the top-left
+        // control stack's way (margins styled in index.css).
+        const map = L.map(containerRef.current, { zoomControl: false })
+        L.control.zoom({ position: 'bottomleft' }).addTo(map)
         mapRef.current = map
         setWorldView(map)
+
+        // Drop the "Leaflet" prefix from the attribution bar. The tile-provider
+        // credits themselves must stay (license requirement for Stadia/Stamen/OSM
+        // tiles) but are restyled dark and compact in index.css.
+        map.attributionControl.setPrefix(false)
 
         L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_dark/{z}/{x}/{y}{r}.{ext}', {
             minZoom: 0,
@@ -557,7 +567,7 @@ function MapView({
         })
     }, [countries, platforms, customerEdges, customerCoords])
 
-    // ── ViewMode permanent edges ─────────────────────────────────────────
+    // ── Permanent edge layers (toggled from the legend's line rows) ──────
     useEffect(() => {
         const map = mapRef.current
         if (!map) return
@@ -565,15 +575,12 @@ function MapView({
         viewModeEdgesRef.current.forEach(l => map.removeLayer(l))
         viewModeEdgesRef.current = []
 
-        if (!viewMode) return
+        if (!showRedEdges && !showWhiteEdges) return
 
         const rel = relRef.current
         if (!rel) return
 
-        const showRed   = viewMode === 'platform-worker'          || viewMode === 'customer-platform-worker'
-        const showWhite = viewMode === 'customer-platform'        || viewMode === 'customer-platform-worker'
-
-        if (showRed) {
+        if (showRedEdges) {
             Object.entries(rel.orangeByName).forEach(([platform, orangeCoords]) => {
                 ;(rel.redByPlatform[platform] || []).forEach(r => {
                     const line = L.polyline(
@@ -585,7 +592,7 @@ function MapView({
             })
         }
 
-        if (showWhite) {
+        if (showWhiteEdges) {
             customerEdges.forEach(e => {
                 const orangeCoords = rel.orangeByName[e.source]
                 const whiteCoords  = customerCoords[e.target]
@@ -597,7 +604,7 @@ function MapView({
                 viewModeEdgesRef.current.push(line)
             })
         }
-    }, [viewMode, countries, customerEdges, customerCoords])
+    }, [showRedEdges, showWhiteEdges, countries, customerEdges, customerCoords])
 
     // Reset to world view on every story beat change (and on enter/exit)
     useEffect(() => {
@@ -610,6 +617,25 @@ function MapView({
         }, 50)
         return () => clearTimeout(timer)
     }, [storyStep])
+
+    // Folding/unfolding the bottom bar changes the map's height: once the
+    // 0.35s padding transition settles, remeasure and recenter the world view
+    // (unless the user is mid-story or has an active selection to preserve).
+    const prevFoldedRef = useRef(barFolded)
+    useEffect(() => {
+        if (prevFoldedRef.current === barFolded) return // skip mount
+        prevFoldedRef.current = barFolded
+        const map = mapRef.current
+        if (!map) return
+        const timer = setTimeout(() => {
+            map.invalidateSize()
+            if (map.getSize().x === 0) return
+            if (storyStepRef.current !== null) return
+            if (selectedCountryRef.current || selectedPlatformRef.current || selectedCustomerRef.current) return
+            flyToWorldView(map, 0.8)
+        }, 380)
+        return () => clearTimeout(timer)
+    }, [barFolded])
 
     // Beat auto-fly (beat 5 zooms into Silicon Valley)
     useEffect(() => {

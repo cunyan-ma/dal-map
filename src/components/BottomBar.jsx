@@ -1,22 +1,7 @@
 import { useState, useRef, useEffect, useLayoutEffect } from 'react'
-import SearchBox from './SearchBox'
-import FilterPanel from './FilterPanel'
-import StoryBox from './StoryBox'
 import './BottomBar.css'
 
-function BottomBar({
-    countries = [],
-    customerEdges = [],
-    selectedPlatform = null,
-    onSelectPlatform = () => {},
-    selectedCountry = null,
-    onSelectCountry = () => {},
-    selectedCustomer = null,
-    onSelectCustomer = () => {},
-    onEnterStory = () => {},
-}) {
-    const [openFilter, setOpenFilter] = useState(null) // null | 'country' | 'platform' | 'customer'
-
+function BottomBar({ folded = false, onToggleFold = () => {} }) {
     // Responsive blurb. The bottom bar has a fixed height so it never grows up
     // into the map. As the window narrows and the blurb would need more height,
     // we step down through three states instead of letting the bar grow:
@@ -62,52 +47,19 @@ function BottomBar({
         }
     }, [blurbLevel, resizeTick])
 
-    const countryNames  = [...new Set(countries.map(r => r.country).filter(Boolean))].sort()
-    const platformNames = [...new Set(countries.map(r => r.company).filter(Boolean))].sort()
-    const customerNames = [...new Set(customerEdges.map(e => e.target).filter(Boolean))].sort()
-
-    const toggleFilter = (filter) => {
-        setOpenFilter(prev => {
-            const next = prev === filter ? null : filter
-            onSelectPlatform(null)
-            onSelectCountry(null)
-            onSelectCustomer(null)
-            return next
-        })
-    }
-
-    const getFilterItems = () => {
-        if (openFilter === 'country')  return countryNames
-        if (openFilter === 'platform') return platformNames
-        if (openFilter === 'customer') return customerNames
-        return []
-    }
-
-    const getSelectedItem = () => {
-        if (openFilter === 'country')  return selectedCountry
-        if (openFilter === 'platform') return selectedPlatform
-        if (openFilter === 'customer') return selectedCustomer
-        return null
-    }
-
-    const getOnSelect = () => {
-        if (openFilter === 'country')  return onSelectCountry
-        if (openFilter === 'platform') return onSelectPlatform
-        if (openFilter === 'customer') return onSelectCustomer
-        return () => {}
-    }
-
     return (
-        <div className="bottombar">
-            {openFilter && (
-                <FilterPanel
-                    mode={openFilter}
-                    items={getFilterItems()}
-                    selectedItem={getSelectedItem()}
-                    onSelect={getOnSelect()}
-                    onClose={() => toggleFilter(openFilter)}
-                />
-            )}
+        <div className={`bottombar ${folded ? 'bottombar-folded' : ''}`}>
+            {/* Fold tab: rides the bar's top edge, stays peeking when folded */}
+            <button
+                className="bottombar-tab"
+                onClick={onToggleFold}
+                aria-expanded={!folded}
+                aria-label={folded ? 'Show info bar' : 'Hide info bar'}
+            >
+                <svg viewBox="0 0 12 6" width="12" height="6" aria-hidden="true">
+                    <polyline points="1,1 6,5 11,1" fill="none" stroke="currentColor" strokeWidth="1.5" />
+                </svg>
+            </button>
 
             <div className="bottombar-inner" ref={innerRef}>
                 <div className="bottombar-title">
@@ -138,17 +90,6 @@ function BottomBar({
                         </div>
                     </div>
                 )}
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginLeft: 'auto' }}>
-                    <StoryBox onEnterStory={onEnterStory} />
-                    <SearchBox
-                        openFilter={openFilter}
-                        onToggle={toggleFilter}
-                        platformCount={platformNames.length}
-                        countryCount={countryNames.length}
-                        customerCount={customerNames.length}
-                    />
-                </div>
             </div>
         </div>
     )

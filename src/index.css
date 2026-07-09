@@ -74,6 +74,64 @@ input:focus-visible,
   background: #0a0a0a !important;
 }
 
+/* ── Dark restyle of Leaflet's stock controls ─────────────────────────────
+   The +/- zoom buttons and the attribution bar ship with a white theme that
+   clashes with the UI. The attribution itself must stay visible (tile-license
+   requirement for Stadia/Stamen/OSM) but is shrunk and dimmed to blend in. */
+.leaflet-bar {
+  border: 1px solid #2a2a2a !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35) !important;
+  border-radius: 2px !important;
+}
+
+/* Zoom control lives bottom-left; match the 16px corner inset used by the
+   other floating panels. */
+.leaflet-bottom.leaflet-left .leaflet-control-zoom {
+  margin: 0 0 16px 16px;
+}
+
+.leaflet-bar a {
+  background: #111111 !important;
+  color: #cccccc !important;
+  border-bottom: 1px solid #2a2a2a !important;
+  width: 24px !important;
+  height: 24px !important;
+  line-height: 24px !important;
+  font-size: 14px !important;
+}
+
+.leaflet-bar a:first-child {
+  border-top-left-radius: 2px !important;
+  border-top-right-radius: 2px !important;
+}
+
+.leaflet-bar a:last-child {
+  border-bottom: none !important;
+  border-bottom-left-radius: 2px !important;
+  border-bottom-right-radius: 2px !important;
+}
+
+.leaflet-bar a:hover {
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+.leaflet-bar a.leaflet-disabled {
+  background: #111111 !important;
+  color: #555555 !important;
+}
+
+.leaflet-control-attribution {
+  background: rgba(10, 10, 10, 0.75) !important;
+  color: #777777 !important;
+  font-size: 9px !important;
+  padding: 1px 6px !important;
+}
+
+.leaflet-control-attribution a {
+  color: #999999 !important;
+}
+
 #root {
   width: 100%;
   max-width: 100%;

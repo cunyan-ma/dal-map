@@ -9,10 +9,35 @@
     flex: 1;
     position: relative;
     padding-bottom: 150px;
+    /* Animate in step with the bottom bar's fold slide; MapView re-fits the
+       world view once the transition settles. */
+    transition: padding-bottom 0.35s ease;
 }
 
-.map-wrap.in-story {
+.map-wrap.in-story,
+.map-wrap.bar-folded {
     padding-bottom: 0;
+}
+
+/* Top-left control stack over the map: "Show relationship" panel with the
+   story entry point directly beneath it. */
+.map-controls {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+}
+
+@media (max-width: 900px) {
+    .map-controls {
+        top: 8px;
+        left: 8px;
+        gap: 5px;
+    }
 }
 
 /* On mobile the bottom bar collapses to small floating controls, so the map
