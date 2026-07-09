@@ -36,8 +36,14 @@
     border: none;
     padding: 0;
     margin: 0;
-    font: inherit;
+    /* Explicit font metrics (not `font: inherit`, which would pull the root's
+       18px instead of the 12px .legend-item size) so toggle rows match the
+       static rows exactly. */
     font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 0.8;
+    color: #cccccc;
     cursor: pointer;
 }
 
@@ -62,6 +68,7 @@
 }
 
 .legend-swatch {
+    font-size: 9px;
     flex-shrink: 0;
     width: 14px;
     height: 14px;
@@ -78,12 +85,8 @@
     border: none;
 }
 
-.legend-swatch-location {
-    background: #e5312e;
-    border: 1px solid #e5312e;
-}
-
 .legend-swatch-line-customer {
+    font-size: 9px;
     width: 14px;
     height: 2px;
     border-radius: 0;
@@ -128,6 +131,8 @@
 
     .legend-swatch-line-customer,
     .legend-swatch-line-worker {
+        
+        font-size: 9px;
         width: 9px;
         height: 1.5px;
     }

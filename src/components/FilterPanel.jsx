@@ -1,10 +1,10 @@
 import './FilterPanel.css'
 
-function FilterPanel({ mode, items, selectedItem, onSelect, onClose }) {
+function FilterPanel({ mode, items, selectedItem, onSelect, onClose, lowered = false }) {
     const title = mode === 'country' ? 'Countries' : mode === 'customer' ? 'Customers' : 'Platforms'
 
     return (
-        <div className="filter-panel">
+        <div className={`filter-panel ${lowered ? 'lowered' : ''}`}>
             <div className="filter-panel-header">
                 <span>{title}</span>
                 <button className="filter-panel-close" onClick={onClose}>×</button>

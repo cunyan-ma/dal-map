@@ -1,44 +1,33 @@
-.corner-controls {
+/* Search box docked top-right, directly beneath the navbar. */
+.search-dock {
     position: fixed;
+    top: 110px;
     right: 40px;
-    /* Sits just above the 230px bottom bar */
-    bottom: 242px;
-    z-index: 1200;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 8px;
-    transition: bottom 0.35s ease;
+    z-index: 1100;
 }
 
-/* When the bottom bar is folded away, drop the stack to the bottom edge */
-.corner-controls-lowered {
-    bottom: 16px;
-}
-
-/* On mobile the bar is hidden entirely; the controls pin bottom-left over the
-   map (the title/blurb live on the MobileIntro screen instead). */
+/* On mobile the navbar is compact and the filter list uses the right edge,
+   so the search box pins bottom-left over the map (as before). */
 @media (max-width: 900px) {
-    .corner-controls {
-        left: 8px;
+    .search-dock {
+        top: auto;
         right: auto;
         bottom: 8px;
-        gap: 6px;
-        align-items: flex-start;
+        left: 8px;
     }
 
-    .corner-controls .search-box {
+    .search-dock .search-box {
         min-width: 0;
         padding: 6px 10px;
         gap: 2px;
     }
 
-    .corner-controls .search-box-title {
+    .search-dock .search-box-title {
         font-size: 10px;
         margin-bottom: 1px;
     }
 
-    .corner-controls .search-box-item {
+    .search-dock .search-box-item {
         font-size: 10px;
     }
 }

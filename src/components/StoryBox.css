@@ -1,23 +1,20 @@
-/* Panel language matches Legend / ViewModePanel; the navbar orange + bold
-   text make this the highlighted call-to-action on the map. */
+/* Text-only call-to-action beneath the legend; navbar orange + bold makes it
+   the highlighted action on the map. Left padding aligns it with the legend's
+   content inset. */
 .story-box {
-    background: #111111;
-    border: 1px solid #2a2a2a;
-    border-radius: 2px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
-    padding: 8px 12px;
+    padding: 0 12px;
     font-family: Helvetica, Arial, sans-serif;
     font-size: 14px;
     font-weight: 700;
-    line-height: 0.8;
+    line-height: 1;
+    text-align: left;
     color: #e0432a;
     cursor: pointer;
-    transition: color 0.15s, background 0.15s;
+    transition: color 0.15s;
     user-select: none;
 }
 
 .story-box:hover {
-    background: #1a1a1a;
     color: #f2572d;
 }
 
@@ -28,7 +25,7 @@
 
 @media (max-width: 900px) {
     .story-box {
-        padding: 5px 8px;
-        font-size: 9px;
+        padding: 0 8px;
+        font-size: 10px;
     }
 }

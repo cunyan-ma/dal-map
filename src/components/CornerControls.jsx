@@ -3,9 +3,9 @@ import SearchBox from './SearchBox'
 import FilterPanel from './FilterPanel'
 import './CornerControls.css'
 
-// Search controls floating in the bottom-right corner over the map (moved out
-// of the bottom bar so they stay reachable when the bar is folded).
-// `lowered` drops the stack to the bottom edge while the bar is folded.
+// Search controls docked top-right beneath the navbar. The filter list opens
+// anchored to the bottom-right corner, mirroring the info panels bottom-left,
+// and rides the bottom-bar fold (`lowered`) the same way they do.
 function CornerControls({
     countries = [],
     customerEdges = [],
@@ -55,7 +55,17 @@ function CornerControls({
     }
 
     return (
-        <div className={`corner-controls ${lowered ? 'corner-controls-lowered' : ''}`}>
+        <>
+            <div className="search-dock">
+                <SearchBox
+                    openFilter={openFilter}
+                    onToggle={toggleFilter}
+                    platformCount={platformNames.length}
+                    countryCount={countryNames.length}
+                    customerCount={customerNames.length}
+                />
+            </div>
+
             {openFilter && (
                 <FilterPanel
                     mode={openFilter}
@@ -63,17 +73,10 @@ function CornerControls({
                     selectedItem={getSelectedItem()}
                     onSelect={getOnSelect()}
                     onClose={() => toggleFilter(openFilter)}
+                    lowered={lowered}
                 />
             )}
-
-            <SearchBox
-                openFilter={openFilter}
-                onToggle={toggleFilter}
-                platformCount={platformNames.length}
-                countryCount={countryNames.length}
-                customerCount={customerNames.length}
-            />
-        </div>
+        </>
     )
 }
 

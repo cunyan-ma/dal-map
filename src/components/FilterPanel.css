@@ -1,8 +1,12 @@
-/* Rendered as the top item inside .corner-controls, so it stacks above the
-   story/search boxes and moves with them when the bottom bar folds. */
+/* Anchored to the bottom-right corner, mirroring the info panels bottom-left
+   (same bottom offset, border, radius, and fold behavior). */
 .filter-panel {
+    position: fixed;
+    right: 40px;
+    bottom: 242px;
     width: 228px;
-    max-height: min(45vh, calc(100vh - 430px));
+    max-height: calc(100vh - 242px - 80px);
+    transition: bottom 0.35s ease;
     background: #111111;
     border: 1px solid #2a2a2a;
     border-radius: 2px;
@@ -17,10 +21,10 @@
     overflow-y: auto;
 }
 
-/* With the bar folded the stack sits at the bottom edge, so the list can use
-   most of the viewport height. */
-.corner-controls-lowered .filter-panel {
-    max-height: calc(100vh - 200px);
+/* Ride the bottom-bar fold down to the bottom edge (matches the info panels) */
+.filter-panel.lowered {
+    bottom: 16px;
+    max-height: calc(100vh - 120px);
 }
 
 .filter-panel-header {
@@ -95,6 +99,12 @@
         padding: 0 8px 8px;
         gap: 6px;
         border-radius: 2px;
+    }
+
+    /* The bar (and its fold) don't exist on mobile */
+    .filter-panel.lowered {
+        bottom: 8px;
+        max-height: none;
     }
 
     .filter-panel-header {
