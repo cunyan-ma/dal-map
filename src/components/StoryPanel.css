@@ -54,6 +54,7 @@ text-align: left;
     line-height: 1.7;
     color: #e0e0e0;
     margin: 0;
+    white-space: pre-line; /* beats contain paragraph breaks */
 }
 
 .story-panel-citation {

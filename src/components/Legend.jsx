@@ -11,7 +11,8 @@ function Legend({
 }) {
     return (
         <div className="legend">
-            <div className="legend-title">Legend</div>
+        
+        
 
             <div className="legend-item">
                 <svg className="legend-swatch legend-swatch-shape" viewBox="0 0 20 20" aria-hidden="true">

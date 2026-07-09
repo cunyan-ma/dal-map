@@ -325,7 +325,17 @@ function MapView({
         storyLayersRef.current.forEach(l => map.removeLayer(l))
         storyLayersRef.current = []
 
-        const { nodeFilter, highlightCountries } = STORY_BEATS[storyStep]
+        const { nodeFilter, highlightCountries, focusPlatform } = STORY_BEATS[storyStep]
+        const shown = nodeFilter === 'all' ? ['red', 'orange', 'white'] : nodeFilter.split('+')
+        const showRed    = shown.includes('red')
+        const showOrange = shown.includes('orange')
+        const showWhite  = shown.includes('white')
+
+        // Focus-platform beats (Sama, Impact Enterprises): the platform's own
+        // customers are the only white nodes highlighted, its workers the only reds.
+        const focusWhites = focusPlatform
+            ? new Set(customerEdges.filter(e => e.source === focusPlatform).map(e => e.target))
+            : null
 
         const workerRows = countries.filter(row =>
             row.location_lat && row.location_long &&
@@ -333,9 +343,11 @@ function MapView({
             row.company_lat && row.company_long
         )
 
-        if (nodeFilter === 'red' || nodeFilter === 'all') {
+        if (showRed) {
             workerRows.forEach(row => {
-                const highlighted = !highlightCountries || highlightCountries.includes(row.country)
+                const highlighted = focusPlatform
+                    ? row.company === focusPlatform
+                    : !highlightCountries || highlightCountries.includes(row.country)
                 const marker = L.circleMarker(
                     [parseFloat(row.location_lat), parseFloat(row.location_long)],
                     { radius: 10, fillColor: '#e5312e', color: '#e5312e', weight: 1,
@@ -347,27 +359,66 @@ function MapView({
 
         const platformLatLng = buildPlatformByName(platforms)
 
-        if (nodeFilter === 'all') {
-            Object.values(platformLatLng).forEach(coords => {
+        if (showOrange) {
+            // Explicit orange beats (e.g. Silicon Valley) show platforms at full
+            // strength; in 'all' overview beats they stay a quiet background layer.
+            const baseStyle = nodeFilter === 'all'
+                ? { fillOpacity: 0.2, opacity: 1 }
+                : { fillOpacity: 0.5, opacity: 1 }
+            Object.entries(platformLatLng).forEach(([name, coords]) => {
+                const style = focusPlatform
+                    ? (name === focusPlatform
+                        ? { fillOpacity: 0.95, opacity: 1 }
+                        : { fillOpacity: 0.03, opacity: 0.08 })
+                    : baseStyle
                 const marker = L.marker(coords, {
-                    icon: makeShapeIcon('square', '#FF9500', { fillOpacity: 0.2, opacity: 1 })
+                    icon: makeShapeIcon('square', '#FF9500', style)
                 }).addTo(map)
                 storyLayersRef.current.push(marker)
             })
         }
 
-        if (nodeFilter === 'white' || nodeFilter === 'all') {
+        if (showWhite) {
             const mapNames = new Set(Object.keys(platformLatLng))
             const validEdges = customerEdges.filter(e => mapNames.has(e.source) && customerCoords[e.target])
             const rendered = new Set()
             validEdges.forEach(edge => {
                 if (rendered.has(edge.target)) return
                 rendered.add(edge.target)
+                const style = focusPlatform
+                    ? (focusWhites.has(edge.target)
+                        ? { fillOpacity: 0.9, opacity: 1 }
+                        : { fillOpacity: 0.04, opacity: 0.06 })
+                    : { fillOpacity: 0.35, opacity: 0.6 }
                 const marker = L.marker(customerCoords[edge.target], {
-                    icon: makeShapeIcon('triangle', '#ffffff', { fillOpacity: 0.35, opacity: 0.6 })
+                    icon: makeShapeIcon('triangle', '#ffffff', style)
                 }).addTo(map)
                 storyLayersRef.current.push(marker)
             })
+        }
+
+        // Draw the focused platform's edges: solid red worker→platform lines,
+        // dotted white platform→customer lines (matching normal-mode hover styling).
+        if (focusPlatform) {
+            const focusCoords = platformLatLng[focusPlatform]
+            if (focusCoords) {
+                workerRows.filter(r => r.company === focusPlatform).forEach(r => {
+                    const line = L.polyline(
+                        [[parseFloat(r.location_lat), parseFloat(r.location_long)], focusCoords],
+                        { color: '#e5312e', weight: 1.5, opacity: 0.75, smoothFactor: 1 }
+                    ).addTo(map)
+                    storyLayersRef.current.push(line)
+                })
+                focusWhites.forEach(name => {
+                    const c = customerCoords[name]
+                    if (!c) return
+                    const line = L.polyline(
+                        [focusCoords, c],
+                        { color: '#ffffff', weight: 1.5, opacity: 0.75, smoothFactor: 1, dashArray: '2 5' }
+                    ).addTo(map)
+                    storyLayersRef.current.push(line)
+                })
+            }
         }
     }, [storyStep, countries, platforms, customerEdges, customerCoords])
 
@@ -637,7 +688,8 @@ function MapView({
         return () => clearTimeout(timer)
     }, [barFolded])
 
-    // Beat auto-fly (beat 5 zooms into Silicon Valley)
+    // Beat auto-fly (beats 4, 5, and 7 zoom into South/Southeast Asia,
+    // Silicon Valley, and Kenya/Uganda respectively)
     useEffect(() => {
         const map = mapRef.current
         if (!map || storyStep === null) return
