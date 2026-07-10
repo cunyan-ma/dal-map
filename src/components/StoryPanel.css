@@ -57,12 +57,64 @@ text-align: left;
     white-space: pre-line; /* beats contain paragraph breaks */
 }
 
-.story-panel-citation {
+/* In-text [n] citation markers */
+.story-panel-cite-ref {
+    color: #FF9500;
+    text-decoration: none;
     font-family: Helvetica, Arial, sans-serif;
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.6);
+    font-size: 10px;
+    letter-spacing: 0.02em;
+}
+
+.story-panel-cite-ref:hover {
+    text-decoration: underline;
+}
+
+/* Numbered source list under the beat text */
+.story-panel-citations {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.55);
     margin: 0;
+    padding-left: 16px;
+}
+
+.story-panel-citations li {
+    margin-bottom: 4px;
+}
+
+.story-panel-citations a {
+    color: rgba(255, 255, 255, 0.55);
     font-style: italic;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.15s;
+    word-break: break-all;
+}
+
+.story-panel-citations a:hover {
+    color: #fff;
+}
+
+/* Optional per-beat image, shown above the text */
+.story-panel-figure {
+    margin: 0;
+}
+
+.story-panel-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.story-panel-figure figcaption {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 6px;
+    line-height: 1.4;
 }
 
 .story-panel-footer {

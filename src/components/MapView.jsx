@@ -688,8 +688,8 @@ function MapView({
         return () => clearTimeout(timer)
     }, [barFolded])
 
-    // Beat auto-fly (beats 4, 5, and 7 zoom into South/Southeast Asia,
-    // Silicon Valley, and Kenya/Uganda respectively)
+    // Beat auto-fly (the South/Southeast Asia, Silicon Valley, and
+    // Kenya/Uganda beats zoom into their regions)
     useEffect(() => {
         const map = mapRef.current
         if (!map || storyStep === null) return
