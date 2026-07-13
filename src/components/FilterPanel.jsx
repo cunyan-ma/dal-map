@@ -11,12 +11,15 @@ function FilterPanel({ mode, items, selectedItem, onSelect, onClose, lowered = f
             </div>
             <ul className="filter-panel-list">
                 {items.map(name => (
-                    <li
-                        key={name}
-                        className={`clickable ${name === selectedItem ? 'selected' : ''}`}
-                        onClick={() => onSelect(name === selectedItem ? null : name)}
-                    >
-                        {name}
+                    <li key={name}>
+                        <button
+                            type="button"
+                            className={`filter-panel-item ${name === selectedItem ? 'selected' : ''}`}
+                            aria-pressed={name === selectedItem}
+                            onClick={() => onSelect(name === selectedItem ? null : name)}
+                        >
+                            {name}
+                        </button>
                     </li>
                 ))}
             </ul>

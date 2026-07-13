@@ -372,7 +372,8 @@ function MapView({
                         : { fillOpacity: 0.03, opacity: 0.08 })
                     : baseStyle
                 const marker = L.marker(coords, {
-                    icon: makeShapeIcon('square', '#FF9500', style)
+                    icon: makeShapeIcon('square', '#FF9500', style),
+                    keyboard: false
                 }).addTo(map)
                 storyLayersRef.current.push(marker)
             })
@@ -391,7 +392,8 @@ function MapView({
                         : { fillOpacity: 0.04, opacity: 0.06 })
                     : { fillOpacity: 0.35, opacity: 0.6 }
                 const marker = L.marker(customerCoords[edge.target], {
-                    icon: makeShapeIcon('triangle', '#ffffff', style)
+                    icon: makeShapeIcon('triangle', '#ffffff', style),
+                    keyboard: false
                 }).addTo(map)
                 storyLayersRef.current.push(marker)
             })
@@ -534,7 +536,10 @@ function MapView({
         const companyLatLng = buildPlatformByName(platforms)
         Object.entries(companyLatLng).forEach(([platform, [lat, lng]]) => {
             const marker = L.marker([lat, lng], {
-                icon: makeShapeIcon('square', '#FF9500', DEFAULTS.orange)
+                icon: makeShapeIcon('square', '#FF9500', DEFAULTS.orange),
+                // Node navigation is handled through the keyboard-accessible
+                // Search by lists; keep the ~250 markers out of the tab order.
+                keyboard: false
             })
 
             marker.on('mouseover', () => {
@@ -579,7 +584,8 @@ function MapView({
             const coords = customerCoords[edge.target]
             const custName = edge.target
             const marker = L.marker(coords, {
-                icon: makeShapeIcon('triangle', '#ffffff', DEFAULTS.white)
+                icon: makeShapeIcon('triangle', '#ffffff', DEFAULTS.white),
+                keyboard: false
             })
 
             marker.on('mouseover', () => {
@@ -731,7 +737,13 @@ function MapView({
     }, [selectedCountry, countries])
 
     return (
-        <div ref={containerRef} style={{ height: '100%', width: '100%' }} />
+        <div
+            ref={containerRef}
+            style={{ height: '100%', width: '100%' }}
+            role="application"
+            tabIndex={0}
+            aria-label="Interactive map of the AI data-worker supply chain. Once focused, use the arrow keys to pan and the plus and minus keys to zoom. To inspect a specific worker location, platform, or customer and its connections, use the Search by lists in the bottom-right corner."
+        />
     )
 }
 
