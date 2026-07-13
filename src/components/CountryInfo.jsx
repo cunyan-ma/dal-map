@@ -1,9 +1,11 @@
 import './CountryInfo.css'
+import COUNTRY_STORIES from '../data/countryStories'
 
 function CountryInfo({ country, countries = [], onClose, lowered = false }) {
     const rows = countries.filter(r => r.country === country)
     const locations = [...new Set(rows.map(r => r.location).filter(Boolean))]
     const companyNames = [...new Set(rows.map(r => r.company).filter(Boolean))]
+    const stories = COUNTRY_STORIES[country] ?? []
 
     return (
         <div className={`country-info ${lowered ? 'lowered' : ''}`}>
@@ -29,9 +31,22 @@ function CountryInfo({ country, countries = [], onClose, lowered = false }) {
                 })}
             </ul>
 
-            <div className="country-info-description">
-                <span>More country-specific socioeconomic contextualization to come.</span>
-            </div>
+            {stories.length > 0 && (
+                <>
+                    <div className="country-info-description">
+                        <span>Visit the following stories to learn more about data workers in {country}:</span>
+                    </div>
+                    <ul className="country-info-list country-info-stories">
+                        {stories.map(story => (
+                            <li key={story.url}>
+                                <a href={story.url} target="_blank" rel="noopener noreferrer">
+                                    {story.title}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </>
+            )}
         </div>
     )
 }

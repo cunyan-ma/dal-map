@@ -92,6 +92,18 @@
     color: #cccccc;
 }
 
+.country-info-stories a {
+    color: rgba(255, 255, 255, 0.55);
+    font-style: italic;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.15s;
+}
+
+.country-info-stories a:hover {
+    color: #fff;
+}
+
 @media (max-width: 900px) {
     .country-info {
         left: 8px;

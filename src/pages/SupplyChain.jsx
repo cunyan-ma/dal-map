@@ -9,6 +9,8 @@ import CountryInfo from '../components/CountryInfo'
 import CustomerInfo from '../components/CustomerInfo'
 import StoryPanel from '../components/StoryPanel'
 import StoryBox from '../components/StoryBox'
+import StoryFigure from '../components/StoryFigure'
+import STORY_BEATS from '../data/storyBeats.js'
 import MobileIntro from '../components/MobileIntro'
 import './SupplyChain.css'
 
@@ -139,6 +141,10 @@ function SupplyChain() {
                     onSelectCountry={(c) => { setSelectedCountry(c); setSelectedPlatform(null); setSelectedCustomer(null) }}
                     onSelectCustomer={(c) => { setSelectedCustomer(c); setSelectedPlatform(null); setSelectedCountry(null) }}
                 />
+                {inStory && (
+                    // key re-triggers the fade-in when the beat changes
+                    <StoryFigure key={storyStep} image={STORY_BEATS[storyStep].image} />
+                )}
                 {!inStory && (
                     <div className="map-controls">
                         <Legend

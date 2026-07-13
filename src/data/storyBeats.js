@@ -7,8 +7,14 @@
 // citations: array of URLs, numbered [1], [2], ... in the order listed. Write [1]
 //   anywhere in the text to render an in-text superscript link to citations[0];
 //   the full numbered list also appears under the beat text.
-// image: null | { src, alt, caption } — src is a path under public/, e.g.
-//   'story/alex.jpg' for public/story/alex.jpg. Rendered above the beat text.
+// image: null | { src, alt, caption, position, width, rotate } — a photo that
+//   floats over the map (outside the story panel) while the beat is shown.
+//   src:      path under public/, e.g. 'story/alex.jpg' for public/story/alex.jpg
+//   position: CSS offsets placing it on a node-free part of the map,
+//             e.g. { bottom: '10%', right: '6%' } (the default) or
+//             { top: '12%', left: '45%' }. Percentages are of the map area.
+//   width:    px, default 240
+//   rotate:   degrees of tilt, default -2 (set 0 for straight)
 
 const STORY_BEATS = [
   // Beat 1: red nodes in Kenya, worldview
@@ -93,7 +99,13 @@ India and the Philippines are the two largest IT BPO markets in the world. These
     highlightCountries: null,
     autoFly: null,
     focusPlatform: 'Impact Enterprises',
-    image: null,
+    image: {
+      src: 'story/ImpactEnterprises.png',
+      alt: 'Zambian women jumping up and down, jolly',
+      caption: 'Picture of Zambian women on the Impact Enterprises official website. Photo: Impact Enterprises',  // optional
+      position: { bottom: '10%', right: '6%' },  // optional, this is the default
+      width: 240,   // optional, px
+    },
     text: `Sama is not the only company that works with African communities. Impact Enterprises is a data labeling company with a sole delivery center in Zambia. The company website opens with a picture of Zambian women cheerfully jumping under the bright sun. With three white men as its executive board, Impact Enterprises writes:
 “We provide job skills training and income-generating opportunities for youth across Zambia, teaching computer literacy, workplace professionalism, and technical skills that open doors to the global digital economy.”`,
     citations: [],

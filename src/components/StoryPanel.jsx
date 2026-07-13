@@ -39,18 +39,6 @@ function StoryPanel({ step, onStep, onClose }) {
             <button className="story-panel-close" onClick={onClose}>×</button>
 
             <div className="story-panel-body">
-                {beat.image && (
-                    <figure className="story-panel-figure">
-                        <img
-                            src={import.meta.env.BASE_URL + beat.image.src}
-                            alt={beat.image.alt || ''}
-                        />
-                        {beat.image.caption && (
-                            <figcaption>{beat.image.caption}</figcaption>
-                        )}
-                    </figure>
-                )}
-
                 <p className="story-panel-text">
                     {renderWithCitations(beat.text, citations)}
                 </p>

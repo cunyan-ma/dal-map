@@ -1,0 +1,55 @@
+/* Photo floating over the map in story mode: above the leaflet panes and
+   corner controls (z ≤ 1000), below the story panel (1300). pointer-events
+   stays off so the map remains draggable underneath. */
+.story-figure {
+    position: absolute;
+    z-index: 1200;
+    margin: 0;
+    padding: 8px 8px 10px;
+    background: rgba(10, 10, 10, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    transform: rotate(var(--figure-rotate, -2deg));
+    pointer-events: none;
+    animation: figureIn 0.5s ease 0.2s backwards;
+}
+
+@keyframes figureIn {
+    from {
+        opacity: 0;
+        transform: rotate(var(--figure-rotate, -2deg)) translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: rotate(var(--figure-rotate, -2deg)) translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .story-figure {
+        animation: none;
+    }
+}
+
+.story-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.story-figure figcaption {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 8px;
+    line-height: 1.4;
+}
+
+/* The story panel already crowds a small screen; skip the floating photo. */
+@media (max-width: 900px) {
+    .story-figure {
+        display: none;
+    }
+}
