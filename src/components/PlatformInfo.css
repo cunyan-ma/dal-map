@@ -35,6 +35,18 @@
     font-size: 12px;
 }
 
+/* "read more" link to the platform's Data Work Landscape profile */
+.platform-info-profile-link {
+    color: #cccccc;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.15s;
+}
+
+.platform-info-profile-link:hover {
+    color: #ffffff;
+}
+
 .platform-info-header {
     display: flex;
     justify-content: space-between;
