@@ -8,6 +8,7 @@ import PlatformInfo from '../components/PlatformInfo'
 import CountryInfo from '../components/CountryInfo'
 import CustomerInfo from '../components/CustomerInfo'
 import StoryPanel from '../components/StoryPanel'
+import MapTour from '../components/MapTour'
 import StoryBox from '../components/StoryBox'
 import StoryFigure from '../components/StoryFigure'
 import STORY_BEATS from '../data/storyBeats.js'
@@ -68,6 +69,7 @@ function SupplyChain() {
     const [showWhiteEdges, setShowWhiteEdges] = useState(false)
     const [storyStep, setStoryStep] = useState(null)
     const [barFolded, setBarFolded] = useState(false)
+    const [tourStep, setTourStep] = useState(null)
 
     useEffect(() => {
         Promise.all([parseCsv(PLATFORMS_URL), parseCsv(WORKERS_URL)])
@@ -118,6 +120,28 @@ function SupplyChain() {
 
     const handleExitStory = () => {
         setStoryStep(null)
+    }
+
+    // "How to navigate the map" walkthrough. The node step (index 2) opens
+    // the Sama pop-up as its example; every other step keeps panels closed.
+    const handleStartTour = () => {
+        setSelectedPlatform(null)
+        setSelectedCountry(null)
+        setSelectedCustomer(null)
+        setBarFolded(false)
+        setTourStep(0)
+    }
+
+    const handleTourStep = (step) => {
+        setSelectedPlatform(step === 2 ? 'Sama' : null)
+        // Advancing past the fold-tab stop folds the bar, demonstrating it
+        if (step === 1) setBarFolded(true)
+        setTourStep(step)
+    }
+
+    const handleTourClose = () => {
+        setSelectedPlatform(null)
+        setTourStep(null)
     }
 
     const inStory = storyStep !== null
@@ -189,6 +213,15 @@ function SupplyChain() {
                 <BottomBar
                     folded={barFolded}
                     onToggleFold={() => setBarFolded(f => !f)}
+                    onStartTour={handleStartTour}
+                />
+            )}
+
+            {!inStory && tourStep !== null && (
+                <MapTour
+                    step={tourStep}
+                    onStep={handleTourStep}
+                    onClose={handleTourClose}
                 />
             )}
 

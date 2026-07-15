@@ -542,6 +542,14 @@ function MapView({
                 keyboard: false
             })
 
+            // Tag the marker element so the map tour can circle a specific
+            // platform node. Re-applied on every 'add' because story mode
+            // removes and re-adds these markers, rebuilding their elements.
+            marker.on('add', () => {
+                const el = marker.getElement()
+                if (el) el.dataset.platform = platform
+            })
+
             marker.on('mouseover', () => {
                 const rel = relRef.current
                 if (!rel) return

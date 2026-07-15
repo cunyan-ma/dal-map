@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useLayoutEffect } from 'react'
 import './BottomBar.css'
 
-function BottomBar({ folded = false, onToggleFold = () => {} }) {
+function BottomBar({ folded = false, onToggleFold = () => {}, onStartTour = () => {} }) {
     // Responsive blurb. The bottom bar has a fixed height so it never grows up
     // into the map. As the window narrows and the blurb would need more height,
     // we step down through three states instead of letting the bar grow:
@@ -90,6 +90,10 @@ function BottomBar({ folded = false, onToggleFold = () => {} }) {
                         </div>
                     </div>
                 )}
+
+                <button className="bottombar-howto" onClick={onStartTour}>
+                    How to navigate the map
+                </button>
             </div>
         </div>
     )

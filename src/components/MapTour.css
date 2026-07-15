@@ -1,0 +1,104 @@
+/* Full-screen overlay for the "how to navigate the map" walkthrough.
+   z-index sits above the navbar (3100) so rings can circle its links;
+   the SVG is click-through so the map stays usable during the tour. */
+.map-tour-svg {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3400;
+    pointer-events: none;
+}
+
+.map-tour-arrow {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 2;
+}
+
+/* Darkens everything outside the highlighted areas; the SVG mask feathers
+   the holes so the darkness fades in around each highlight. */
+.map-tour-scrim {
+    fill: rgba(0, 0, 0, 0.78);
+}
+
+/* Boxless floating text: readable against the scrim via a soft text shadow.
+   The block itself is click-through; only its buttons take the pointer. */
+.map-tour-card {
+    position: fixed;
+    z-index: 3500;
+    width: 300px;
+    box-sizing: border-box;
+    text-align: left;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.map-tour-close {
+    position: absolute;
+    top: -4px;
+    right: 0;
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    color: #999999;
+    pointer-events: auto;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
+}
+
+.map-tour-close:hover {
+    color: #ffffff;
+}
+
+.map-tour-text {
+    margin: 0 20px 10px 0;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 150%;
+    color: #ffffff;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
+}
+
+.map-tour-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+.map-tour-count {
+    font-size: 12px;
+    font-weight: 700;
+    color: #aaaaaa;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
+}
+
+.map-tour-next {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 700;
+    color: #ffffff;
+    cursor: pointer;
+    pointer-events: auto;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
+    transition: color 0.15s, transform 0.15s;
+}
+
+.map-tour-next:hover {
+    color: #f2572d;
+    transform: translateX(3px);
+}
+
+/* The tour's entry point lives in the bottom bar, which is desktop-only */
+@media (max-width: 900px) {
+    .map-tour-svg,
+    .map-tour-card {
+        display: none;
+    }
+}

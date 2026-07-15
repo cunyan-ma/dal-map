@@ -19,13 +19,14 @@
     margin-bottom: 8px;
     text-align: left;
     font-size: 18px;
-    color: #ffffff;
+    color: #f2572d;
     scroll-margin-top: 80px;
 }
 
 .method-container p,
 .method-container ul {
     line-height: 1.6;
+    font-size: 16px;
     color: #cccccc;
         text-align: left;
 
