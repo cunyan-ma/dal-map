@@ -4,6 +4,7 @@ import SupplyChain from './pages/SupplyChain'
 import AboutPage from './pages/AboutPage'
 import Methodology from './pages/Methodology'
 import Database from './pages/Database'
+import ContactPage from './pages/ContactPage'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/methodology" element={<Methodology />} />
         <Route path="/database" element={<Database />} />
+        <Route path="/contact" element={<ContactPage />} />
       </Routes>
     </HashRouter>
   )

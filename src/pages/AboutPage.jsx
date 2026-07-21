@@ -16,9 +16,9 @@ function AboutPage() {
                 behind AI. It provides the first systematic and
                 quantitative documentation of data workers' distribution around the
                 world by tracking data annotation and labeling (DAL) platforms' worker
-                delivery centers, a first step towards making this opaque 
+                delivery centers, a first step towards making this opaque
                 industry more transparent. This interactive map positions data workers
-                as part of a supply chain in the global AI DAL industry. 
+                as part of a supply chain in the global AI DAL industry.
                 It display a consistent pattern across
                 the industry: What is the structural relationship between AI
                 company customers, the data labeling platforms that intermediate
@@ -26,12 +26,16 @@ function AboutPage() {
             </p>
             <br></br>
             <p>
-                This map is part of the data journalism series: where is the
-                material supply chain behind AI? *insert hyperlink here after
-                finished* *I will also explain the "power mapping" framework
-                here*
+                This map is part of the data journalism series: Power Mapping
+                AI's Materiality. Power mapping is an organizer framework that
+                identifies the loci of power around a target. This project
+                asks: When we power map the material, global supply
+                chain behind AI systems, what power relations do we surface?
+                How do we highlight the material foundation behind AI and
+                recognize how world systems such as neo-liberalism and
+                imperialism dictated the organization of labor and resources?
             </p>
-
+            <br />
             <p>
                 All methodology and limitations, including any LLM use, is documented in the
                 Methodology page.
@@ -49,19 +53,19 @@ function AboutPage() {
                     throughout the world with the interactive map.
                 </li>
                 <li>
-                    Learn about each platform, customer, and worker location, 
+                    Learn about each platform, customer, and worker location,
                     as well as the relationships among them. Do so by
-                    clicking into each node for entity information; hover on 
-                    a node to explore its linkage with other entities; 
-                    use the search box for any specific entity; or use "show 
+                    clicking into each node for entity information; hover on
+                    a node to explore its linkage with other entities;
+                    use the search box for any specific entity; or use "show
                     relationships" to map out the edges between entities.
                 </li>
             </ul>
             <p>
                 Through the visual distribution and the
-                worker country profiles, we hope that users can interrogate 
+                worker country profiles, we hope that users can interrogate
                 the concentration of power behind modern-day AI systems. What
-                does that implicate about this technology we build, what systems 
+                does that implicate about this technology we build, what systems
                 of power is it inheriting and perpetrating, and how
                 should we change that?
             </p>
@@ -72,9 +76,9 @@ function AboutPage() {
             <br></br>
 
             <p>
-                In order for machines to understand a piece of data, it has to 
-                be annotated. This act of annotation is performed by data 
-                workers in the data annotation and labeling (DAL) industry, 
+                In order for machines to understand a piece of data, it has to
+                be annotated. This act of annotation is performed by data
+                workers in the data annotation and labeling (DAL) industry,
                 who make up the foundation of the AI industry.
             </p>
             <br />
@@ -83,7 +87,7 @@ function AboutPage() {
                 design. Half of the industry operates as gig platforms, which
                 treats workers as "contractors" rather than "workers", obscuring
                 away any detail on worker number, location, wage, and more, to the
-                public. 
+                public.
             </p>
             <br></br>
             <p>
@@ -99,17 +103,17 @@ function AboutPage() {
             </p>
             <br />
             <p>
-                However, there is yet to be any systematic documentation of 
-                where these data workers are located. Reliance on journalist 
-                reporting is unable to provide a hollistic overview on the pattern 
-                between worker exploitation and the companies that seek profit 
-                from them. 
+                However, there is yet to be any systematic documentation of
+                where these data workers are located. Reliance on journalist
+                reporting is unable to provide a hollistic overview on the pattern
+                between worker exploitation and the companies that seek profit
+                from them.
             </p>
             <br />
             <p>
-                This project attempts to construct a database that documents 
-                worker location quantitatively and systematically. It does so 
-                by tracking down the DAL platforms that operate on a "Business 
+                This project attempts to construct a database that documents
+                worker location quantitatively and systematically. It does so
+                by tracking down the DAL platforms that operate on a "Business
                 Process Outsourcing" (BPO) Business Model. These companies receive
                 data labeling contracts outsourced from AI companies, then pass
                 them along to their in-house annotation teams assembled across
@@ -143,13 +147,13 @@ function AboutPage() {
                 </ul>
 
             </p> */}
-            
+
             <br></br>
             <p>
-                This documentation is nevertheless imperfect. Information 
-                remains opaque in these BPO platforms, although it's much more 
-                available compared to gig platforms. The overlap between 
-                DAL services and the platforms that provide these services is 
+                This documentation is nevertheless imperfect. Information
+                remains opaque in these BPO platforms, although it's much more
+                available compared to gig platforms. The overlap between
+                DAL services and the platforms that provide these services is
                 imperfect, making scoping a difficult tradeoff.
             </p>
             <br />

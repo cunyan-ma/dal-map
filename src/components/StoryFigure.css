@@ -47,9 +47,21 @@
     line-height: 1.4;
 }
 
-/* The story panel already crowds a small screen; skip the floating photo. */
+/* Mobile is landscape-only for the map; the panel still crowds a small screen,
+   so shrink the floating photo rather than dropping it entirely. */
 @media (max-width: 900px) {
     .story-figure {
-        display: none;
+        max-width: 42vw;
+        padding: 5px 5px 6px;
+    }
+
+    .story-figure img {
+        width: auto;
+        max-width: 100%;
+    }
+
+    .story-figure figcaption {
+        font-size: 9px;
+        margin-top: 5px;
     }
 }

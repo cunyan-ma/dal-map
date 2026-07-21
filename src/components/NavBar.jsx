@@ -67,6 +67,8 @@ function NavBar() {
         </div>
 
         <Link to="/database">Database</Link>
+
+        <Link to="/contact">Contact</Link>
       </div>
     </nav>
   )

@@ -92,6 +92,7 @@ function BottomBar({ folded = false, onToggleFold = () => {}, onStartTour = () =
                 )}
 
                 <button className="bottombar-howto" onClick={onStartTour}>
+                    <span className="bottombar-howto-q" aria-hidden="true">?</span>
                     How to navigate the map
                 </button>
             </div>

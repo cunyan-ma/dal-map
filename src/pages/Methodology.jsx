@@ -76,7 +76,7 @@ function Methodology() {
             <p><b>Scoped within the English media world</b></p>
 
 
-            <p> *unfinished* Currently, this map only contains information available in the
+            <p> Currently, this map only contains information available in the
                 English media world. The map acknowlwedges that this overlooks
                 a large ecosystem of Chinese DAL industry. This is partially by
                 design, however, as the map is interested in understanding a
@@ -219,11 +219,16 @@ function Methodology() {
 
             </p>
 
-            <h2 id="worker-countries">Contextualizing worker countries</h2>
+            <h2 id="worker-countries">Entity-specific contextualizations</h2>
             <p>
-                *unfinished* all manually compiled, by doing deep research into
-                each company's history in DAL industry, their English literacy
-                level, etc.
+                Every entity on the map - worker location, DAL platform, and 
+                customers - has a field for contextualization in their respective 
+                pop-up window. This contextualization is mostly populated with 
+                existing research, such as the Data Worker Inquiry for worker 
+                stories in different countries, Data Work Landscape for 
+                DAL platform profiles, and journalist pieces that tell the story 
+                of workers of specific countries/platforms. These sources are 
+                manually searched and compiled.
             </p>
 
         </div>

@@ -95,10 +95,14 @@
     transform: translateX(3px);
 }
 
-/* The tour's entry point lives in the bottom bar, which is desktop-only */
+/* On mobile the map is landscape-only and narrower, so keep the card from
+   crowding the screen. The tour itself runs on both layouts. */
 @media (max-width: 900px) {
-    .map-tour-svg,
     .map-tour-card {
-        display: none;
+        width: min(280px, 62vw);
+    }
+
+    .map-tour-text {
+        font-size: 13px;
     }
 }

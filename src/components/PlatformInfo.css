@@ -35,16 +35,17 @@
     font-size: 12px;
 }
 
-/* "read more" link to the platform's Data Work Landscape profile */
-.platform-info-profile-link {
-    color: #cccccc;
+/* Story links, matching the country popup's list */
+.platform-info-stories a {
+    color: rgba(255, 255, 255, 0.55);
+    font-style: italic;
     text-decoration: underline;
     text-underline-offset: 2px;
     transition: color 0.15s;
 }
 
-.platform-info-profile-link:hover {
-    color: #ffffff;
+.platform-info-stories a:hover {
+    color: #fff;
 }
 
 .platform-info-header {

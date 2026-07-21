@@ -1,11 +1,11 @@
-import DWL_PROFILES from '../data/dwlProfiles.js'
 import './PlatformInfo.css'
+import PLATFORM_STORIES from '../data/platformStories'
 
 function PlatformInfo({ platform, countries = [], onClose, lowered = false }) {
     const rows = countries.filter(r => r.company === platform)
     const locations = [...new Set(rows.map(r => r.location).filter(Boolean))]
     const countryNames = [...new Set(rows.map(r => r.country).filter(Boolean))]
-    const profileUrl = DWL_PROFILES[platform]
+    const stories = PLATFORM_STORIES[platform] ?? []
 
     return (
         <div className={`platform-info ${lowered ? 'lowered' : ''}`}>
@@ -31,17 +31,21 @@ function PlatformInfo({ platform, countries = [], onClose, lowered = false }) {
                 })}
             </ul>
 
-            {profileUrl && (
-                <div className="platform-info-description">
-                    <a
-                        className="platform-info-profile-link"
-                        href={profileUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        Read more about {platform} from TechEquity's profile.
-                    </a>
-                </div>
+            {stories.length > 0 && (
+                <>
+                    <div className="platform-info-description">
+                        <span>Learn more about {platform} here:</span>
+                    </div>
+                    <ul className="platform-info-list platform-info-stories">
+                        {stories.map(story => (
+                            <li key={story.url}>
+                                <a href={story.url} target="_blank" rel="noopener noreferrer">
+                                    {story.title}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </>
             )}
 
             {/* <div className="platform-info-stat">

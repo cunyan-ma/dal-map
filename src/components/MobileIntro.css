@@ -61,91 +61,67 @@
     line-height: 145%;
 }
 
-/* Portrait: rotate prompt */
+/* Portrait: rotate prompt — icon on the left, instruction on the right */
 .mobile-intro-rotate {
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin-top: 4px;
+    gap: 16px;
+    margin-top: 8px;
     color: #e0432a;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 15px;
+    line-height: 1.3;
     letter-spacing: 0.02em;
 }
 
-.mobile-intro-phone {
+.mobile-intro-rotate span {
+    max-width: 220px;
+}
+
+.mobile-intro-rotate-icon {
     flex-shrink: 0;
-    width: 72px;
-    height: 72px;
+    width: 76px;
+    height: 76px;
+    overflow: visible;
+}
+
+/* The phone tips from portrait to landscape and holds, on a loop. */
+.mobile-intro-phone {
     transform-origin: 60px 60px;
-    animation: mobile-intro-rotate 2.4s ease-in-out infinite;
+    animation: mobile-intro-turn 3s ease-in-out infinite;
 }
 
 .mobile-intro-phone-body {
     fill: none;
     stroke: #ffffff;
-    stroke-width: 3;
-}
-
-.mobile-intro-phone-speaker {
-    stroke: #ffffff;
-    stroke-width: 2.4;
-    stroke-linecap: round;
+    stroke-width: 3.5;
 }
 
 .mobile-intro-phone-home {
-    fill: #ffffff;
+    stroke: #ffffff;
+    stroke-width: 3;
+    stroke-linecap: round;
 }
 
-.mobile-intro-arrow,
-.mobile-intro-arrow-head {
+/* The curved arrow tracing the same turn stays put while the phone rotates. */
+.mobile-intro-turn-arc,
+.mobile-intro-turn-head {
+    fill: none;
     stroke: #e0432a;
-    stroke-width: 3;
+    stroke-width: 3.5;
     stroke-linecap: round;
     stroke-linejoin: round;
 }
 
-@keyframes mobile-intro-rotate {
-    0%, 18%   { transform: rotate(0deg); }
-    50%, 68%  { transform: rotate(-90deg); }
+@keyframes mobile-intro-turn {
+    0%, 22%   { transform: rotate(0deg); }
+    55%, 82%  { transform: rotate(90deg); }
     100%      { transform: rotate(0deg); }
 }
 
-/* Landscape: enter button */
-.mobile-intro-enter {
-    margin-top: 4px;
-    background: #e0432a;
-    color: #ffffff;
-    border: none;
-    border-radius: 2px;
-    padding: 14px 28px;
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    cursor: pointer;
-    transition: background 0.15s;
-}
-
-.mobile-intro-enter:hover,
-.mobile-intro-enter:active {
-    background: #c5371f;
-}
-
-/* In landscape on a short phone, keep everything compact and scrollable */
-@media (orientation: landscape) and (max-height: 500px) {
-    .mobile-intro-content {
-        padding: 52px 24px 18px;
-        gap: 14px;
-        max-width: 720px;
-    }
-
-    .mobile-intro-title {
-        font-size: clamp(30px, 8vh, 46px);
-    }
-
-    .mobile-intro-blurb {
-        font-size: 13px;
-        line-height: 132%;
+@media (prefers-reduced-motion: reduce) {
+    .mobile-intro-phone {
+        animation: none;
+        transform: rotate(90deg);
     }
 }

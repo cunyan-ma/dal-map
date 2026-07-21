@@ -1,7 +1,8 @@
-/* Search box docked top-right, directly beneath the navbar. */
+/* Search box docked top-right, clear of the navbar (which now runs five links
+   deep, ending near y=112). */
 .search-dock {
     position: fixed;
-    top: 110px;
+    top: 136px;
     right: 40px;
     z-index: 1100;
 }

@@ -9,10 +9,13 @@ import CountryInfo from '../components/CountryInfo'
 import CustomerInfo from '../components/CustomerInfo'
 import StoryPanel from '../components/StoryPanel'
 import MapTour from '../components/MapTour'
+import { getTourSteps } from '../components/tourSteps'
 import StoryBox from '../components/StoryBox'
+import TourChip from '../components/TourChip'
 import StoryFigure from '../components/StoryFigure'
 import STORY_BEATS from '../data/storyBeats.js'
 import MobileIntro from '../components/MobileIntro'
+import { useIsMobile } from '../hooks/useMediaQuery'
 import './SupplyChain.css'
 
 const PLATFORMS_URL = '/dal-map/dal-platforms.csv'         // orange nodes: platform HQs
@@ -71,6 +74,11 @@ function SupplyChain() {
     const [barFolded, setBarFolded] = useState(false)
     const [tourStep, setTourStep] = useState(null)
 
+    const isMobile = useIsMobile()
+    // Mobile drops the desktop-only "fold the bottom bar" step; both layouts
+    // otherwise share the same walkthrough.
+    const tourSteps = useMemo(() => getTourSteps(isMobile), [isMobile])
+
     useEffect(() => {
         Promise.all([parseCsv(PLATFORMS_URL), parseCsv(WORKERS_URL)])
             .then(([platformRows, workers]) => {
@@ -122,8 +130,9 @@ function SupplyChain() {
         setStoryStep(null)
     }
 
-    // "How to navigate the map" walkthrough. The node step (index 2) opens
-    // the Sama pop-up as its example; every other step keeps panels closed.
+    // "How to navigate the map" walkthrough. Each step's side effects come from
+    // its config (see getTourSteps): `platform` opens that pop-up as the example,
+    // `foldBar` folds the desktop bottom bar to demonstrate it.
     const handleStartTour = () => {
         setSelectedPlatform(null)
         setSelectedCountry(null)
@@ -133,9 +142,9 @@ function SupplyChain() {
     }
 
     const handleTourStep = (step) => {
-        setSelectedPlatform(step === 2 ? 'Sama' : null)
-        // Advancing past the fold-tab stop folds the bar, demonstrating it
-        if (step === 1) setBarFolded(true)
+        const cfg = tourSteps[step] || {}
+        setSelectedPlatform(cfg.platform ?? null)
+        if (cfg.foldBar) setBarFolded(true)
         setTourStep(step)
     }
 
@@ -217,9 +226,16 @@ function SupplyChain() {
                 />
             )}
 
+            {/* The bar hosts the tour trigger; when it folds away (or on mobile,
+                where there's no bar) the floating chip takes over. */}
+            {!inStory && (barFolded || isMobile) && (
+                <TourChip onClick={handleStartTour} />
+            )}
+
             {!inStory && tourStep !== null && (
                 <MapTour
                     step={tourStep}
+                    steps={tourSteps}
                     onStep={handleTourStep}
                     onClose={handleTourClose}
                 />

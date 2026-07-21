@@ -1,0 +1,71 @@
+/* Floating tour trigger that appears when the bottom bar (and its in-bar pill)
+   slides away, or on mobile where there's no bar. Matches the in-bar pill's
+   look (.bottombar-howto) — outlined red pill, red "?" — over an opaque dark
+   backing (the bar's tint composited onto its background) so it stays legible
+   floating over the map. Sits bottom-right, clear of the Leaflet attribution. */
+.tour-chip {
+    position: fixed;
+    right: 40px;
+    bottom: 28px;
+    z-index: 1200;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #1c110f;
+    border: 1px solid #e0432a;
+    color: #ffffff;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 8px 15px;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    transition: background 0.15s;
+    animation: tour-chip-in 0.25s ease backwards;
+}
+
+.tour-chip:hover {
+    background: #2a1613;
+}
+
+.tour-chip-q {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 1.5px solid #e0432a;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    line-height: 1;
+    color: #e0432a;
+}
+
+@keyframes tour-chip-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tour-chip { animation: none; }
+}
+
+/* Mobile: smaller, tucked bottom-right above the attribution line (the search
+   box lives bottom-left, so this corner is free). */
+@media (max-width: 900px) {
+    .tour-chip {
+        right: 8px;
+        bottom: 22px;
+        font-size: 11px;
+        gap: 7px;
+        padding: 6px 12px;
+    }
+
+    .tour-chip-q {
+        width: 15px;
+        height: 15px;
+        font-size: 10px;
+    }
+}

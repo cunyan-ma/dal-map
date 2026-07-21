@@ -1,0 +1,102 @@
+.contact-container {
+    box-sizing: border-box;
+    /* Standard page padding, matches the About/Database pages */
+    padding: 80px 40px 40px;
+    max-width: 900px;
+    color: #e0e0e0;
+}
+
+.contact-container h1 {
+    margin: 0 0 12px 0;
+    text-align: left;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.contact-container h2 {
+    margin-top: 28px;
+    margin-bottom: 8px;
+    text-align: left;
+    font-size: 18px;
+    color: #f2572d;
+}
+
+.contact-container p {
+    line-height: 1.6;
+    font-size: 16px;
+    color: #cccccc;
+    text-align: left;
+}
+
+.contact-container a {
+    color: #f2572d;
+    text-decoration: underline;
+}
+
+.contact-container a:hover {
+    color: #ff7a55;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 420px;
+    margin-top: 16px;
+}
+
+.contact-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+}
+
+.contact-field span {
+    font-size: 13px;
+    font-weight: 700;
+    color: #cccccc;
+}
+
+.contact-field input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px 12px;
+    background: #111111;
+    border: 1px solid #2a2a2a;
+    border-radius: 2px;
+    color: #ffffff;
+    font-size: 15px;
+    font-family: inherit;
+}
+
+.contact-field input:focus {
+    outline: none;
+    border-color: #e0432a;
+}
+
+.contact-submit {
+    align-self: flex-start;
+    margin-top: 4px;
+    padding: 10px 24px;
+    background: #e0432a;
+    border: none;
+    border-radius: 2px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.contact-submit:hover {
+    background: #f2572d;
+}
+
+@media (max-width: 900px) {
+    .contact-container {
+        padding: 64px 20px 32px;
+    }
+}

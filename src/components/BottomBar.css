@@ -98,22 +98,42 @@
     color: #e0e0e0;
 }
 
+/* Promoted from a text link to a pill so the map's primary onboarding action
+   reads as an action, not a footnote. When the bar folds away this trigger
+   goes with it — the floating TourChip takes over (see SupplyChain). */
 .bottombar-howto {
     margin-left: auto;
     flex-shrink: 0;
-    background: none;
-    border: none;
-    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(224, 67, 42, 0.12);
+    border: 1px solid #e0432a;
+    padding: 8px 15px;
+    border-radius: 999px;
     font-size: 13px;
     font-weight: 700;
-    color: #cccccc;
-    text-decoration: underline;
-    text-underline-offset: 3px;
+    color: #ffffff;
     cursor: pointer;
+    transition: background 0.15s;
 }
 
 .bottombar-howto:hover {
-    color: #ffffff;
+    background: rgba(224, 67, 42, 0.22);
+}
+
+.bottombar-howto-q {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 1.5px solid #e0432a;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    line-height: 1;
+    color: #e0432a;
 }
 
 /* On mobile the title + blurb live on the rotate/intro screen and the
