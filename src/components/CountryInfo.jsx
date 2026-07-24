@@ -1,5 +1,5 @@
 import './CountryInfo.css'
-import COUNTRY_STORIES from '../data/countryStories'
+import COUNTRY_STORIES from '../src/data/countryStories'
 
 function CountryInfo({ country, countries = [], onClose, lowered = false }) {
     const rows = countries.filter(r => r.country === country)

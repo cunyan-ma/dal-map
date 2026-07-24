@@ -1,5 +1,5 @@
 import './PlatformInfo.css'
-import PLATFORM_STORIES from '../data/platformStories'
+import PLATFORM_STORIES from '../src/data/platformStories'
 
 function PlatformInfo({ platform, countries = [], onClose, lowered = false }) {
     const rows = countries.filter(r => r.company === platform)
@@ -20,7 +20,7 @@ function PlatformInfo({ platform, countries = [], onClose, lowered = false }) {
                 </span>
             </div>
 
-             <ul className="platform-info-list">
+            <ul className="platform-info-list">
                 {locations.map(loc => {
                     const row = rows.find(r => r.location === loc)
                     return (

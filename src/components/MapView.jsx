@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import STORY_BEATS from '../data/storyBeats.js'
+import STORY_BEATS from '../src/data/storyBeats.js'
 
 // Orange node coordinates, sourced directly from dal-platforms.csv (name → [lat, lng]).
 function buildPlatformByName(platforms) {
@@ -18,19 +18,19 @@ function buildPlatformByName(platforms) {
 
 // Default opacities for each node type
 const DEFAULTS = {
-    red:    { fillOpacity: 0.5,  opacity: 0.7 },
-    orange: { fillOpacity: 0.5, opacity: 1   },
-    white:  { fillOpacity: 0.5,  opacity: 0.5 },
+    red: { fillOpacity: 0.5, opacity: 0.7 },
+    orange: { fillOpacity: 0.5, opacity: 1 },
+    white: { fillOpacity: 0.5, opacity: 0.5 },
 }
 const HIGHLIGHT = {
-    red:    { fillOpacity: 0.95, opacity: 1   },
-    orange: { fillOpacity: 0.95, opacity: 1   },
-    white:  { fillOpacity: 0.9,  opacity: 1   },
+    red: { fillOpacity: 0.95, opacity: 1 },
+    orange: { fillOpacity: 0.95, opacity: 1 },
+    white: { fillOpacity: 0.9, opacity: 1 },
 }
 const DIMMED = {
-    red:    { fillOpacity: 0.04, opacity: 0.04 },
+    red: { fillOpacity: 0.04, opacity: 0.04 },
     orange: { fillOpacity: 0.03, opacity: 0.04 },
-    white:  { fillOpacity: 0.04, opacity: 0.04 },
+    white: { fillOpacity: 0.04, opacity: 0.04 },
 }
 
 // Shape-code the node types so they stay distinguishable for color-blind viewers:
@@ -109,9 +109,9 @@ function MapView({
     showWhiteEdges = false,
     storyStep = null,
     barFolded = false,
-    onSelectPlatform = () => {},
-    onSelectCountry = () => {},
-    onSelectCustomer = () => {},
+    onSelectPlatform = () => { },
+    onSelectCountry = () => { },
+    onSelectCustomer = () => { },
 }) {
     const containerRef = useRef(null)
     const mapRef = useRef(null)
@@ -139,14 +139,14 @@ function MapView({
     // Refs that keep prop values current inside stale closures
     const selectedPlatformRef = useRef(selectedPlatform)
     const selectedCustomerRef = useRef(selectedCustomer)
-    const customerCoordsRef   = useRef(customerCoords)
-    const selectedCountryRef  = useRef(selectedCountry)
-    const storyStepRef        = useRef(storyStep)
+    const customerCoordsRef = useRef(customerCoords)
+    const selectedCountryRef = useRef(selectedCountry)
+    const storyStepRef = useRef(storyStep)
     useEffect(() => { selectedPlatformRef.current = selectedPlatform }, [selectedPlatform])
     useEffect(() => { selectedCustomerRef.current = selectedCustomer }, [selectedCustomer])
-    useEffect(() => { customerCoordsRef.current   = customerCoords   }, [customerCoords])
-    useEffect(() => { selectedCountryRef.current  = selectedCountry  }, [selectedCountry])
-    useEffect(() => { storyStepRef.current        = storyStep        }, [storyStep])
+    useEffect(() => { customerCoordsRef.current = customerCoords }, [customerCoords])
+    useEffect(() => { selectedCountryRef.current = selectedCountry }, [selectedCountry])
+    useEffect(() => { storyStepRef.current = storyStep }, [storyStep])
 
     // Ref holding the latest restoreSelectionStyles so clearHover (inside a stale closure) can call it
     const restoreSelectionStylesRef = useRef(null)
@@ -156,7 +156,7 @@ function MapView({
     const restoreSelectionStyles = useCallback(() => {
         const platform = selectedPlatformRef.current
         const customer = selectedCustomerRef.current
-        const rel      = relRef.current
+        const rel = relRef.current
 
         if (!platform && !customer) {
             redMarkersRef.current.forEach(({ marker }) => applyStyle(marker, DEFAULTS.red))
@@ -168,25 +168,25 @@ function MapView({
         if (platform) {
             const connectedWhites = new Set(rel?.custEdgesBySource[platform] || [])
             redMarkersRef.current.forEach(({ marker: m, row: r }) =>
-                applyStyle(m,r.company === platform ? HIGHLIGHT.red : DIMMED.red))
+                applyStyle(m, r.company === platform ? HIGHLIGHT.red : DIMMED.red))
             orangeMarkersRef.current.forEach(({ marker: m, platform: p }) =>
-                applyStyle(m,p === platform ? HIGHLIGHT.orange : DIMMED.orange))
+                applyStyle(m, p === platform ? HIGHLIGHT.orange : DIMMED.orange))
             whiteMarkersRef.current.forEach(({ marker: m, name }) =>
-                applyStyle(m,connectedWhites.has(name) ? HIGHLIGHT.white : DIMMED.white))
+                applyStyle(m, connectedWhites.has(name) ? HIGHLIGHT.white : DIMMED.white))
         }
 
         if (customer) {
             const connectedOranges = new Set(rel?.custEdgesByTarget[customer] || [])
             const connectedRedRows = new Set()
             connectedOranges.forEach(p => {
-                ;(rel?.redByPlatform[p] || []).forEach(r => connectedRedRows.add(r))
+                ; (rel?.redByPlatform[p] || []).forEach(r => connectedRedRows.add(r))
             })
             whiteMarkersRef.current.forEach(({ marker: m, name }) =>
-                applyStyle(m,name === customer ? HIGHLIGHT.white : DIMMED.white))
+                applyStyle(m, name === customer ? HIGHLIGHT.white : DIMMED.white))
             orangeMarkersRef.current.forEach(({ marker: m, platform: p }) =>
-                applyStyle(m,connectedOranges.has(p) ? HIGHLIGHT.orange : DIMMED.orange))
+                applyStyle(m, connectedOranges.has(p) ? HIGHLIGHT.orange : DIMMED.orange))
             redMarkersRef.current.forEach(({ marker: m, row: r }) =>
-                applyStyle(m,connectedRedRows.has(r) ? HIGHLIGHT.red : DIMMED.red))
+                applyStyle(m, connectedRedRows.has(r) ? HIGHLIGHT.red : DIMMED.red))
         }
     }, [])
 
@@ -219,10 +219,10 @@ function MapView({
         }
 
         if (selectedPlatform) {
-            const orangeCoords    = rel.orangeByName[selectedPlatform]
+            const orangeCoords = rel.orangeByName[selectedPlatform]
             const connectedWhites = new Set(rel.custEdgesBySource[selectedPlatform] || [])
             if (orangeCoords) {
-                ;(rel.redByPlatform[selectedPlatform] || []).forEach(r => {
+                ; (rel.redByPlatform[selectedPlatform] || []).forEach(r => {
                     addSelectionEdge([parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords, '#e5312e')
                 })
                 connectedWhites.forEach(name => {
@@ -240,9 +240,9 @@ function MapView({
                     const orangeCoords = rel.orangeByName[p]
                     if (!orangeCoords) return
                     addSelectionEdge(orangeCoords, custCoords, '#ffffff')
-                    ;(rel.redByPlatform[p] || []).forEach(r => {
-                        addSelectionEdge([parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords, '#e5312e')
-                    })
+                        ; (rel.redByPlatform[p] || []).forEach(r => {
+                            addSelectionEdge([parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords, '#e5312e')
+                        })
                 })
             }
         }
@@ -327,9 +327,9 @@ function MapView({
 
         const { nodeFilter, highlightCountries, focusPlatform } = STORY_BEATS[storyStep]
         const shown = nodeFilter === 'all' ? ['red', 'orange', 'white'] : nodeFilter.split('+')
-        const showRed    = shown.includes('red')
+        const showRed = shown.includes('red')
         const showOrange = shown.includes('orange')
-        const showWhite  = shown.includes('white')
+        const showWhite = shown.includes('white')
 
         // Focus-platform beats (Sama, Impact Enterprises): the platform's own
         // customers are the only white nodes highlighted, its workers the only reds.
@@ -350,8 +350,10 @@ function MapView({
                     : !highlightCountries || highlightCountries.includes(row.country)
                 const marker = L.circleMarker(
                     [parseFloat(row.location_lat), parseFloat(row.location_long)],
-                    { radius: 10, fillColor: '#e5312e', color: '#e5312e', weight: 1,
-                      fillOpacity: highlighted ? 0.85 : 0.05, opacity: highlighted ? 0.9 : 0.05 }
+                    {
+                        radius: 10, fillColor: '#e5312e', color: '#e5312e', weight: 1,
+                        fillOpacity: highlighted ? 0.85 : 0.05, opacity: highlighted ? 0.9 : 0.05
+                    }
                 ).addTo(map)
                 storyLayersRef.current.push(marker)
             })
@@ -508,11 +510,11 @@ function MapView({
                 const connectedWhites = new Set(rel.custEdgesBySource[platform] || [])
 
                 redMarkersRef.current.forEach(({ marker: m, row: r }) =>
-                    applyStyle(m,r === row ? HIGHLIGHT.red : DIMMED.red))
+                    applyStyle(m, r === row ? HIGHLIGHT.red : DIMMED.red))
                 orangeMarkersRef.current.forEach(({ marker: m, platform: p }) =>
-                    applyStyle(m,p === platform ? HIGHLIGHT.orange : DIMMED.orange))
+                    applyStyle(m, p === platform ? HIGHLIGHT.orange : DIMMED.orange))
                 whiteMarkersRef.current.forEach(({ marker: m, name }) =>
-                    applyStyle(m,connectedWhites.has(name) ? HIGHLIGHT.white : DIMMED.white))
+                    applyStyle(m, connectedWhites.has(name) ? HIGHLIGHT.white : DIMMED.white))
 
                 const orangeCoords = rel.orangeByName[platform]
                 if (orangeCoords) {
@@ -557,15 +559,15 @@ function MapView({
                 const orangeCoords = [lat, lng]
 
                 redMarkersRef.current.forEach(({ marker: m, row: r }) =>
-                    applyStyle(m,r.company === platform ? HIGHLIGHT.red : DIMMED.red))
+                    applyStyle(m, r.company === platform ? HIGHLIGHT.red : DIMMED.red))
                 orangeMarkersRef.current.forEach(({ marker: m, platform: p }) =>
-                    applyStyle(m,p === platform ? HIGHLIGHT.orange : DIMMED.orange))
+                    applyStyle(m, p === platform ? HIGHLIGHT.orange : DIMMED.orange))
                 whiteMarkersRef.current.forEach(({ marker: m, name }) =>
-                    applyStyle(m,connectedWhites.has(name) ? HIGHLIGHT.white : DIMMED.white))
+                    applyStyle(m, connectedWhites.has(name) ? HIGHLIGHT.white : DIMMED.white))
 
-                ;(rel.redByPlatform[platform] || []).forEach(r => {
-                    addEdge([parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords, '#e5312e')
-                })
+                    ; (rel.redByPlatform[platform] || []).forEach(r => {
+                        addEdge([parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords, '#e5312e')
+                    })
                 connectedWhites.forEach(name => {
                     const c = customerCoords[name]
                     if (c) addEdge(orangeCoords, c, '#ffffff')
@@ -603,23 +605,23 @@ function MapView({
 
                 const connectedRedRows = new Set()
                 connectedOranges.forEach(platform => {
-                    ;(rel.redByPlatform[platform] || []).forEach(r => connectedRedRows.add(r))
+                    ; (rel.redByPlatform[platform] || []).forEach(r => connectedRedRows.add(r))
                 })
 
                 whiteMarkersRef.current.forEach(({ marker: m, name }) =>
-                    applyStyle(m,name === custName ? HIGHLIGHT.white : DIMMED.white))
+                    applyStyle(m, name === custName ? HIGHLIGHT.white : DIMMED.white))
                 orangeMarkersRef.current.forEach(({ marker: m, platform }) =>
-                    applyStyle(m,connectedOranges.has(platform) ? HIGHLIGHT.orange : DIMMED.orange))
+                    applyStyle(m, connectedOranges.has(platform) ? HIGHLIGHT.orange : DIMMED.orange))
                 redMarkersRef.current.forEach(({ marker: m, row: r }) =>
-                    applyStyle(m,connectedRedRows.has(r) ? HIGHLIGHT.red : DIMMED.red))
+                    applyStyle(m, connectedRedRows.has(r) ? HIGHLIGHT.red : DIMMED.red))
 
                 connectedOranges.forEach(platform => {
                     const orangeCoords = rel.orangeByName[platform]
                     if (!orangeCoords) return
                     addEdge(orangeCoords, coords, '#ffffff')
-                    ;(rel.redByPlatform[platform] || []).forEach(r => {
-                        addEdge([parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords, '#e5312e')
-                    })
+                        ; (rel.redByPlatform[platform] || []).forEach(r => {
+                            addEdge([parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords, '#e5312e')
+                        })
                 })
             })
 
@@ -647,7 +649,7 @@ function MapView({
 
         if (showRedEdges) {
             Object.entries(rel.orangeByName).forEach(([platform, orangeCoords]) => {
-                ;(rel.redByPlatform[platform] || []).forEach(r => {
+                ; (rel.redByPlatform[platform] || []).forEach(r => {
                     const line = L.polyline(
                         [[parseFloat(r.location_lat), parseFloat(r.location_long)], orangeCoords],
                         { color: '#e5312e', weight: 1, opacity: 0.4, smoothFactor: 1 }
@@ -660,7 +662,7 @@ function MapView({
         if (showWhiteEdges) {
             customerEdges.forEach(e => {
                 const orangeCoords = rel.orangeByName[e.source]
-                const whiteCoords  = customerCoords[e.target]
+                const whiteCoords = customerCoords[e.target]
                 if (!orangeCoords || !whiteCoords) return
                 const line = L.polyline(
                     [orangeCoords, whiteCoords],
