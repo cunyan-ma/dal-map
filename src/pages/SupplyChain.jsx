@@ -18,9 +18,12 @@ import MobileIntro from '../components/MobileIntro'
 import { useIsMobile } from '../hooks/useMediaQuery'
 import './SupplyChain.css'
 
-const PLATFORMS_URL = '/dal-map/dal-platforms.csv'         // orange nodes: platform HQs
-const WORKERS_URL = '/dal-map/worker-location.csv'         // red nodes: worker delivery centers
-const PLATFORM_CUSTOMER_URL = '/dal-map/platform-customer.csv' // white nodes + white edges
+// Served from public/, so they live at the app's base URL — which is the
+// domain root on Vercel and /dal-map/ on GitHub Pages. BASE_URL keeps both right.
+const BASE = import.meta.env.BASE_URL
+const PLATFORMS_URL = `${BASE}dal-platforms.csv`         // orange nodes: platform HQs
+const WORKERS_URL = `${BASE}worker-location.csv`         // red nodes: worker delivery centers
+const PLATFORM_CUSTOMER_URL = `${BASE}platform-customer.csv` // white nodes + white edges
 
 // Promise wrapper around Papa.parse so the two source sheets can be joined once both load.
 function parseCsv(url) {

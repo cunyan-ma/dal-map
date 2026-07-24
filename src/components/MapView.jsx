@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import STORY_BEATS from '../src/data/storyBeats.js'
+import STORY_BEATS from '../data/storyBeats.js'
 
 // Orange node coordinates, sourced directly from dal-platforms.csv (name → [lat, lng]).
 function buildPlatformByName(platforms) {

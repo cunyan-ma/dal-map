@@ -1,5 +1,5 @@
 import './PlatformInfo.css'
-import PLATFORM_STORIES from '../src/data/platformStories'
+import PLATFORM_STORIES from '../data/platformStories'
 
 function PlatformInfo({ platform, countries = [], onClose, lowered = false }) {
     const rows = countries.filter(r => r.company === platform)
