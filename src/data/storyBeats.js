@@ -25,15 +25,9 @@ const STORY_BEATS = [
     autoFly: null,
     focusPlatform: null,
     image: null,
-    text: `Alex is a data worker in Nairobi, Kenya. Paid at a rate of $1.5 to
-     $3.75 an hour, Alex and his team would review paragraphs of horrifying violence: 
-     someone stabbing himself; children having sex with their parents or with 
-     each other; sometimes, rape. Workers like Alex label these passages into 
-     severities of violence in the day, and at night, fight with the nightmares 
-     induced by these writings.
+    text: `Alex is a data worker in Nairobi, Kenya. Paid at a rate of $1.5 to $3.75 an hour, Alex and his team would review paragraphs of horrifying violence: someone stabbing himself; children having sex with their parents or with  each other; sometimes, rape. Workers like Alex label these passages into severities of violence in the day, and at night, fight with the nightmares induced by these writings.
      
-     They did not know who this work was done for, or where these paragraphs c
-     ame from. All they know is that they work to label data at a company called Sama.`,
+     They did not know who this work was done for, or where these paragraphs came from. All they know is that they work to label data at a company called Sama.`,
     citations: [
       'https://www.wsj.com/podcasts/the-journal/the-hidden-workforce-that-helped-filter-violence-and-abuse-out-of-chatgpt/ffc2427f-bdd8-47b7-9a4b-27e7267cf413',
     ],
@@ -46,11 +40,7 @@ const STORY_BEATS = [
     autoFly: null,
     focusPlatform: null,
     image: null,
-    text: `The story of data workers dates as far back as the development of 
-    machine learning. Data annotation and labeling (DAL) is the work of 
-    making data legible to machines–that this is a tree, this is a car, this is 
-    a dog, and sometimes--this is child pornography. This work is repetitive. 
-    It is demanded in bulk. And so it is outsourced.`,
+    text: `The story of data workers dates as far back as the development of machine learning. Data annotation and labeling (DAL) is the work of making data legible to machines–that this is a tree, this is a car, this is a dog, and sometimes--this is child pornography. This work is repetitive. It is demanded in bulk. And so it is outsourced.`,
     citations: [],
   },
   // Beat 4: zoom into South + Southeast Asia
@@ -61,13 +51,7 @@ const STORY_BEATS = [
     autoFly: null,
     focusPlatform: null,
     image: null,
-    text: `The history of outsourcing business parallels the rise of 
-    neoliberalism in the 1980s. As global capitalism grew, companies needed 
-    to cut down costs by seeking out cheaper labor. That labor came, 
-    disproportionately, from the global 
-    south–-countries newly independent from colonial or semi-colonial rule, 
-    with little choice but to open their economies to foreign capital. They 
-    became the perfect demographic for data work.`,
+    text: `The history of outsourcing business parallels the rise of neoliberalism in the 1980s. As global capitalism grew, companies needed to cut down costs by seeking out cheaper labor. That labor came, disproportionately, from the global south–-countries newly independent from colonial or semi-colonial rule, with little choice but to open their economies to foreign capital. They became the perfect demographic for data work.`,
     citations: [
       'https://scm.ncsu.edu/scm-articles/article/a-brief-history-of-outsourcing',
     ],
@@ -80,13 +64,7 @@ const STORY_BEATS = [
     autoFly: { center: [15, 98], zoom: 4, delayMs: 1200 },
     focusPlatform: null,
     image: null,
-    text: `India and the Philippines are the world's two largest IT BPO market. 
-    These countries share a colonial history that left behind a large
-    English-speaking population, creating a market of cheap labor valuable for 
-    Western capital. The Philippines was the “call center 
-    capital of the world”; India, an 
-    IT powerhouse on the back of its engineering talent pool. When DAL demand 
-    rose, both countries were already positioned to absorb it.`,
+    text: `India and the Philippines are the world's two largest IT BPO market. These countries share a colonial history that left behind a large English-speaking population, creating a market of cheap labor valuable for Western capital. The Philippines was the “call center capital of the world”; India, an IT powerhouse on the back of its engineering talent pool. When DAL demand rose, both countries were already positioned to absorb it.`,
     citations: null,
   },
   // Beat 5: white + yellow nodes in Silicon Valley, zoom in
@@ -97,17 +75,9 @@ const STORY_BEATS = [
     autoFly: { center: [37.4, -122.0], zoom: 9, delayMs: 1200 },
     focusPlatform: null,
     image: null,
-    text: `The AI hype has, for two times, expanded the DAL industry to unprecedented 
-    levels. The first wave came from the rise of autonomous vehicles in 2015, 
-    Venture capital-backed startups like Scale AI, which specialized in labeeling 
-    everyday traffic into annotated data, built billion-dollar businesses. 
+    text: `The AI hype has, for two times, expanded the DAL industry to unprecedented levels. The first wave came from the rise of autonomous vehicles in 2015, Venture capital-backed startups like Scale AI, which specialized in labeeling everyday traffic into annotated data, built billion-dollar businesses. 
 
-    The second wave came after the launch of ChatGPT in 2022. To ensure 
-    that the large language model cannot produce violent material or child 
-    pornography, someone has to teach the models what is violent, and what is assult, and what is hate speech. 
-    Data labeling is no longer about assigning words to pictures. It is about 
-    cataloging the most gortesque corners of the internet into degrees of 
-    severities, manually judged by human workers who read violent passage after passage.`,
+    The second wave came after the launch of ChatGPT in 2022. To ensure that the large language model cannot produce violent material or child pornography, someone has to teach the models what is violent, and what is assult, and what is hate speech. Data labeling is no longer about assigning words to pictures. It is about cataloging the most gortesque corners of the internet into degrees of severities, manually judged by human workers who read violent passage after passage.`,
     citations: [],
   },
   // Beat 6: show Sama node + its relationship to other platform nodes, worldview
@@ -118,14 +88,7 @@ const STORY_BEATS = [
     autoFly: null,
     focusPlatform: 'Sama',
     image: null,
-    text: `Sama, the DAL company that employed Alex, signed a $230,000 contracts 
-    with OpenAI. It previously worked on content moderation for Meta. A Times 
-    investigation by Billy Perrigo revealed the violent and graphic content 
-    that Sama workers moderated–-mental health struggles after watching suicide 
-    videos were left unattended. Nearly two hundered workers were unlawfully
-     dismissed for attempting to unionzie. This all happens while Sama speaks of 
-     its work as “impact sourcing”, which creates stable employment and 
-     economic opportunities for marginalized communities.`,
+    text: `Sama, the DAL company that employed Alex, signed a $230,000 contracts with OpenAI. It previously worked on content moderation for Meta. A Times investigation by Billy Perrigo revealed the violent and graphic content that Sama workers moderated–-mental health struggles after watching suicide videos were left unattended. Nearly two hundered workers were unlawfully dismissed for attempting to unionzie. This all happens while Sama speaks of its work as “impact sourcing”, which creates stable employment and economic opportunities for marginalized communities.`,
     citations: [
       'https://time.com/6147458/facebook-africa-content-moderation-employee-treatment/',
       'https://www.sama.com/impact',
@@ -153,11 +116,12 @@ const STORY_BEATS = [
       src: 'story/ImpactEnterprises.png',
       alt: 'Zambian women jumping up and down, jolly',
       caption: 'Picture of Zambian women on the Impact Enterprises official website. Photo: Impact Enterprises',  // optional
-      position: { bottom: '10%', right: '6%' },  // optional, this is the default
-      width: 240,   // optional, px
+      position: { top: '10%', right: '6%' },  // optional, this is the default
+      width: 540,   // optional, px
     },
     text: `Sama is not the only company that works with African communities. Impact Enterprises is a data labeling company with a sole delivery center in Zambia. The company website opens with a picture of Zambian women cheerfully jumping under the bright sun. With three white men as its executive board, Impact Enterprises writes:
-“We provide job skills training and income-generating opportunities for youth across Zambia, teaching computer literacy, workplace professionalism, and technical skills that open doors to the global digital economy.”`,
+
+    “We provide job skills training and income-generating opportunities for youth across Zambia, teaching computer literacy, workplace professionalism, and technical skills that open doors to the global digital economy.”`,
     citations: [],
   },
   // beat 9: more incoming
