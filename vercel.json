@@ -1,12 +1,5 @@
 {
   "rewrites": [
-    {
-      "source": "/data-workers/assets/(.*)",
-      "destination": "/assets/$1"
-    },
-    {
-      "source": "/data-workers/(.*)",
-      "destination": "/"
-    }
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
