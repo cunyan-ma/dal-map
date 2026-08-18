@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './ContactPage.css'
 
-const CONTACT_EMAIL = 'cunyan_ma@brown.edu'
+const CONTACT_EMAIL = 'ai-materiality-map@proton.me'
 
 function ContactPage() {
     const [form, setForm] = useState({ name: '', email: '', institution: '' })
