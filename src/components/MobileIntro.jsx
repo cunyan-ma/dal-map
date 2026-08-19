@@ -46,7 +46,7 @@ function MobileIntro() {
                         curved arrow tracing the same turn. */}
                     <svg className="mobile-intro-rotate-icon" viewBox="0 0 120 120" aria-hidden="true">
                         <path className="mobile-intro-turn-arc" d="M32 34 A40 40 0 0 1 88 34" fill="none" />
-                        <path className="mobile-intro-turn-head" d="M88 34 l-10 -2 M88 34 l2 10" fill="none" />
+                        <path className="mobile-intro-turn-head" d="M88 34 l-3.3 -10.5 M88 34 l-10.5 -3.1" fill="none" />
                         <g className="mobile-intro-phone">
                             <rect className="mobile-intro-phone-body" x="49" y="34" width="22" height="52" rx="4" />
                             <line className="mobile-intro-phone-home" x1="56" y1="81" x2="64" y2="81" />
