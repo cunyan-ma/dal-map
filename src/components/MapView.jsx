@@ -112,6 +112,7 @@ function MapView({
     onSelectPlatform = () => { },
     onSelectCountry = () => { },
     onSelectCustomer = () => { },
+    onClearSelection = () => { },
 }) {
     const containerRef = useRef(null)
     const mapRef = useRef(null)
@@ -142,11 +143,22 @@ function MapView({
     const customerCoordsRef = useRef(customerCoords)
     const selectedCountryRef = useRef(selectedCountry)
     const storyStepRef = useRef(storyStep)
+    const onClearSelectionRef = useRef(onClearSelection)
     useEffect(() => { selectedPlatformRef.current = selectedPlatform }, [selectedPlatform])
     useEffect(() => { selectedCustomerRef.current = selectedCustomer }, [selectedCustomer])
     useEffect(() => { customerCoordsRef.current = customerCoords }, [customerCoords])
     useEffect(() => { selectedCountryRef.current = selectedCountry }, [selectedCountry])
     useEffect(() => { storyStepRef.current = storyStep }, [storyStep])
+    useEffect(() => { onClearSelectionRef.current = onClearSelection }, [onClearSelection])
+
+    // A click on any node opens its info panel, and that panel's picture of the
+    // network is the only one on screen until it's dismissed: hover is inert
+    // while a selection is live, so passing the cursor over other nodes can't
+    // overwrite the selected node's edges with a second, contradictory set.
+    // Dismissing the panel (its x, or a click on empty map) restores hover.
+    const hasSelection = () => Boolean(
+        selectedPlatformRef.current || selectedCountryRef.current || selectedCustomerRef.current
+    )
 
     // Ref holding the latest restoreSelectionStyles so clearHover (inside a stale closure) can call it
     const restoreSelectionStylesRef = useRef(null)
@@ -255,6 +267,10 @@ function MapView({
         L.control.zoom({ position: 'bottomleft' }).addTo(map)
         mapRef.current = map
         setWorldView(map)
+
+        // Leaflet only makes the map itself the click target when no interactive
+        // layer was hit, so this fires on empty map only — never on a node.
+        map.on('click', () => onClearSelectionRef.current())
 
         // Drop the "Leaflet" prefix from the attribution bar. The tile-provider
         // credits themselves must stay (license requirement for Stadia/Stamen/OSM
@@ -500,10 +516,16 @@ function MapView({
             const lng = parseFloat(row.location_long)
             const marker = L.circleMarker([lat, lng], {
                 radius: 10, fillColor: '#e5312e', color: '#e5312e', weight: 1,
+                // L.Path bubbles mouse events to the map by default (L.Marker,
+                // used for the orange/white shapes, does not). Left on, a click
+                // here would reach the map's background-click handler and clear
+                // the country selection this same click just made.
+                bubblingMouseEvents: false,
                 ...DEFAULTS.red
             })
 
             marker.on('mouseover', () => {
+                if (hasSelection()) return
                 const rel = relRef.current
                 if (!rel) return
                 const platform = row.company
@@ -553,6 +575,7 @@ function MapView({
             })
 
             marker.on('mouseover', () => {
+                if (hasSelection()) return
                 const rel = relRef.current
                 if (!rel) return
                 const connectedWhites = new Set(rel.custEdgesBySource[platform] || [])
@@ -599,6 +622,7 @@ function MapView({
             })
 
             marker.on('mouseover', () => {
+                if (hasSelection()) return
                 const rel = relRef.current
                 if (!rel) return
                 const connectedOranges = new Set(rel.custEdgesByTarget[custName] || [])

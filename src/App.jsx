@@ -5,10 +5,12 @@ import AboutPage from './pages/AboutPage'
 import Methodology from './pages/Methodology'
 import Database from './pages/Database'
 import ContactPage from './pages/ContactPage'
+import { Analytics } from '@vercel/analytics/react'
 
 function App() {
   return (
     <HashRouter>
+      <Analytics />
       <NavBar />
       <Routes>
         <Route path="/" element={<SupplyChain />} />

@@ -112,14 +112,19 @@ function SupplyChain() {
         })
     }, [])
 
-    // Only keep edges whose source platform is listed in dal-platforms.csv
+    // A customer is renderable only when it satisfies both halves of the map's
+    // contract: its platform is listed in dal-platforms.csv (so there's an orange
+    // node to draw the contract line from), and it has finite coordinates (so
+    // there's somewhere to put the white node). Rows failing either test stay in
+    // the CSV — and on the Database page — but are hidden from the map *and* from
+    // the Customers search list, which share this one list so the two can't drift.
     const platformNames = useMemo(
         () => new Set(platforms.map(p => p.name.trim())),
         [platforms]
     )
-    const filteredCustomerEdges = useMemo(
-        () => customerEdges.filter(e => platformNames.has(e.source)),
-        [customerEdges, platformNames]
+    const renderableCustomerEdges = useMemo(
+        () => customerEdges.filter(e => platformNames.has(e.source) && customerCoords[e.target]),
+        [customerEdges, platformNames, customerCoords]
     )
 
     const handleEnterStory = () => {
@@ -167,7 +172,7 @@ function SupplyChain() {
                     selectedPlatform={selectedPlatform}
                     selectedCountry={selectedCountry}
                     selectedCustomer={selectedCustomer}
-                    customerEdges={filteredCustomerEdges}
+                    customerEdges={renderableCustomerEdges}
                     customerCoords={customerCoords}
                     showRedEdges={showRedEdges}
                     showWhiteEdges={showWhiteEdges}
@@ -176,6 +181,7 @@ function SupplyChain() {
                     onSelectPlatform={(c) => { setSelectedPlatform(c); setSelectedCountry(null); setSelectedCustomer(null) }}
                     onSelectCountry={(c) => { setSelectedCountry(c); setSelectedPlatform(null); setSelectedCustomer(null) }}
                     onSelectCustomer={(c) => { setSelectedCustomer(c); setSelectedPlatform(null); setSelectedCountry(null) }}
+                    onClearSelection={() => { setSelectedPlatform(null); setSelectedCountry(null); setSelectedCustomer(null) }}
                 />
                 {inStory && (
                     // key re-triggers the fade-in when the beat changes
@@ -215,7 +221,7 @@ function SupplyChain() {
             {!inStory && selectedCustomer && (
                 <CustomerInfo
                     customer={selectedCustomer}
-                    customerEdges={filteredCustomerEdges}
+                    customerEdges={renderableCustomerEdges}
                     onClose={() => setSelectedCustomer(null)}
                     lowered={barFolded}
                 />
@@ -247,7 +253,7 @@ function SupplyChain() {
             {!inStory && (
                 <CornerControls
                     countries={countries}
-                    customerEdges={filteredCustomerEdges}
+                    customerEdges={renderableCustomerEdges}
                     selectedPlatform={selectedPlatform}
                     onSelectPlatform={setSelectedPlatform}
                     selectedCountry={selectedCountry}
