@@ -1,5 +1,8 @@
 {
   "redirects": [
     { "source": "/", "destination": "/data-workers/" }
+  ],
+  "rewrites": [
+    { "source": "/data-workers/(.*)", "destination": "/data-workers/index.html" }
   ]
 }

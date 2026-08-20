@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import NavBar from './components/NavBar'
 import SupplyChain from './pages/SupplyChain'
 import AboutPage from './pages/AboutPage'
@@ -9,7 +9,7 @@ import { Analytics } from '@vercel/analytics/react'
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Analytics />
       <NavBar />
       <Routes>
@@ -19,7 +19,7 @@ function App() {
         <Route path="/database" element={<Database />} />
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   )
 }
 

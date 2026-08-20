@@ -18,15 +18,15 @@ function Methodology() {
 
             <p>
                 To construct the full supply chain, we:
-                <ul>
-                    <li>Identified data labeling platforms with a BPO
-                        business model</li>
-                    <li>Identify platforms' worker delivery centers</li>
-                    <li>Identify platforms' customers</li>
-                    <li>Geocode these locations into map coordinates for
-                        visualization.</li>
-                </ul>
             </p>
+            <ul>
+                <li>Identified data labeling platforms with a BPO
+                    business model</li>
+                <li>Identify platforms' worker delivery centers</li>
+                <li>Identify platforms' customers</li>
+                <li>Geocode these locations into map coordinates for
+                    visualization.</li>
+            </ul>
             <br />
             <p>All database used in this project is open-sourced in the "Database" 
                 page.</p>

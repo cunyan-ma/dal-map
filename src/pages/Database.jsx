@@ -111,23 +111,23 @@ function Database() {
         <h1>Database</h1>
         <p className="database-subtitle">
           This map is supported by three database:
-          <ul>
-            <li>
-              worker-location.csv: an original database constructed by the 
-              project. It tracks worker location by country, city, and the 
-              platform that employes them.
-            </li>
-            <li>
-              dal-platforms.csv: Lists the DAL BPO platforms that are included 
-              in this map due to their public available information on delivery 
-              centers
-            </li>
-            <li>
-              platform-customer.csv: sourced from TechEquity, cleaned to match
-               the data structure required by this map
-            </li>
-            </ul> 
         </p>
+        <ul className="database-list">
+          <li>
+            worker-location.csv: an original database constructed by the 
+            project. It tracks worker location by country, city, and the 
+            platform that employes them.
+          </li>
+          <li>
+            dal-platforms.csv: Lists the DAL BPO platforms that are included 
+            in this map due to their public available information on delivery 
+            centers
+          </li>
+          <li>
+            platform-customer.csv: sourced from TechEquity, cleaned to match
+             the data structure required by this map
+          </li>
+        </ul>
       </div>
 
       <div className="db-columns">

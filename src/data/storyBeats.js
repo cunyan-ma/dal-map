@@ -25,7 +25,7 @@ const STORY_BEATS = [
     autoFly: null,
     focusPlatform: null,
     image: null,
-    text: `Alex is a data worker in Nairobi, Kenya. Paid at a rate of $1.5 to $3.75 an hour, Alex and his team would review paragraphs of horrifying violence: someone stabbing himself; children having sex with their parents or with  each other; sometimes, rape. Workers like Alex label these passages into severities of violence in the day, and at night, fight with the nightmares induced by these writings.
+    text: `Alex is a data worker in Nairobi, Kenya. Paid at a rate of $1.5 to $3.75 an hour, Alex and his team would review paragraphs of horrifying violence: self-harm; parents having sex with their children; and sometimes, rape. Workers like Alex label these passages into severities of violence in the day, and at night, fight with the nightmares induced by these writings.
      
      They did not know who this work was done for, or where these paragraphs came from. All they know is that they work to label data at a company called Sama.`,
     citations: [
