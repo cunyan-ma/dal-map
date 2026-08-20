@@ -33,33 +33,15 @@ function AboutPage() {
             <h1>About this project</h1>
             <br></br>
             <p>
-                This map visualizes the geographic locations of data workers
-                behind AI. It provides the first systematic and
-                quantitative documentation of data workers' distribution around the
-                world by tracking data annotation and labeling (DAL) platforms' worker
-                delivery centers, a first step towards making this opaque
-                industry more transparent. This interactive map positions data workers
-                as part of a supply chain in the global AI DAL industry.
-                It display a consistent pattern across
-                the industry: What is the structural relationship between AI
-                company customers, the data labeling platforms that intermediate
-                labor, and the workers who receive little recognition or pay?
+                This map visualizes the geographic locations of data workers behind AI. It provides the first systematic and quantitative documentation of data workers' distribution around the world by tracking data annotation and labeling (DAL) platforms' worker delivery centers and is a first step towards making this opaque industry more transparent. This interactive map positions data workers as part of a supply chain in the global AI DAL industry. It displays a consistent pattern across the industry: What is the structural relationship among AI company customers, the data-labeling platforms that intermediate labor, and the workers who receive little recognition or pay?
             </p>
             <br></br>
             <p>
-                This map is part of the data journalism series: Power Mapping
-                AI's Materiality. Power mapping is an organizer framework that
-                identifies the loci of power around a target. This project
-                asks: When we power map the material, global supply
-                chain behind AI systems, what power relations do we surface?
-                How do we highlight the material foundation behind AI and
-                recognize how world systems such as neo-liberalism and
-                imperialism dictated the organization of labor and resources?
+                This map is part of the data journalism series <i>Power Mapping AI's Materiality</i>. Power mapping is an organizing framework that identifies the loci of power around a target. This project asks: When we power-map the material and global supply chain behind AI systems, what power relations do we surface? How do we highlight the material foundation behind AI and recognize how labor and resources are organized by world systems such as neo-liberalism and imperialism?
             </p>
             <br />
             <p>
-                All methodology and limitations, including any LLM use, is documented in the
-                Methodology page.
+                All methodology and limitations, including any LLM use, are documented on the Methodology page.
             </p>
             <br></br>
 
@@ -83,12 +65,7 @@ function AboutPage() {
                 </li>
             </ul>
             <p>
-                Through the visual distribution and the
-                worker country profiles, we hope that users can interrogate
-                the concentration of power behind modern-day AI systems. What
-                does that implicate about this technology we build, what systems
-                of power is it inheriting and perpetrating, and how
-                should we change that?
+                Through the visual distribution and the worker country profiles, we hope that users can interrogate the concentration of power behind modern-day AI systems. What does that imply about this technology we build, what systems of power is it inheriting and perpetrating, and how should we change that?
             </p>
 
             <br></br>
@@ -97,52 +74,25 @@ function AboutPage() {
             <br></br>
 
             <p>
-                In order for machines to understand a piece of data, it has to
-                be annotated. This act of annotation is performed by data
-                workers in the data annotation and labeling (DAL) industry,
-                who make up the foundation of the AI industry.
+                In order for machines to understand a piece of data, it has to be annotated. This act of annotation is performed by data workers in the data annotation and labeling (DAL) industry, who make up the foundation of the AI technologies.
             </p>
             <br />
             <p>
-                This is an incredibly opaque industry byy
-                design. Half of the industry operates as gig platforms, which
-                treats workers as "contractors" rather than "workers", obscuring
-                away any detail on worker number, location, wage, and more, to the
-                public.
+                This is an incredibly opaque industry by design. Half of the industry operates as gig platforms, which treat workers as "contractors" rather than "workers", obscuring any detail on worker numbers, location, wage, and more from the public.
             </p>
             <br></br>
             <p>
-                Thanks to some incredible journalists, the story of data workers
-                have surfaced to us more as AI became a larger part of our
-                lives. We know that some of them locate in Kenya, Venezuela,
-                and other countries with English literacy but poor economic
-                conditions, enabling exploitation. We know that they are
-                sometimes made to work with traumatizing
-                material with no redress from their supposed employees--the
-                "data labeling platforms" that pass down contracts from
-                mysterious customers.
+                Thanks to some incredible journalists and researchers, the story of data workers has surfaced to us more as AI became a larger part of our lives. We know that some of them are located in Kenya, Venezuela, and other countries with English literacy but poor economic conditions, enabling exploitation. We know that they are sometimes made to work with traumatizing material with no redress from their supposed employers- the "data labeling platforms" that pass down contracts from mysterious customers. Research projects like the <a href="https://data-workers.org/">Data Workers’ Inquiry</a> gave workers the platform to tell their own stories of job insecurity and mental trauma, while the <a href="https://dataworklandscape.org/">Data Work Landscape</a>  provided a comprehensive list of the corporations in DAL.
             </p>
             <br />
             <p>
-                However, there is yet to be any systematic documentation of
-                where these data workers are located. Reliance on journalist
-                reporting is unable to provide a hollistic overview on the pattern
-                between worker exploitation and the companies that seek profit
-                from them.
+                However, there has yet to be any systematic documentation of where these data workers are located. Reliance on journalist reporting is unable to provide a holistic overview of the pattern between worker exploitation and the companies that seek profit from them.
+
             </p>
             <br />
             <p>
-                This project attempts to construct a database that documents
-                worker location quantitatively and systematically. It does so
-                by tracking down the DAL platforms that operate on a "Business
-                Process Outsourcing" (BPO) Business Model. These companies receive
-                data labeling contracts outsourced from AI companies, then pass
-                them along to their in-house annotation teams assembled across
-                "delivery centers" across the world. The locations of these
-                delivery centers are chosen deliberately. Not only do the
-                companies need to guarantee company network, these locations
-                also often have abundant of workers who look for lower pay due
-                to their countries' historic, social, or economic conditions.
+                This project attempts to construct a database that documents worker location quantitatively and systematically. It does so by tracking down the DAL platforms that operate on a "Business Process Outsourcing" (BPO) Business Model. These companies receive data labeling contracts outsourced from AI companies, then pass them along to their in-house annotation teams assembled across "delivery centers" across the world. The locations of these delivery centers are chosen deliberately. Not only do the companies need to secure human resources, but these locations also often have an abundance of workers who look for lower pay due to their countries' historic, social, or economic conditions.
+
             </p>
             {/* <p>
                 Data work has become more nuanced in the age of LLMs.
@@ -171,11 +121,8 @@ function AboutPage() {
 
             <br></br>
             <p>
-                This documentation is nevertheless imperfect. Information
-                remains opaque in these BPO platforms, although it's much more
-                available compared to gig platforms. The overlap between
-                DAL services and the platforms that provide these services is
-                imperfect, making scoping a difficult tradeoff.
+                This documentation is nevertheless imperfect. Information remains opaque in these BPO platforms, although it's much more available compared to gig platforms. The overlap between DAL services and the platforms that provide these services is imperfect, making scoping a difficult tradeoff.
+
             </p>
             <br />
             <p>
@@ -186,7 +133,8 @@ function AboutPage() {
 
             <h2 id="cite">Cite this work</h2>
             <p>
-                The work can be cited as: Cunyan Ma. <i>Power Mapping AI’s Materiality: the Data Annotation and Labeling Industry</i>. viewed on {'<date>'}. ai-materiality-map.org/data-workers.
+                The work can be cited as: Cunyan Ma. <i>Power Mapping AI’s Materiality: the Data Annotation and Labeling Industry</i>. viewed on {'<date>'}. <a href="ai-materiality-map.org">ai-materiality-map.org/data-workers</a>
+.
             </p>
 
             <h2 id="bibliography">Bibliography</h2>
