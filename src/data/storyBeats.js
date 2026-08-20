@@ -22,17 +22,24 @@ const STORY_BEATS = [
     id: 'kenya',
     nodeFilter: 'red',
     highlightCountries: ['Kenya'],
-    autoFly: null,
+    autoFly: { center: [2, 20], zoom: 3, delayMs: 1200 },
     focusPlatform: null,
-    image: null,
-    text: `Alex is a data worker in Nairobi, Kenya. Paid at a rate of $1.5 to $3.75 an hour, Alex and his team would review paragraphs of horrifying violence: self-harm; parents having sex with their children; and sometimes, rape. Workers like Alex label these passages into severities of violence in the day, and at night, fight with the nightmares induced by these writings.
+    text: `Alex is a data worker in Nairobi, Kenya. Paid at a rate of $1.5 to $3.75 an hour, Alex and his team would review paragraphs of horrifying violence: a man stabbing a knife towards himself; parents having sex with their children; and in many instances, rape. Workers like Alex label these passages into severities of violence in the day, and at night, fight with the nightmares induced by these writings.
      
      They did not know who this work was done for, or where these paragraphs came from. All they know is that they work to label data at a company called Sama.`,
     citations: [
       'https://www.wsj.com/podcasts/the-journal/the-hidden-workforce-that-helped-filter-violence-and-abuse-out-of-chatgpt/ffc2427f-bdd8-47b7-9a4b-27e7267cf413',
     ],
+    image: {
+      src: 'story/SamasourceKenya.png',
+      alt: 'Picture of an office with a billboard saying "Samasource, the Soul of AI"',
+      caption: 'Picture of Sama office in Nairobi, Kenya. Photo: Getty Images',  // optional
+      position: { bottom: '10%', right: '30%' },  // optional, this is the default
+      width: 300,   // optional, px
+      rotate: 0,    // no tilt
+    },
   },
-  // Beat 3: all nodes, worldview
+  // Beat 2: all nodes, worldview
   {
     id: 'origins',
     nodeFilter: 'all',
@@ -42,12 +49,26 @@ const STORY_BEATS = [
     image: null,
     text: `The story of data workers dates as far back as the development of machine learning. Data annotation and labeling (DAL) is the work of making data legible to machines–that this is a tree, this is a car, this is a dog, and sometimes--this is child pornography. This work is repetitive. It is demanded in bulk. And so it is outsourced.`,
     citations: [],
+    image: {
+      src: 'story/DataLabeling.png',
+      alt: 'Cars and traffic signs are labeled out by boxes',
+      caption: 'Photo: Cogito Tech',  // optional
+      position: { top: '6%', left: '30%' },  // optional, this is the default
+      width: 300,   // optional, px
+      rotate: 0,    // no tilt
+    },
   },
-  // Beat 4: zoom into South + Southeast Asia
+  // Beat 3: zoom into South + Southeast Asia
   {
     id: 'outsourcing-history',
     nodeFilter: 'red',
-    highlightCountries: ['India', 'Nepal', 'Philippines', 'Cambodia', 'Laos', 'Malaysia', 'Thailand', 'Singapore'],
+    // Every worker-location country in the global south, so the map matches the
+    // text's claim about where outsourced labor came from.
+    highlightCountries: [
+      'Argentina', 'Cambodia', 'China', 'Colombia', 'Costa Rica', 'Egypt',
+      'India', 'Kenya', 'Laos', 'Madagascar', 'Malaysia', 'Mexico', 'Nepal',
+      'Philippines', 'Singapore', 'Thailand', 'Uganda', 'Zambia',
+    ],
     autoFly: null,
     focusPlatform: null,
     image: null,
@@ -57,6 +78,7 @@ const STORY_BEATS = [
     ],
   },
 
+  //Beat 4
   {
     id: 'south-southeast-asia',
     nodeFilter: 'red',
@@ -66,6 +88,14 @@ const STORY_BEATS = [
     image: null,
     text: `India and the Philippines are the world's two largest IT BPO market. These countries share a colonial history that left behind a large English-speaking population, creating a market of cheap labor valuable for Western capital. The Philippines was the “call center capital of the world”; India, an IT powerhouse on the back of its engineering talent pool. When DAL demand rose, both countries were already positioned to absorb it.`,
     citations: null,
+    image: {
+      src: 'story/PhilippinesCallCenter.png',
+      alt: 'People sitting in front of computers wearing masks and headsets',
+      caption: 'Philippines: "Call center capital of the world". Photo: Rest of World',  // optional
+      position: { bottom: '6%', left: '25%' },  // optional, this is the default
+      width: 300,   // optional, px
+      rotate: 0,    // no tilt
+    },
   },
   // Beat 5: white + yellow nodes in Silicon Valley, zoom in
   {
@@ -117,7 +147,8 @@ const STORY_BEATS = [
       alt: 'Zambian women jumping up and down, jolly',
       caption: 'Picture of Zambian women on the Impact Enterprises official website. Photo: Impact Enterprises',  // optional
       position: { top: '10%', right: '6%' },  // optional, this is the default
-      width: 540,   // optional, px
+      width: 540,   
+      rotate: 0,// optional, px
     },
     text: `Sama is not the only company that works with African communities. Impact Enterprises is a data labeling company with a sole delivery center in Zambia. The company website opens with a picture of Zambian women cheerfully jumping under the bright sun. With three white men as its executive board, Impact Enterprises writes:
 

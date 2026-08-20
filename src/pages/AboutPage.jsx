@@ -7,6 +7,27 @@ function AboutPage() {
         'Company location pages and career postings for geographic presence'
     ]
 
+    // Chicago author-date entries, alphabetized; `url` is rendered as the
+    // trailing access link so the citation text stays plain.
+    const bibliography = [
+        { text: '“Africa Tech Workers Rising, Kenya.” Paris Peace Forum, n.d. Accessed August 11, 2026.', url: 'https://parispeaceforum.org/projects/africa-tech-workers-rising-kenya/' },
+        { text: 'Anatomy of an AI System. “Anatomy of an AI System.” Accessed August 11, 2026.', url: 'http://www.anatomyof.ai' },
+        { text: 'Anti-Eviction Mapping Project. “Anti-Eviction Mapping Project.” Accessed August 11, 2026.', url: 'https://antievictionmap.com' },
+        { text: 'Casilli, Antonio A., Paola Tubaro, Maxime Cornet, Clément Le Ludec, Juana Torres-Cierpe, and Matheus Viana Braz. “Global Inequalities in the Production of Artificial Intelligence: A Four-Country Study on Data Work.” arXiv:2410.14230. Preprint, arXiv, October 31, 2025.', url: 'https://doi.org/10.48550/arXiv.2410.14230' },
+        { text: '“Data Work Landscape.” Accessed August 11, 2026.', url: 'https://dataworklandscape.org' },
+        { text: 'Data Workers’ Inquiry. “Data Workers’ Inquiry.” Accessed August 11, 2026.', url: 'https://data-workers.org/' },
+        { text: '“Follow the Thing: AI.” Springer Nature Link. Accessed August 11, 2026.', url: 'https://link.springer.com/chapter/10.1007/978-3-032-09748-4_2' },
+        { text: 'Gray, Mary L., and Siddharth Suri. Ghost Work: How to Stop Silicon Valley from Building a New Global Underclass. Harper Business, 2019.' },
+        { text: 'Hao, Karen. Empire of AI: Dreams and Nightmares in Sam Altman’s OpenAI. Penguin Press, 2026.' },
+        { text: '“How Many Online Workers Are There in the World? A Data-Driven Assessment.” Open Research Europe. Accessed August 11, 2026.', url: 'https://open-research-europe.ec.europa.eu/articles/1-53' },
+        { text: '“Manhattan Population Explorer.” Accessed August 11, 2026.', url: 'https://manpopex.us/' },
+        { text: 'Miceli, Milagros, and Julian Posada. “The Data-Production Dispositif.” Proceedings of the ACM on Human-Computer Interaction 6, no. CSCW2 (2022): 460:1–37.', url: 'https://doi.org/10.1145/3555561' },
+        { text: 'Muldoon, James, Callum Cant, Mark Graham, and Funda Ustek Spilda. “The Poverty of Ethical AI: Impact Sourcing and AI Supply Chains.” AI & SOCIETY 40, no. 2 (2025): 529–43.', url: 'https://doi.org/10.1007/s00146-023-01824-9' },
+        { text: 'Muldoon, James, Callum Cant, Boxi Wu, and Mark Graham. “A Typology of Artificial Intelligence Data Work.” Big Data & Society 11, no. 1 (2024): 20539517241232632.', url: 'https://doi.org/10.1177/20539517241232632' },
+        { text: 'Online Labour Observatory. n.d. Accessed August 11, 2026.', url: 'http://onlinelabourobservatory.org/' },
+        { text: '“The Power Mapping Tool: A Method for the Empirical Research of Power Relations.” Accessed August 11, 2026.', url: 'https://ageconsearch.umn.edu/record/42410/?v=pdf' },
+    ]
+
     return (
         <div className="about-container">
             <h1>About this project</h1>
@@ -165,14 +186,33 @@ function AboutPage() {
 
             <h2 id="cite">Cite this work</h2>
             <p>
-                A CNTR project by Cunyan Ma.
-                (insert cite)
+                The work can be cited as: Cunyan Ma. <i>Power Mapping AI’s Materiality: the Data Annotation and Labeling Industry</i>. viewed on {'<date>'}. ai-materiality-map.org/data-workers.
             </p>
 
             <h2 id="bibliography">Bibliography</h2>
-            <p>
-                *This page should be folded up* *would be a long long list*
-            </p>
+            <details className="bibliography">
+                <summary>{bibliography.length} sources</summary>
+                <ul className="bib-list">
+                    {bibliography.map((entry) => (
+                        <li key={entry.text}>
+                            {entry.text}
+                            {entry.url && (
+                                <>
+                                    {' '}
+                                    <a
+                                        href={entry.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {entry.url}
+                                    </a>
+                                    .
+                                </>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            </details>
         </div>
     )
 }

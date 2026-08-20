@@ -45,3 +45,47 @@
 .about-container a:hover {
     color: #ff7a55;
 }
+
+/* Bibliography: folded by default, hanging indent when open. */
+.about-container .bibliography {
+    margin-top: 8px;
+}
+
+.about-container .bibliography summary {
+    cursor: pointer;
+    width: fit-content;
+    font-size: 16px;
+    color: #f2572d;
+    list-style: none;
+}
+
+.about-container .bibliography summary::-webkit-details-marker {
+    display: none;
+}
+
+.about-container .bibliography summary::before {
+    content: '▸ ';
+    display: inline-block;
+    transition: transform 0.15s ease;
+}
+
+.about-container .bibliography[open] summary::before {
+    content: '▾ ';
+}
+
+.about-container .bibliography summary:hover {
+    color: #ff7a55;
+}
+
+.about-container .bib-list {
+    margin: 12px 0 0 0;
+    padding-left: 2em;
+    list-style: none;
+}
+
+.about-container .bib-list li {
+    /* Hanging indent: first line flush left, continuations indented. */
+    text-indent: -2em;
+    margin-bottom: 12px;
+    overflow-wrap: anywhere;
+}
