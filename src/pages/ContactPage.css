@@ -38,18 +38,87 @@
     color: #ff7a55;
 }
 
-.contact-embed {
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 420px;
     margin-top: 16px;
-    max-width: 640px;
 }
 
-.contact-embed iframe {
-    display: block;
+.contact-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+}
+
+.contact-field span {
+    font-size: 13px;
+    font-weight: 700;
+    color: #cccccc;
+}
+
+.contact-field input {
+    box-sizing: border-box;
     width: 100%;
-    /* Fixed height: Google Forms can't report its own height across origins,
-       so the form scrolls inside the frame rather than growing the page. */
-    height: 500px;
-    border: 0;
+    padding: 10px 12px;
+    background: #111111;
+    border: 1px solid #2a2a2a;
+    border-radius: 2px;
+    color: #ffffff;
+    font-size: 15px;
+    font-family: inherit;
+}
+
+.contact-field input:focus {
+    outline: none;
+    border-color: #e0432a;
+}
+
+/* Mailchimp's bot trap: offscreen rather than display:none, so bots that skip
+   hidden inputs still fill it. */
+.contact-honeypot {
+    position: absolute;
+    left: -5000px;
+}
+
+.contact-submit {
+    align-self: flex-start;
+    margin-top: 4px;
+    padding: 10px 24px;
+    background: #e0432a;
+    border: none;
+    border-radius: 2px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.contact-submit:hover {
+    background: #f2572d;
+}
+
+.contact-submit:disabled {
+    background: #7a2b1b;
+    cursor: default;
+}
+
+.contact-status {
+    margin: 4px 0 0 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.contact-status-success {
+    color: #7ddba3;
+}
+
+.contact-status-error {
+    color: #ff8b6b;
 }
 
 @media (max-width: 900px) {
