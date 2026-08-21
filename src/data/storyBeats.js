@@ -104,7 +104,12 @@ const STORY_BEATS = [
     highlightCountries: null,
     autoFly: { center: [37.4, -122.0], zoom: 9, delayMs: 1200 },
     focusPlatform: null,
-    image: null,
+    image: {
+      src: 'story/ScaleAIValuation.png',
+      position: { bottom: '6%', left: '25%' },  // optional, this is the default
+      width: 400,   // optional, px
+      rotate: 0,    // no tilt
+    },
     text: `The AI hype has, for two times, expanded the DAL industry to unprecedented levels. The first wave came from the rise of autonomous vehicles in 2015, Venture capital-backed startups like Scale AI, which specialized in labeeling everyday traffic into annotated data, built billion-dollar businesses. 
 
     The second wave came after the launch of ChatGPT in 2022. To ensure that the large language model cannot produce violent material or child pornography, someone has to teach the models what is violent, and what is assult, and what is hate speech. Data labeling is no longer about assigning words to pictures. It is about cataloging the most gortesque corners of the internet into degrees of severities, manually judged by human workers who read violent passage after passage.`,
